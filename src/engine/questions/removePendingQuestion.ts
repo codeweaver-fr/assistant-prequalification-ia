@@ -1,7 +1,4 @@
-import type {
-  FieldKey,
-  PendingQuestion,
-} from "../model/types";
+import type { FieldKey, PendingQuestion } from "../model/types";
 
 export function removePendingQuestion(
   pendingQuestions: readonly PendingQuestion[],
@@ -14,7 +11,6 @@ export function removePendingQuestion(
    * La liste d'origine n'est jamais modifiée.
    */
   return pendingQuestions.filter(
-    (pendingQuestion) =>
-      pendingQuestion.field !== field,
+    (pendingQuestion) => pendingQuestion.field !== field,
   );
 }

@@ -1,19 +1,11 @@
-import type {
-  EnumValue,
-  TextValue,
-} from "../model/types";
+import type { EnumValue, TextValue } from "../model/types";
 
 import { normalizeText } from "../validation/normalizeText";
 
 export type TextComparison =
-  | "equal"
-  | "more_precise"
-  | "less_precise"
-  | "incompatible";
+  "equal" | "more_precise" | "less_precise" | "incompatible";
 
-export type EnumComparison =
-  | "equal"
-  | "incompatible";
+export type EnumComparison = "equal" | "incompatible";
 
 export function compareTextValues(
   previous: TextValue,
@@ -41,7 +33,5 @@ export function compareEnumValues(
   previous: EnumValue,
   incoming: EnumValue,
 ): EnumComparison {
-  return previous.key === incoming.key
-    ? "equal"
-    : "incompatible";
+  return previous.key === incoming.key ? "equal" : "incompatible";
 }

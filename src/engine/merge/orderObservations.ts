@@ -13,27 +13,16 @@ export function orderObservations(
   message: string,
   observations: readonly Observation[],
 ): Observation[] {
-  const nextSearchPositionByCitation = new Map<
-    string,
-    number
-  >();
+  const nextSearchPositionByCitation = new Map<string, number>();
 
-  const positioned: PositionedObservation[] =
-    observations.map((observation, originalIndex) => {
-      const normalizedCitation = normalizeText(
-        observation.sourceText,
-      );
+  const positioned: PositionedObservation[] = observations.map(
+    (observation, originalIndex) => {
+      const normalizedCitation = normalizeText(observation.sourceText);
 
       const fromIndex =
-        nextSearchPositionByCitation.get(
-          normalizedCitation,
-        ) ?? 0;
+        nextSearchPositionByCitation.get(normalizedCitation) ?? 0;
 
-      const position = positionOf(
-        message,
-        observation.sourceText,
-        fromIndex,
-      );
+      const position = positionOf(message, observation.sourceText, fromIndex);
 
       /*
        * Si plusieurs observations utilisent exactement
@@ -52,7 +41,8 @@ export function orderObservations(
         position,
         originalIndex,
       };
-    });
+    },
+  );
 
   return [...positioned]
     .sort((left, right) => {
@@ -62,17 +52,11 @@ export function orderObservations(
        *
        * A2 la rejettera ensuite.
        */
-      if (
-        left.position === -1 &&
-        right.position !== -1
-      ) {
+      if (left.position === -1 && right.position !== -1) {
         return 1;
       }
 
-      if (
-        left.position !== -1 &&
-        right.position === -1
-      ) {
+      if (left.position !== -1 && right.position === -1) {
         return -1;
       }
 
@@ -80,14 +64,8 @@ export function orderObservations(
        * Deux citations introuvables :
        * on conserve l'ordre produit par l'extracteur.
        */
-      if (
-        left.position === -1 &&
-        right.position === -1
-      ) {
-        return (
-          left.originalIndex -
-          right.originalIndex
-        );
+      if (left.position === -1 && right.position === -1) {
+        return left.originalIndex - right.originalIndex;
       }
 
       /*
@@ -102,10 +80,7 @@ export function orderObservations(
        * Même position :
        * on conserve l'ordre initial fourni par l'IA.
        */
-      return (
-        left.originalIndex -
-        right.originalIndex
-      );
+      return left.originalIndex - right.originalIndex;
     })
     .map(({ observation }) => observation);
 }

@@ -12,8 +12,7 @@ type ValueSupportValidationFailure = {
 };
 
 export type ValueSupportValidationResult =
-  | ValueSupportValidationSuccess
-  | ValueSupportValidationFailure;
+  ValueSupportValidationSuccess | ValueSupportValidationFailure;
 
 export function validateObservationValueSupport(
   observation: Observation,
@@ -41,19 +40,13 @@ export function validateObservationValueSupport(
    * - text   : laissé passer ici
    * - enum   : contrôlé séparément par A4
    */
-  if (
-    proposedValue.type === "text" ||
-    proposedValue.type === "enum"
-  ) {
+  if (proposedValue.type === "text" || proposedValue.type === "enum") {
     return {
       success: true,
     };
   }
 
-  const supported = supportsValue(
-    observation.sourceText,
-    proposedValue,
-  );
+  const supported = supportsValue(observation.sourceText, proposedValue);
 
   if (!supported) {
     return {

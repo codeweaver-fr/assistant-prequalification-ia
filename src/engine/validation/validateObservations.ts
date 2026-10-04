@@ -1,26 +1,15 @@
-import type {
-  FieldKey,
-  Observation,
-  PendingQuestion,
-} from "../model/types";
+import type { FieldKey, Observation, PendingQuestion } from "../model/types";
 
 import type { BusinessConfig } from "../model/config";
 
 import { limitObservations } from "./limitObservations";
 import { validateObservation } from "./validateObservation";
 
-type ValidationResult =
-  ReturnType<typeof validateObservation>;
+type ValidationResult = ReturnType<typeof validateObservation>;
 
-type RejectedValidation = Extract<
-  ValidationResult,
-  { status: "rejected" }
->;
+type RejectedValidation = Extract<ValidationResult, { status: "rejected" }>;
 
-type IgnoredValidation = Extract<
-  ValidationResult,
-  { status: "ignored" }
->;
+type IgnoredValidation = Extract<ValidationResult, { status: "ignored" }>;
 
 type RejectedObservation = {
   index: number;
@@ -29,9 +18,7 @@ type RejectedObservation = {
 
 type IgnoredObservation = {
   index: number;
-  reason:
-    | IgnoredValidation["reason"]
-    | "trop_d_observations";
+  reason: IgnoredValidation["reason"] | "trop_d_observations";
 };
 
 export type ValidateObservationsResult = {
@@ -41,22 +28,14 @@ export type ValidateObservationsResult = {
   clarifyFields: FieldKey[];
 };
 
-function getFieldFromInput(
-  input: unknown,
-): FieldKey | null {
-  if (
-    typeof input !== "object" ||
-    input === null ||
-    !("field" in input)
-  ) {
+function getFieldFromInput(input: unknown): FieldKey | null {
+  if (typeof input !== "object" || input === null || !("field" in input)) {
     return null;
   }
 
   const field = input.field;
 
-  return typeof field === "string"
-    ? field
-    : null;
+  return typeof field === "string" ? field : null;
 }
 
 export function validateObservations(
@@ -71,17 +50,12 @@ export function validateObservations(
    * On limite d'abord la quantité de données produites
    * par le LLM avant même d'essayer de les valider.
    */
-  const limited = limitObservations(
-    config,
-    rawObservations,
-  );
+  const limited = limitObservations(config, rawObservations);
 
   const valid: Observation[] = [];
   const rejected: RejectedObservation[] = [];
 
-  const ignored: IgnoredObservation[] = [
-    ...limited.ignored,
-  ];
+  const ignored: IgnoredObservation[] = [...limited.ignored];
 
   const clarifyFields = new Set<FieldKey>();
 
@@ -100,12 +74,7 @@ export function validateObservations(
      * A4 enum
      * A5 garde elliptique
      */
-    const result = validateObservation(
-      config,
-      message,
-      input,
-      pendingAtStart,
-    );
+    const result = validateObservation(config, message, input, pendingAtStart);
 
     if (result.status === "valid") {
       valid.push(result.observation);

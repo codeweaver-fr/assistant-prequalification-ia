@@ -1,8 +1,4 @@
-import type {
-  DateValue,
-  FieldValue,
-  NumberValue,
-} from "../model/types";
+import type { DateValue, FieldValue, NumberValue } from "../model/types";
 
 import { normalizeText } from "./normalizeText";
 import { parseNumbers } from "./parseNumbers";
@@ -35,10 +31,7 @@ function parsedNumbersFrom(sourceText: string): number[] {
     .map((result) => result.value);
 }
 
-function supportsNumber(
-  sourceText: string,
-  value: NumberValue,
-): boolean {
+function supportsNumber(sourceText: string, value: NumberValue): boolean {
   const numbers = parsedNumbersFrom(sourceText);
 
   switch (value.kind) {
@@ -48,10 +41,7 @@ function supportsNumber(
       return numbers.includes(value.v);
 
     case "range":
-      return (
-        numbers.includes(value.min) &&
-        numbers.includes(value.max)
-      );
+      return numbers.includes(value.min) && numbers.includes(value.max);
   }
 }
 
@@ -65,18 +55,13 @@ function containsMonth(
 
   const containsMonthName = monthNames.some((name) => {
     const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    return new RegExp(`(?:^|\\s)${escaped}(?:\\s|$)`, "i").test(
-      normalized,
-    );
+    return new RegExp(`(?:^|\\s)${escaped}(?:\\s|$)`, "i").test(normalized);
   });
 
   return containsMonthName || numbers.includes(month);
 }
 
-function supportsDate(
-  sourceText: string,
-  value: DateValue,
-): boolean {
+function supportsDate(sourceText: string, value: DateValue): boolean {
   const numbers = parsedNumbersFrom(sourceText);
 
   if (value.year !== null && !numbers.includes(value.year)) {
@@ -97,10 +82,7 @@ function supportsDate(
   return true;
 }
 
-export function supportsValue(
-  sourceText: string,
-  value: FieldValue,
-): boolean {
+export function supportsValue(sourceText: string, value: FieldValue): boolean {
   switch (value.type) {
     case "number":
       return supportsNumber(sourceText, value);

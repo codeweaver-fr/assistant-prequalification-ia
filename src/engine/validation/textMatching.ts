@@ -21,10 +21,7 @@ function cuePattern(cue: string): RegExp {
   );
 }
 
-export function matchesCues(
-  text: string,
-  cues: readonly string[],
-): boolean {
+export function matchesCues(text: string, cues: readonly string[]): boolean {
   const normalizedText = normalizeText(text);
 
   return cues.some((cue) => {
@@ -50,8 +47,5 @@ export function positionOf(
     return -1;
   }
 
-  return normalizedText.indexOf(
-    normalizedSourceText,
-    Math.max(0, fromIndex),
-  );
+  return normalizedText.indexOf(normalizedSourceText, Math.max(0, fromIndex));
 }

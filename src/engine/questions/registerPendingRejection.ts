@@ -1,7 +1,4 @@
-import type {
-  FieldKey,
-  PendingQuestion,
-} from "../model/types";
+import type { FieldKey, PendingQuestion } from "../model/types";
 
 type RegisterPendingRejectionResult = {
   pendingQuestions: PendingQuestion[];
@@ -41,8 +38,7 @@ export function registerPendingRejection(
   if (nextAttempts >= attemptsThreshold) {
     return {
       pendingQuestions: pendingQuestions.filter(
-        (pendingQuestion) =>
-          pendingQuestion.field !== field,
+        (pendingQuestion) => pendingQuestion.field !== field,
       ),
       abandonedField: field,
     };
@@ -53,18 +49,16 @@ export function registerPendingRejection(
    * son compteur de tentatives augmenter.
    */
   return {
-    pendingQuestions: pendingQuestions.map(
-      (pendingQuestion) => {
-        if (pendingQuestion.field !== field) {
-          return pendingQuestion;
-        }
+    pendingQuestions: pendingQuestions.map((pendingQuestion) => {
+      if (pendingQuestion.field !== field) {
+        return pendingQuestion;
+      }
 
-        return {
-          ...pendingQuestion,
-          attempts: nextAttempts,
-        };
-      },
-    ),
+      return {
+        ...pendingQuestion,
+        attempts: nextAttempts,
+      };
+    }),
     abandonedField: null,
   };
 }

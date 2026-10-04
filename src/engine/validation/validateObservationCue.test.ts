@@ -1,10 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import type { Observation } from "../model/types";
-import {
-  pending,
-  testConfig,
-} from "../testing/builders";
+import { pending, testConfig } from "../testing/builders";
 
 import { validateObservationCue } from "./validateObservationCue";
 
@@ -21,13 +18,7 @@ describe("validateObservationCue", () => {
       sourceText: "budget 12000",
     };
 
-    expect(
-      validateObservationCue(
-        testConfig,
-        observation,
-        [],
-      ),
-    ).toEqual({
+    expect(validateObservationCue(testConfig, observation, [])).toEqual({
       success: true,
     });
   });
@@ -44,13 +35,7 @@ describe("validateObservationCue", () => {
       sourceText: "12000 €",
     };
 
-    expect(
-      validateObservationCue(
-        testConfig,
-        observation,
-        [],
-      ),
-    ).toEqual({
+    expect(validateObservationCue(testConfig, observation, [])).toEqual({
       success: true,
     });
   });
@@ -68,11 +53,9 @@ describe("validateObservationCue", () => {
     };
 
     expect(
-      validateObservationCue(
-        testConfig,
-        observation,
-        [pending("budget", "missing")],
-      ),
+      validateObservationCue(testConfig, observation, [
+        pending("budget", "missing"),
+      ]),
     ).toEqual({
       success: true,
     });
@@ -90,13 +73,7 @@ describe("validateObservationCue", () => {
       sourceText: "12000",
     };
 
-    expect(
-      validateObservationCue(
-        testConfig,
-        observation,
-        [],
-      ),
-    ).toEqual({
+    expect(validateObservationCue(testConfig, observation, [])).toEqual({
       success: false,
       reason: "champ_non_en_attente",
       shouldClarify: true,
@@ -115,13 +92,7 @@ describe("validateObservationCue", () => {
       sourceText: "finalement 12000",
     };
 
-    expect(
-      validateObservationCue(
-        testConfig,
-        observation,
-        [],
-      ),
-    ).toEqual({
+    expect(validateObservationCue(testConfig, observation, [])).toEqual({
       success: false,
       reason: "champ_non_en_attente",
       shouldClarify: true,
@@ -140,13 +111,7 @@ describe("validateObservationCue", () => {
       sourceText: "finalement le budget est 12000",
     };
 
-    expect(
-      validateObservationCue(
-        testConfig,
-        observation,
-        [],
-      ),
-    ).toEqual({
+    expect(validateObservationCue(testConfig, observation, [])).toEqual({
       success: true,
     });
   });
@@ -160,11 +125,9 @@ describe("validateObservationCue", () => {
     };
 
     expect(
-      validateObservationCue(
-        testConfig,
-        observation,
-        [pending("budget", "missing")],
-      ),
+      validateObservationCue(testConfig, observation, [
+        pending("budget", "missing"),
+      ]),
     ).toEqual({
       success: true,
     });
@@ -178,13 +141,7 @@ describe("validateObservationCue", () => {
       sourceText: "je ne sais pas",
     };
 
-    expect(
-      validateObservationCue(
-        testConfig,
-        observation,
-        [],
-      ),
-    ).toEqual({
+    expect(validateObservationCue(testConfig, observation, [])).toEqual({
       success: false,
       reason: "champ_non_en_attente",
       shouldClarify: false,
@@ -200,11 +157,9 @@ describe("validateObservationCue", () => {
     };
 
     expect(
-      validateObservationCue(
-        testConfig,
-        observation,
-        [pending("guestCount", "clarify")],
-      ),
+      validateObservationCue(testConfig, observation, [
+        pending("guestCount", "clarify"),
+      ]),
     ).toEqual({
       success: true,
     });
@@ -218,13 +173,7 @@ describe("validateObservationCue", () => {
       sourceText: "ne tenez pas compte",
     };
 
-    expect(
-      validateObservationCue(
-        testConfig,
-        observation,
-        [],
-      ),
-    ).toEqual({
+    expect(validateObservationCue(testConfig, observation, [])).toEqual({
       success: false,
       reason: "champ_non_en_attente",
       shouldClarify: false,
@@ -244,14 +193,10 @@ describe("validateObservationCue", () => {
     };
 
     expect(
-      validateObservationCue(
-        testConfig,
-        observation,
-        [
-          pending("budget", "missing"),
-          pending("guestCount", "missing"),
-        ],
-      ),
+      validateObservationCue(testConfig, observation, [
+        pending("budget", "missing"),
+        pending("guestCount", "missing"),
+      ]),
     ).toEqual({
       success: true,
     });

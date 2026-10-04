@@ -18,16 +18,10 @@ type ValidationFailure = {
   reason: "champ_inconnu" | "forme_invalide";
 };
 
-export type ObservationShapeValidation =
-  | ValidationSuccess
-  | ValidationFailure;
+export type ObservationShapeValidation = ValidationSuccess | ValidationFailure;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
-  return (
-    typeof value === "object" &&
-    value !== null &&
-    !Array.isArray(value)
-  );
+  return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 function isFiniteNumber(value: unknown): value is number {
@@ -53,8 +47,7 @@ function isNumberValue(value: unknown): value is NumberValue {
 
     case "bound":
       return (
-        (value.direction === "min" ||
-          value.direction === "max") &&
+        (value.direction === "min" || value.direction === "max") &&
         isFiniteNumber(value.v)
       );
 
@@ -96,11 +89,7 @@ function isDateValue(value: unknown): value is DateValue {
    * - une année seule est autorisée ;
    * - un mois peut exister avec ou sans année.
    */
-  if (
-    year === null &&
-    month === null &&
-    day === null
-  ) {
+  if (year === null && month === null && day === null) {
     return false;
   }
 
@@ -108,28 +97,15 @@ function isDateValue(value: unknown): value is DateValue {
     return false;
   }
 
-  if (
-    month !== null &&
-    (!Number.isInteger(month) ||
-      month < 1 ||
-      month > 12)
-  ) {
+  if (month !== null && (!Number.isInteger(month) || month < 1 || month > 12)) {
     return false;
   }
 
-  if (
-    day !== null &&
-    (!Number.isInteger(day) ||
-      day < 1 ||
-      day > 31)
-  ) {
+  if (day !== null && (!Number.isInteger(day) || day < 1 || day > 31)) {
     return false;
   }
 
-  if (
-    year !== null &&
-    !Number.isInteger(year)
-  ) {
+  if (year !== null && !Number.isInteger(year)) {
     return false;
   }
 
@@ -138,17 +114,13 @@ function isDateValue(value: unknown): value is DateValue {
 
 function isTextValue(value: unknown): value is TextValue {
   return (
-    isRecord(value) &&
-    value.type === "text" &&
-    typeof value.text === "string"
+    isRecord(value) && value.type === "text" && typeof value.text === "string"
   );
 }
 
 function isEnumValue(value: unknown): value is EnumValue {
   return (
-    isRecord(value) &&
-    value.type === "enum" &&
-    typeof value.key === "string"
+    isRecord(value) && value.type === "enum" && typeof value.key === "string"
   );
 }
 
@@ -182,19 +154,14 @@ export function validateObservationShape(
     };
   }
 
-  if (
-    typeof input.field !== "string" ||
-    typeof input.sourceText !== "string"
-  ) {
+  if (typeof input.field !== "string" || typeof input.sourceText !== "string") {
     return {
       success: false,
       reason: "forme_invalide",
     };
   }
 
-  const fieldDef = config.fields.find(
-    (field) => field.key === input.field,
-  );
+  const fieldDef = config.fields.find((field) => field.key === input.field);
 
   if (!fieldDef) {
     return {
@@ -215,10 +182,7 @@ export function validateObservationShape(
     };
   }
 
-  if (
-    input.intent === "remove" ||
-    input.intent === "unknown"
-  ) {
+  if (input.intent === "remove" || input.intent === "unknown") {
     if (input.proposedValue !== null) {
       return {
         success: false,
@@ -237,12 +201,7 @@ export function validateObservationShape(
     };
   }
 
-  if (
-    !isFieldValueForType(
-      input.proposedValue,
-      fieldDef.type,
-    )
-  ) {
+  if (!isFieldValueForType(input.proposedValue, fieldDef.type)) {
     return {
       success: false,
       reason: "forme_invalide",

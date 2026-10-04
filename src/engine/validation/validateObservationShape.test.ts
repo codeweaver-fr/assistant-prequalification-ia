@@ -201,9 +201,7 @@ describe("validateObservationShape", () => {
   });
 
   it("rejette une observation qui n'est pas un objet", () => {
-    expect(
-      validateObservationShape(testConfig, "budget 15k"),
-    ).toEqual({
+    expect(validateObservationShape(testConfig, "budget 15k")).toEqual({
       success: false,
       reason: "forme_invalide",
     });

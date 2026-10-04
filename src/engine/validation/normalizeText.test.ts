@@ -30,8 +30,8 @@ describe("normalizeText", () => {
   });
 
   it("combine toutes les normalisations", () => {
-    expect(
-      normalizeText("  J’AIMERAIS   un budget de 15\u202F000 €  "),
-    ).toBe("j'aimerais un budget de 15 000 €");
+    expect(normalizeText("  J’AIMERAIS   un budget de 15\u202F000 €  ")).toBe(
+      "j'aimerais un budget de 15 000 €",
+    );
   });
 });

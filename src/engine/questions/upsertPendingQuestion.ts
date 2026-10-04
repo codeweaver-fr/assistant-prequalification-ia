@@ -16,8 +16,7 @@ export function upsertPendingQuestion(
   messageId: MessageId,
 ): PendingQuestion[] {
   const existing = pendingQuestions.find(
-    (pendingQuestion) =>
-      pendingQuestion.field === input.field,
+    (pendingQuestion) => pendingQuestion.field === input.field,
   );
 
   /*

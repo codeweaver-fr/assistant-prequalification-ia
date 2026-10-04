@@ -9,8 +9,5 @@ export function selectPendingQuestions(
    * On conserve simplement les premières questions
    * dans l'ordre où elles ont été produites.
    */
-  return pendingQuestions.slice(
-    0,
-    Math.max(0, maxQuestionsPerTurn),
-  );
+  return pendingQuestions.slice(0, Math.max(0, maxQuestionsPerTurn));
 }

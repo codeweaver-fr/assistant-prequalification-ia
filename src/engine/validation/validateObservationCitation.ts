@@ -12,17 +12,13 @@ type CitationValidationFailure = {
 };
 
 export type CitationValidationResult =
-  | CitationValidationSuccess
-  | CitationValidationFailure;
+  CitationValidationSuccess | CitationValidationFailure;
 
 export function validateObservationCitation(
   message: string,
   observation: Observation,
 ): CitationValidationResult {
-  const position = positionOf(
-    message,
-    observation.sourceText,
-  );
+  const position = positionOf(message, observation.sourceText);
 
   if (position === -1) {
     return {

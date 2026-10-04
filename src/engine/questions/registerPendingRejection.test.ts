@@ -20,13 +20,7 @@ const locationPending: PendingQuestion = {
 
 describe("registerPendingRejection", () => {
   it("incrémente attempts pour le champ pending concerné", () => {
-    expect(
-      registerPendingRejection(
-        [budgetPending],
-        "budget",
-        2,
-      ),
-    ).toEqual({
+    expect(registerPendingRejection([budgetPending], "budget", 2)).toEqual({
       pendingQuestions: [
         {
           ...budgetPending,
@@ -39,14 +33,7 @@ describe("registerPendingRejection", () => {
 
   it("ne modifie pas les autres questions pending", () => {
     expect(
-      registerPendingRejection(
-        [
-          budgetPending,
-          locationPending,
-        ],
-        "budget",
-        2,
-      ),
+      registerPendingRejection([budgetPending, locationPending], "budget", 2),
     ).toEqual({
       pendingQuestions: [
         {
@@ -60,16 +47,8 @@ describe("registerPendingRejection", () => {
   });
 
   it("ne fait rien si le champ n'était pas pending", () => {
-    expect(
-      registerPendingRejection(
-        [budgetPending],
-        "guestCount",
-        2,
-      ),
-    ).toEqual({
-      pendingQuestions: [
-        budgetPending,
-      ],
+    expect(registerPendingRejection([budgetPending], "guestCount", 2)).toEqual({
+      pendingQuestions: [budgetPending],
       abandonedField: null,
     });
   });
@@ -81,11 +60,7 @@ describe("registerPendingRejection", () => {
     };
 
     expect(
-      registerPendingRejection(
-        [pendingWithOneFailure],
-        "budget",
-        2,
-      ),
+      registerPendingRejection([pendingWithOneFailure], "budget", 2),
     ).toEqual({
       pendingQuestions: [],
       abandonedField: "budget",
@@ -100,13 +75,7 @@ describe("registerPendingRejection", () => {
       attempts: 0,
     };
 
-    expect(
-      registerPendingRejection(
-        [conflictPending],
-        "budget",
-        2,
-      ),
-    ).toEqual({
+    expect(registerPendingRejection([conflictPending], "budget", 2)).toEqual({
       pendingQuestions: [
         {
           field: "budget",

@@ -1,14 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import type {
-  Field,
-  FieldKey,
-  PendingQuestion,
-} from "../model/types";
-import {
-  exact,
-  testConfig,
-} from "../testing/builders";
+import type { Field, FieldKey, PendingQuestion } from "../model/types";
+import { exact, testConfig } from "../testing/builders";
 
 import { syncPendingQuestions } from "./syncPendingQuestions";
 
@@ -76,9 +69,7 @@ describe("syncPendingQuestions", () => {
 
     expect(
       result.some(
-        (pending) =>
-          pending.field === "budget" &&
-          pending.reason === "missing",
+        (pending) => pending.field === "budget" && pending.reason === "missing",
       ),
     ).toBe(false);
   });
@@ -109,11 +100,7 @@ describe("syncPendingQuestions", () => {
       messageId: "message-3",
     });
 
-    expect(
-      result.find(
-        (pending) => pending.field === "budget",
-      ),
-    ).toEqual({
+    expect(result.find((pending) => pending.field === "budget")).toEqual({
       field: "budget",
       reason: "conflict",
       askedAtMessageId: "message-3",
@@ -131,11 +118,7 @@ describe("syncPendingQuestions", () => {
       messageId: "message-4",
     });
 
-    expect(
-      result.find(
-        (pending) => pending.field === "budget",
-      ),
-    ).toEqual({
+    expect(result.find((pending) => pending.field === "budget")).toEqual({
       field: "budget",
       reason: "clarify",
       askedAtMessageId: "message-4",
@@ -169,11 +152,9 @@ describe("syncPendingQuestions", () => {
       messageId: "message-5",
     });
 
-    expect(
-      result.find(
-        (pending) => pending.field === "budget",
-      )?.reason,
-    ).toBe("conflict");
+    expect(result.find((pending) => pending.field === "budget")?.reason).toBe(
+      "conflict",
+    );
   });
 
   it("retire un ancien pending lorsque le champ est résolu", () => {
@@ -202,11 +183,7 @@ describe("syncPendingQuestions", () => {
       messageId: "message-2",
     });
 
-    expect(
-      result.some(
-        (pending) => pending.field === "budget",
-      ),
-    ).toBe(false);
+    expect(result.some((pending) => pending.field === "budget")).toBe(false);
   });
 
   it("préserve attempts si la même question reste en attente", () => {
@@ -228,11 +205,7 @@ describe("syncPendingQuestions", () => {
       messageId: "message-2",
     });
 
-    expect(
-      result.find(
-        (pending) => pending.field === "budget",
-      ),
-    ).toEqual({
+    expect(result.find((pending) => pending.field === "budget")).toEqual({
       field: "budget",
       reason: "missing",
       askedAtMessageId: "message-1",
@@ -250,10 +223,6 @@ describe("syncPendingQuestions", () => {
       messageId: "message-6",
     });
 
-    expect(
-      result.some(
-        (pending) => pending.field === "budget",
-      ),
-    ).toBe(false);
+    expect(result.some((pending) => pending.field === "budget")).toBe(false);
   });
 });

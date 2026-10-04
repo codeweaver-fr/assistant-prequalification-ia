@@ -1,10 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import {
-  exact,
-  pending,
-  testConfig,
-} from "../testing/builders";
+import { exact, pending, testConfig } from "../testing/builders";
 
 import { validateObservations } from "./validateObservations";
 
@@ -32,12 +28,7 @@ describe("validateObservations", () => {
       testConfig,
       "Projet à Toulon avec un budget 12000.",
       rawObservations,
-      [
-        pending(
-          "location",
-          "missing",
-        ),
-      ],
+      [pending("location", "missing")],
     );
 
     expect(result.valid).toEqual(rawObservations);
@@ -64,16 +55,11 @@ describe("validateObservations", () => {
     const result = validateObservations(
       testConfig,
       "budget 12000 et surface 20",
-      [
-        validObservation,
-        invalidObservation,
-      ],
+      [validObservation, invalidObservation],
       [],
     );
 
-    expect(result.valid).toEqual([
-      validObservation,
-    ]);
+    expect(result.valid).toEqual([validObservation]);
 
     expect(result.rejected).toEqual([
       {
@@ -111,9 +97,7 @@ describe("validateObservations", () => {
       },
     ]);
 
-    expect(result.clarifyFields).toEqual([
-      "budget",
-    ]);
+    expect(result.clarifyFields).toEqual(["budget"]);
   });
 
   it("ne demande pas de clarification pour unknown ignoré par A5", () => {
@@ -156,17 +140,10 @@ describe("validateObservations", () => {
       testConfig,
       "12000",
       [observation],
-      [
-        pending(
-          "budget",
-          "missing",
-        ),
-      ],
+      [pending("budget", "missing")],
     );
 
-    expect(result.valid).toEqual([
-      observation,
-    ]);
+    expect(result.valid).toEqual([observation]);
 
     expect(result.rejected).toEqual([]);
     expect(result.ignored).toEqual([]);

@@ -1,16 +1,9 @@
-import type {
-  Field,
-  MessageId,
-  Observation,
-} from "../model/types";
+import type { Field, MessageId, Observation } from "../model/types";
 
 type ApplyToAbsentFieldResult =
   | {
       status: "applied";
-      reason:
-        | "nouvelle_valeur"
-        | "correct_sans_valeur"
-        | "inconnu_declare";
+      reason: "nouvelle_valeur" | "correct_sans_valeur" | "inconnu_declare";
       field: Field;
     }
   | {

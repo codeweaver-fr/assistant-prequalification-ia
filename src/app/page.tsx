@@ -33,7 +33,9 @@ type ChatMessage = {
 
 export default function Home() {
   const [input, setInput] = useState("");
-  const [currentProject, setCurrentProject] = useState<ProjectData | null>(null);
+  const [currentProject, setCurrentProject] = useState<ProjectData | null>(
+    null,
+  );
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(false);
 

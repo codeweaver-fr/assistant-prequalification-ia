@@ -1,10 +1,6 @@
-import type {
-  FieldKey,
-  Observation,
-} from "../model/types";
+import type { FieldKey, Observation } from "../model/types";
 
-export type ObservationsByField =
-  Partial<Record<FieldKey, Observation[]>>;
+export type ObservationsByField = Partial<Record<FieldKey, Observation[]>>;
 
 export function groupObservationsByField(
   observations: readonly Observation[],
@@ -15,17 +11,12 @@ export function groupObservationsByField(
     const existing = grouped[observation.field];
 
     if (existing) {
-      grouped[observation.field] = [
-        ...existing,
-        observation,
-      ];
+      grouped[observation.field] = [...existing, observation];
 
       continue;
     }
 
-    grouped[observation.field] = [
-      observation,
-    ];
+    grouped[observation.field] = [observation];
   }
 
   return grouped;

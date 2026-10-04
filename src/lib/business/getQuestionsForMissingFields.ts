@@ -7,7 +7,5 @@ const questionsByField: Record<string, string> = {
 };
 
 export function getQuestionsForMissingFields(missingFields: string[]) {
-  return missingFields
-    .map((field) => questionsByField[field])
-    .filter(Boolean);
+  return missingFields.map((field) => questionsByField[field]).filter(Boolean);
 }

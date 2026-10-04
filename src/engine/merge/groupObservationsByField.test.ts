@@ -1,10 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import type { Observation } from "../model/types";
-import {
-  exact,
-  textValue,
-} from "../testing/builders";
+import { exact, textValue } from "../testing/builders";
 
 import { groupObservationsByField } from "./groupObservationsByField";
 
@@ -24,16 +21,8 @@ describe("groupObservationsByField", () => {
       sourceText: "budget 12000",
     };
 
-    expect(
-      groupObservationsByField([
-        first,
-        second,
-      ]),
-    ).toEqual({
-      budget: [
-        first,
-        second,
-      ],
+    expect(groupObservationsByField([first, second])).toEqual({
+      budget: [first, second],
     });
   });
 
@@ -52,12 +41,7 @@ describe("groupObservationsByField", () => {
       sourceText: "à Toulon",
     };
 
-    expect(
-      groupObservationsByField([
-        budget,
-        location,
-      ]),
-    ).toEqual({
+    expect(groupObservationsByField([budget, location])).toEqual({
       budget: [budget],
       location: [location],
     });
@@ -85,13 +69,7 @@ describe("groupObservationsByField", () => {
       sourceText: "budget 15000",
     };
 
-    expect(
-      groupObservationsByField([
-        first,
-        second,
-        third,
-      ]).budget,
-    ).toEqual([
+    expect(groupObservationsByField([first, second, third]).budget).toEqual([
       first,
       second,
       third,
@@ -99,9 +77,7 @@ describe("groupObservationsByField", () => {
   });
 
   it("retourne un objet vide sans observation", () => {
-    expect(
-      groupObservationsByField([]),
-    ).toEqual({});
+    expect(groupObservationsByField([])).toEqual({});
   });
 
   it("ne modifie pas le tableau d'origine", () => {

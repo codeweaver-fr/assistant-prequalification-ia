@@ -22,14 +22,11 @@ describe("orderObservations", () => {
     };
 
     expect(
-      orderObservations(
-        "budget 10000, non finalement budget 15000",
-        [second, first],
-      ),
-    ).toEqual([
-      first,
-      second,
-    ]);
+      orderObservations("budget 10000, non finalement budget 15000", [
+        second,
+        first,
+      ]),
+    ).toEqual([first, second]);
   });
 
   it("ordonne aussi des observations de champs différents", () => {
@@ -51,14 +48,11 @@ describe("orderObservations", () => {
     };
 
     expect(
-      orderObservations(
-        "Le projet est à Toulon avec un budget 12000.",
-        [budget, location],
-      ),
-    ).toEqual([
-      location,
-      budget,
-    ]);
+      orderObservations("Le projet est à Toulon avec un budget 12000.", [
+        budget,
+        location,
+      ]),
+    ).toEqual([location, budget]);
   });
 
   it("préserve l'ordre fourni lorsque deux citations commencent au même endroit", () => {
@@ -76,12 +70,7 @@ describe("orderObservations", () => {
       sourceText: "budget 10000",
     };
 
-    expect(
-      orderObservations(
-        "budget 10000",
-        [first, second],
-      ),
-    ).toEqual([
+    expect(orderObservations("budget 10000", [first, second])).toEqual([
       first,
       second,
     ]);
@@ -102,12 +91,7 @@ describe("orderObservations", () => {
       sourceText: "budget 15000",
     };
 
-    expect(
-      orderObservations(
-        "budget 10000",
-        [invalid, valid],
-      ),
-    ).toEqual([
+    expect(orderObservations("budget 10000", [invalid, valid])).toEqual([
       valid,
       invalid,
     ]);
@@ -128,17 +112,11 @@ describe("orderObservations", () => {
       sourceText: "budget 15000",
     };
 
-    const observations = [
-      second,
-      first,
-    ];
+    const observations = [second, first];
 
     const original = [...observations];
 
-    orderObservations(
-      "budget 10000 puis budget 15000",
-      observations,
-    );
+    orderObservations("budget 10000 puis budget 15000", observations);
 
     expect(observations).toEqual(original);
   });

@@ -1,13 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import type {
-  Field,
-  Observation,
-} from "../model/types";
-import {
-  exact,
-  range,
-} from "../testing/builders";
+import type { Field, Observation } from "../model/types";
+import { exact, range } from "../testing/builders";
 
 import { applyToConflictingField } from "./applyToConflictingField";
 
@@ -37,15 +31,10 @@ describe("applyToConflictingField", () => {
     };
 
     expect(
-      applyToConflictingField(
-        currentField,
-        observation,
-        "message-3",
-        {
-          conflictPendingAtStart: false,
-          citationNamesField: true,
-        },
-      ),
+      applyToConflictingField(currentField, observation, "message-3", {
+        conflictPendingAtStart: false,
+        citationNamesField: true,
+      }),
     ).toEqual({
       status: "ignored",
       reason: "doublon",
@@ -62,15 +51,10 @@ describe("applyToConflictingField", () => {
     };
 
     expect(
-      applyToConflictingField(
-        currentField,
-        observation,
-        "message-3",
-        {
-          conflictPendingAtStart: false,
-          citationNamesField: true,
-        },
-      ),
+      applyToConflictingField(currentField, observation, "message-3", {
+        conflictPendingAtStart: false,
+        citationNamesField: true,
+      }),
     ).toEqual({
       status: "conflict",
       reason: "candidat_ajoute",
@@ -143,15 +127,10 @@ describe("applyToConflictingField", () => {
     };
 
     expect(
-      applyToConflictingField(
-        currentField,
-        observation,
-        "message-3",
-        {
-          conflictPendingAtStart: true,
-          citationNamesField: false,
-        },
-      ),
+      applyToConflictingField(currentField, observation, "message-3", {
+        conflictPendingAtStart: true,
+        citationNamesField: false,
+      }),
     ).toEqual({
       status: "applied",
       reason: "conflit_resolu",
@@ -189,15 +168,10 @@ describe("applyToConflictingField", () => {
     };
 
     expect(
-      applyToConflictingField(
-        rangedConflict,
-        observation,
-        "message-3",
-        {
-          conflictPendingAtStart: true,
-          citationNamesField: false,
-        },
-      ),
+      applyToConflictingField(rangedConflict, observation, "message-3", {
+        conflictPendingAtStart: true,
+        citationNamesField: false,
+      }),
     ).toEqual({
       status: "applied",
       reason: "conflit_resolu_affine",
@@ -219,15 +193,10 @@ describe("applyToConflictingField", () => {
     };
 
     expect(
-      applyToConflictingField(
-        currentField,
-        observation,
-        "message-3",
-        {
-          conflictPendingAtStart: true,
-          citationNamesField: false,
-        },
-      ),
+      applyToConflictingField(currentField, observation, "message-3", {
+        conflictPendingAtStart: true,
+        citationNamesField: false,
+      }),
     ).toEqual({
       status: "applied",
       reason: "correction_sur_conflit",
@@ -249,15 +218,10 @@ describe("applyToConflictingField", () => {
     };
 
     expect(
-      applyToConflictingField(
-        currentField,
-        observation,
-        "message-3",
-        {
-          conflictPendingAtStart: false,
-          citationNamesField: true,
-        },
-      ),
+      applyToConflictingField(currentField, observation, "message-3", {
+        conflictPendingAtStart: false,
+        citationNamesField: true,
+      }),
     ).toEqual({
       status: "applied",
       reason: "correction_sur_conflit",
@@ -279,15 +243,10 @@ describe("applyToConflictingField", () => {
     };
 
     expect(
-      applyToConflictingField(
-        currentField,
-        observation,
-        "message-3",
-        {
-          conflictPendingAtStart: false,
-          citationNamesField: true,
-        },
-      ),
+      applyToConflictingField(currentField, observation, "message-3", {
+        conflictPendingAtStart: false,
+        citationNamesField: true,
+      }),
     ).toEqual({
       status: "applied",
       reason: "retrait",
@@ -306,15 +265,10 @@ describe("applyToConflictingField", () => {
     };
 
     expect(
-      applyToConflictingField(
-        currentField,
-        observation,
-        "message-3",
-        {
-          conflictPendingAtStart: true,
-          citationNamesField: false,
-        },
-      ),
+      applyToConflictingField(currentField, observation, "message-3", {
+        conflictPendingAtStart: true,
+        citationNamesField: false,
+      }),
     ).toEqual({
       status: "applied",
       reason: "devient_inconnu",
@@ -335,15 +289,10 @@ describe("applyToConflictingField", () => {
     };
 
     expect(
-      applyToConflictingField(
-        currentField,
-        observation,
-        "message-3",
-        {
-          conflictPendingAtStart: false,
-          citationNamesField: true,
-        },
-      ),
+      applyToConflictingField(currentField, observation, "message-3", {
+        conflictPendingAtStart: false,
+        citationNamesField: true,
+      }),
     ).toEqual({
       status: "applied",
       reason: "devient_inconnu",

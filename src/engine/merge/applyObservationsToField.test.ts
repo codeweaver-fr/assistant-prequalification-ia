@@ -1,9 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import type {
-  Field,
-  Observation,
-} from "../model/types";
+import type { Field, Observation } from "../model/types";
 import { exact } from "../testing/builders";
 
 import { applyObservationsToField } from "./applyObservationsToField";
@@ -30,12 +27,8 @@ describe("applyObservationsToField", () => {
 
     const result = applyObservationsToField({
       currentField,
-      message:
-        "budget 10000, non finalement budget 12000",
-      observations: [
-        correction,
-        first,
-      ],
+      message: "budget 10000, non finalement budget 12000",
+      observations: [correction, first],
       messageId: "message-1",
     });
 
@@ -70,12 +63,8 @@ describe("applyObservationsToField", () => {
 
     const result = applyObservationsToField({
       currentField,
-      message:
-        "budget 10000 et budget 12000",
-      observations: [
-        second,
-        first,
-      ],
+      message: "budget 10000 et budget 12000",
+      observations: [second, first],
       messageId: "message-2",
     });
 
@@ -122,12 +111,8 @@ describe("applyObservationsToField", () => {
 
     const result = applyObservationsToField({
       currentField,
-      message:
-        "budget 12000, non finalement budget 15000",
-      observations: [
-        correction,
-        conflictingValue,
-      ],
+      message: "budget 12000, non finalement budget 15000",
+      observations: [correction, conflictingValue],
       messageId: "message-2",
     });
 
@@ -165,12 +150,8 @@ describe("applyObservationsToField", () => {
 
     const result = applyObservationsToField({
       currentField,
-      message:
-        "oubliez les 100 invités, ce sera 80 invités",
-      observations: [
-        provide,
-        remove,
-      ],
+      message: "oubliez les 100 invités, ce sera 80 invités",
+      observations: [provide, remove],
       messageId: "message-2",
     });
 
@@ -205,12 +186,8 @@ describe("applyObservationsToField", () => {
 
     const result = applyObservationsToField({
       currentField,
-      message:
-        "80 invités, oui 80 invités",
-      observations: [
-        first,
-        duplicate,
-      ],
+      message: "80 invités, oui 80 invités",
+      observations: [first, duplicate],
       messageId: "message-3",
     });
 

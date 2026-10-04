@@ -17,9 +17,7 @@ describe("validateObservationEnum", () => {
       sourceText: "une cérémonie civile",
     };
 
-    expect(
-      validateObservationEnum(testConfig, observation),
-    ).toEqual({
+    expect(validateObservationEnum(testConfig, observation)).toEqual({
       success: true,
     });
   });
@@ -35,9 +33,7 @@ describe("validateObservationEnum", () => {
       sourceText: "une cérémonie religieuse",
     };
 
-    expect(
-      validateObservationEnum(testConfig, observation),
-    ).toEqual({
+    expect(validateObservationEnum(testConfig, observation)).toEqual({
       success: true,
     });
   });
@@ -53,9 +49,7 @@ describe("validateObservationEnum", () => {
       sourceText: "une cérémonie symbolique",
     };
 
-    expect(
-      validateObservationEnum(testConfig, observation),
-    ).toEqual({
+    expect(validateObservationEnum(testConfig, observation)).toEqual({
       success: false,
       reason: "valeur_hors_enum",
     });
@@ -72,9 +66,7 @@ describe("validateObservationEnum", () => {
       sourceText: "finalement une cérémonie inconnue",
     };
 
-    expect(
-      validateObservationEnum(testConfig, observation),
-    ).toEqual({
+    expect(validateObservationEnum(testConfig, observation)).toEqual({
       success: false,
       reason: "valeur_hors_enum",
     });
@@ -92,9 +84,7 @@ describe("validateObservationEnum", () => {
       sourceText: "15 000 euros",
     };
 
-    expect(
-      validateObservationEnum(testConfig, observation),
-    ).toEqual({
+    expect(validateObservationEnum(testConfig, observation)).toEqual({
       success: true,
     });
   });
@@ -110,9 +100,7 @@ describe("validateObservationEnum", () => {
       sourceText: "à Toulon",
     };
 
-    expect(
-      validateObservationEnum(testConfig, observation),
-    ).toEqual({
+    expect(validateObservationEnum(testConfig, observation)).toEqual({
       success: true,
     });
   });
@@ -125,9 +113,7 @@ describe("validateObservationEnum", () => {
       sourceText: "je ne sais pas",
     };
 
-    expect(
-      validateObservationEnum(testConfig, observation),
-    ).toEqual({
+    expect(validateObservationEnum(testConfig, observation)).toEqual({
       success: true,
     });
   });
@@ -140,9 +126,7 @@ describe("validateObservationEnum", () => {
       sourceText: "oubliez la cérémonie",
     };
 
-    expect(
-      validateObservationEnum(testConfig, observation),
-    ).toEqual({
+    expect(validateObservationEnum(testConfig, observation)).toEqual({
       success: true,
     });
   });

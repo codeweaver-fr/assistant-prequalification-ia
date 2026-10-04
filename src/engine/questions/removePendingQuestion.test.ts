@@ -21,12 +21,7 @@ const pendingQuestions: PendingQuestion[] = [
 
 describe("removePendingQuestion", () => {
   it("retire la question correspondant au champ", () => {
-    expect(
-      removePendingQuestion(
-        pendingQuestions,
-        "budget",
-      ),
-    ).toEqual([
+    expect(removePendingQuestion(pendingQuestions, "budget")).toEqual([
       {
         field: "location",
         reason: "clarify",
@@ -37,12 +32,7 @@ describe("removePendingQuestion", () => {
   });
 
   it("ne modifie pas les autres questions", () => {
-    expect(
-      removePendingQuestion(
-        pendingQuestions,
-        "location",
-      ),
-    ).toEqual([
+    expect(removePendingQuestion(pendingQuestions, "location")).toEqual([
       {
         field: "budget",
         reason: "missing",
@@ -53,30 +43,19 @@ describe("removePendingQuestion", () => {
   });
 
   it("ne fait rien si le champ n'est pas pending", () => {
-    expect(
-      removePendingQuestion(
-        pendingQuestions,
-        "guestCount",
-      ),
-    ).toEqual(pendingQuestions);
+    expect(removePendingQuestion(pendingQuestions, "guestCount")).toEqual(
+      pendingQuestions,
+    );
   });
 
   it("retourne une liste vide si la seule question est résolue", () => {
-    expect(
-      removePendingQuestion(
-        [pendingQuestions[0]],
-        "budget",
-      ),
-    ).toEqual([]);
+    expect(removePendingQuestion([pendingQuestions[0]], "budget")).toEqual([]);
   });
 
   it("ne modifie pas la liste originale", () => {
     const original = [...pendingQuestions];
 
-    removePendingQuestion(
-      pendingQuestions,
-      "budget",
-    );
+    removePendingQuestion(pendingQuestions, "budget");
 
     expect(pendingQuestions).toEqual(original);
   });

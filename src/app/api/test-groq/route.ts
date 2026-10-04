@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
         ok: false,
         error: "GROQ_API_KEY manquante",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -89,7 +89,7 @@ Ne retourne aucun texte avant ou après le JSON.
           ok: false,
           error: "Réponse IA vide",
         },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -104,7 +104,7 @@ Ne retourne aucun texte avant ou après le JSON.
           error: "La réponse IA ne respecte pas le format attendu.",
           details: validation.error.issues,
         },
-        { status: 422 }
+        { status: 422 },
       );
     }
 
@@ -112,7 +112,7 @@ Ne retourne aucun texte avant ou après le JSON.
 
     if (body.currentProject) {
       const currentValidation = ProjectRequestSchema.safeParse(
-        body.currentProject
+        body.currentProject,
       );
 
       if (!currentValidation.success) {
@@ -121,21 +121,17 @@ Ne retourne aucun texte avant ou après le JSON.
             ok: false,
             error: "Les données actuelles du projet sont invalides.",
           },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
-      project = mergeProjectRequest(
-        currentValidation.data,
-        validation.data
-      );
+      project = mergeProjectRequest(currentValidation.data, validation.data);
     }
 
     const missingFields = getMissingFields(project);
     const fieldsToClarify = getFieldsToClarify(project);
 
-    const missingQuestions =
-      getQuestionsForMissingFields(missingFields);
+    const missingQuestions = getQuestionsForMissingFields(missingFields);
 
     const clarificationQuestions =
       getQuestionsForClarifications(fieldsToClarify);
@@ -158,7 +154,7 @@ Ne retourne aucun texte avant ou après le JSON.
         ok: false,
         error: "Erreur lors du traitement de la demande.",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

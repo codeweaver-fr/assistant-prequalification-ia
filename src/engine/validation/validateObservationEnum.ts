@@ -11,8 +11,7 @@ type EnumValidationFailure = {
 };
 
 export type EnumValidationResult =
-  | EnumValidationSuccess
-  | EnumValidationFailure;
+  EnumValidationSuccess | EnumValidationFailure;
 
 export function validateObservationEnum(
   config: BusinessConfig,

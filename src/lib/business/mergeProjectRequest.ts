@@ -2,7 +2,7 @@ import type { ProjectRequest } from "@/lib/schemas/projectRequest";
 
 export function mergeProjectRequest(
   current: ProjectRequest,
-  incoming: ProjectRequest
+  incoming: ProjectRequest,
 ): ProjectRequest {
   return {
     projectType: incoming.projectType ?? current.projectType,
@@ -10,9 +10,7 @@ export function mergeProjectRequest(
     location: incoming.location ?? current.location,
 
     budget:
-      incoming.budget.status !== "missing"
-        ? incoming.budget
-        : current.budget,
+      incoming.budget.status !== "missing" ? incoming.budget : current.budget,
 
     deadline: incoming.deadline ?? current.deadline,
   };

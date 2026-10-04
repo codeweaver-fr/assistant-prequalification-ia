@@ -7,12 +7,7 @@
  * Le moteur ne doit connaître aucun métier.
  */
 
-import type {
-  BusinessId,
-  Field,
-  FieldKey,
-  NumberValue,
-} from "./types";
+import type { BusinessId, Field, FieldKey, NumberValue } from "./types";
 
 export type NonEmptyArray<T> = readonly [T, ...T[]];
 
@@ -124,18 +119,13 @@ export type EnumFieldDef = FieldDefBase & {
 };
 
 export type FieldDef =
-  | NumberFieldDef
-  | DateFieldDef
-  | TextFieldDef
-  | EnumFieldDef;
+  NumberFieldDef | DateFieldDef | TextFieldDef | EnumFieldDef;
 
 /* ------------------------------------------------------------------ */
 /* Qualification                                                      */
 /* ------------------------------------------------------------------ */
 
-export type QualificationResult =
-  | "complete"
-  | "incomplete";
+export type QualificationResult = "complete" | "incomplete";
 
 export type BusinessConfig = {
   readonly id: BusinessId;
@@ -149,7 +139,7 @@ export type BusinessConfig = {
    * est suffisamment complet.
    */
   readonly qualify: (
-    fields: Readonly<Record<FieldKey, Field>>
+    fields: Readonly<Record<FieldKey, Field>>,
   ) => QualificationResult;
 
   /**

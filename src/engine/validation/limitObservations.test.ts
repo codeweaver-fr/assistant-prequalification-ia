@@ -1,10 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import type { Observation } from "../model/types";
-import {
-  exact,
-  testConfig,
-} from "../testing/builders";
+import { exact, testConfig } from "../testing/builders";
 
 import { limitObservations } from "./limitObservations";
 
@@ -19,42 +16,31 @@ function makeObservation(index: number): Observation {
 
 describe("limitObservations", () => {
   it("laisse passer un lot inférieur au plafond", () => {
-    const observations = [
-      makeObservation(1),
-      makeObservation(2),
-    ];
+    const observations = [makeObservation(1), makeObservation(2)];
 
-    expect(
-      limitObservations(testConfig, observations),
-    ).toEqual({
+    expect(limitObservations(testConfig, observations)).toEqual({
       kept: observations,
       ignored: [],
     });
   });
 
   it("laisse passer exactement le nombre maximal autorisé", () => {
-    const observations = Array.from(
-      { length: 10 },
-      (_, index) => makeObservation(index),
+    const observations = Array.from({ length: 10 }, (_, index) =>
+      makeObservation(index),
     );
 
-    expect(
-      limitObservations(testConfig, observations),
-    ).toEqual({
+    expect(limitObservations(testConfig, observations)).toEqual({
       kept: observations,
       ignored: [],
     });
   });
 
   it("ignore les observations qui dépassent le plafond", () => {
-    const observations = Array.from(
-      { length: 12 },
-      (_, index) => makeObservation(index),
+    const observations = Array.from({ length: 12 }, (_, index) =>
+      makeObservation(index),
     );
 
-    expect(
-      limitObservations(testConfig, observations),
-    ).toEqual({
+    expect(limitObservations(testConfig, observations)).toEqual({
       kept: observations.slice(0, 10),
       ignored: [
         {
@@ -78,14 +64,11 @@ describe("limitObservations", () => {
       },
     };
 
-    const observations = Array.from(
-      { length: 7 },
-      (_, index) => makeObservation(index),
+    const observations = Array.from({ length: 7 }, (_, index) =>
+      makeObservation(index),
     );
 
-    expect(
-      limitObservations(customConfig, observations),
-    ).toEqual({
+    expect(limitObservations(customConfig, observations)).toEqual({
       kept: observations.slice(0, 5),
       ignored: [
         {
@@ -101,15 +84,11 @@ describe("limitObservations", () => {
   });
 
   it("ne conserve pas les observations excédentaires dans le résultat ignoré", () => {
-    const observations = Array.from(
-      { length: 11 },
-      (_, index) => makeObservation(index),
+    const observations = Array.from({ length: 11 }, (_, index) =>
+      makeObservation(index),
     );
 
-    const result = limitObservations(
-      testConfig,
-      observations,
-    );
+    const result = limitObservations(testConfig, observations);
 
     expect(result.ignored).toEqual([
       {
@@ -118,8 +97,6 @@ describe("limitObservations", () => {
       },
     ]);
 
-    expect(result.ignored[0]).not.toHaveProperty(
-      "observation",
-    );
+    expect(result.ignored[0]).not.toHaveProperty("observation");
   });
 });

@@ -23,12 +23,10 @@ export function updateStalledTurns(
    * Aucun changement dans le dossier :
    * on compte un tour bloqué supplémentaire.
    */
-  const nextStalledTurns =
-    currentStalledTurns + 1;
+  const nextStalledTurns = currentStalledTurns + 1;
 
   return {
     stalledTurns: nextStalledTurns,
-    reachedThreshold:
-      nextStalledTurns >= stalledTurnsThreshold,
+    reachedThreshold: nextStalledTurns >= stalledTurnsThreshold,
   };
 }

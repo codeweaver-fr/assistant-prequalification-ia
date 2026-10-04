@@ -1,8 +1,5 @@
 import type { BusinessConfig } from "../model/config";
-import type {
-  Observation,
-  PendingQuestion,
-} from "../model/types";
+import type { Observation, PendingQuestion } from "../model/types";
 
 import { matchesCues } from "./textMatching";
 
@@ -16,9 +13,7 @@ type CueValidationFailure = {
   shouldClarify: boolean;
 };
 
-export type CueValidationResult =
-  | CueValidationSuccess
-  | CueValidationFailure;
+export type CueValidationResult = CueValidationSuccess | CueValidationFailure;
 
 export function validateObservationCue(
   config: BusinessConfig,
@@ -54,8 +49,7 @@ export function validateObservationCue(
    * AU DÉBUT du message.
    */
   const wasPendingAtStart = pendingAtStart.some(
-    (pendingQuestion) =>
-      pendingQuestion.field === observation.field,
+    (pendingQuestion) => pendingQuestion.field === observation.field,
   );
 
   if (wasPendingAtStart) {
@@ -75,8 +69,7 @@ export function validateObservationCue(
    * → on ignore simplement.
    */
   const shouldClarify =
-    observation.intent === "provide" ||
-    observation.intent === "correct";
+    observation.intent === "provide" || observation.intent === "correct";
 
   return {
     success: false,

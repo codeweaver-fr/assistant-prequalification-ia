@@ -17,9 +17,7 @@ describe("validateObservationValueSupport", () => {
       sourceText: "budget de 15 000 euros",
     };
 
-    expect(
-      validateObservationValueSupport(observation),
-    ).toEqual({
+    expect(validateObservationValueSupport(observation)).toEqual({
       success: true,
     });
   });
@@ -36,9 +34,7 @@ describe("validateObservationValueSupport", () => {
       sourceText: "budget confortable",
     };
 
-    expect(
-      validateObservationValueSupport(observation),
-    ).toEqual({
+    expect(validateObservationValueSupport(observation)).toEqual({
       success: false,
       reason: "valeur_non_supportee_par_citation",
     });
@@ -57,9 +53,7 @@ describe("validateObservationValueSupport", () => {
       sourceText: "environ 80 invités",
     };
 
-    expect(
-      validateObservationValueSupport(observation),
-    ).toEqual({
+    expect(validateObservationValueSupport(observation)).toEqual({
       success: false,
       reason: "valeur_non_supportee_par_citation",
     });
@@ -77,9 +71,7 @@ describe("validateObservationValueSupport", () => {
       sourceText: "budget de 1.500 euros",
     };
 
-    expect(
-      validateObservationValueSupport(observation),
-    ).toEqual({
+    expect(validateObservationValueSupport(observation)).toEqual({
       success: false,
       reason: "valeur_non_supportee_par_citation",
     });
@@ -99,9 +91,7 @@ describe("validateObservationValueSupport", () => {
       sourceText: "le 14 juin",
     };
 
-    expect(
-      validateObservationValueSupport(observation),
-    ).toEqual({
+    expect(validateObservationValueSupport(observation)).toEqual({
       success: true,
     });
   });
@@ -120,9 +110,7 @@ describe("validateObservationValueSupport", () => {
       sourceText: "en juin",
     };
 
-    expect(
-      validateObservationValueSupport(observation),
-    ).toEqual({
+    expect(validateObservationValueSupport(observation)).toEqual({
       success: false,
       reason: "valeur_non_supportee_par_citation",
     });
@@ -136,9 +124,7 @@ describe("validateObservationValueSupport", () => {
       sourceText: "je ne sais pas",
     };
 
-    expect(
-      validateObservationValueSupport(observation),
-    ).toEqual({
+    expect(validateObservationValueSupport(observation)).toEqual({
       success: true,
     });
   });
@@ -151,9 +137,7 @@ describe("validateObservationValueSupport", () => {
       sourceText: "ne tenez pas compte",
     };
 
-    expect(
-      validateObservationValueSupport(observation),
-    ).toEqual({
+    expect(validateObservationValueSupport(observation)).toEqual({
       success: true,
     });
   });
@@ -169,9 +153,7 @@ describe("validateObservationValueSupport", () => {
       sourceText: "dans le centre de Toulon",
     };
 
-    expect(
-      validateObservationValueSupport(observation),
-    ).toEqual({
+    expect(validateObservationValueSupport(observation)).toEqual({
       success: true,
     });
   });
@@ -187,9 +169,7 @@ describe("validateObservationValueSupport", () => {
       sourceText: "une cérémonie civile",
     };
 
-    expect(
-      validateObservationValueSupport(observation),
-    ).toEqual({
+    expect(validateObservationValueSupport(observation)).toEqual({
       success: true,
     });
   });

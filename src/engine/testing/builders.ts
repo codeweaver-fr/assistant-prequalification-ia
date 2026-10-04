@@ -37,16 +37,12 @@ export const CURRENT_MESSAGE_ID = "m1";
 /* Provenance                                                         */
 /* ------------------------------------------------------------------ */
 
-export const before = (
-  sourceText: string
-): SourceRef => ({
+export const before = (sourceText: string): SourceRef => ({
   sourceText,
   sourceMessageId: PREVIOUS_MESSAGE_ID,
 });
 
-export const now = (
-  sourceText: string
-): SourceRef => ({
+export const now = (sourceText: string): SourceRef => ({
   sourceText,
   sourceMessageId: CURRENT_MESSAGE_ID,
 });
@@ -55,36 +51,26 @@ export const now = (
 /* NumberValue                                                        */
 /* ------------------------------------------------------------------ */
 
-export const exact = (
-  v: number
-): NumberValue => ({
+export const exact = (v: number): NumberValue => ({
   type: "number",
   kind: "exact",
   v,
 });
 
-export const approx = (
-  v: number
-): NumberValue => ({
+export const approx = (v: number): NumberValue => ({
   type: "number",
   kind: "approximate",
   v,
 });
 
-export const range = (
-  min: number,
-  max: number
-): NumberValue => ({
+export const range = (min: number, max: number): NumberValue => ({
   type: "number",
   kind: "range",
   min,
   max,
 });
 
-export const bound = (
-  direction: "min" | "max",
-  v: number
-): NumberValue => ({
+export const bound = (direction: "min" | "max", v: number): NumberValue => ({
   type: "number",
   kind: "bound",
   direction,
@@ -97,7 +83,7 @@ export const bound = (
 
 export const dateValue = (
   parts: DateParts,
-  relation: DateRelation = "at"
+  relation: DateRelation = "at",
 ): DateValue => ({
   type: "date",
   relation,
@@ -108,16 +94,12 @@ export const dateValue = (
 /* Text / Enum                                                        */
 /* ------------------------------------------------------------------ */
 
-export const textValue = (
-  text: string
-): TextValue => ({
+export const textValue = (text: string): TextValue => ({
   type: "text",
   text,
 });
 
-export const enumValue = (
-  key: string
-): EnumValue => ({
+export const enumValue = (key: string): EnumValue => ({
   type: "enum",
   key,
 });
@@ -130,33 +112,23 @@ export const absentField = (): Field => ({
   presence: "absent",
 });
 
-export const unknownField = (
-  source: SourceRef
-): Field => ({
+export const unknownField = (source: SourceRef): Field => ({
   presence: "unknown",
   ...source,
 });
 
-export const providedField = (
-  value: FieldValue,
-  source: SourceRef
-): Field => ({
+export const providedField = (value: FieldValue, source: SourceRef): Field => ({
   presence: "provided",
   value,
   ...source,
 });
 
-export const candidate = (
-  value: FieldValue,
-  source: SourceRef
-): Candidate => ({
+export const candidate = (value: FieldValue, source: SourceRef): Candidate => ({
   value,
   ...source,
 });
 
-export const conflictingField = (
-  candidates: ConflictCandidates
-): Field => ({
+export const conflictingField = (candidates: ConflictCandidates): Field => ({
   presence: "conflicting",
   candidates,
 });
@@ -168,7 +140,7 @@ export const conflictingField = (
 export const provideObs = (
   field: FieldKey,
   value: FieldValue,
-  sourceText: string
+  sourceText: string,
 ): Observation => ({
   field,
   intent: "provide",
@@ -179,7 +151,7 @@ export const provideObs = (
 export const correctObs = (
   field: FieldKey,
   value: FieldValue,
-  sourceText: string
+  sourceText: string,
 ): Observation => ({
   field,
   intent: "correct",
@@ -189,7 +161,7 @@ export const correctObs = (
 
 export const removeObs = (
   field: FieldKey,
-  sourceText: string
+  sourceText: string,
 ): Observation => ({
   field,
   intent: "remove",
@@ -199,7 +171,7 @@ export const removeObs = (
 
 export const unknownObs = (
   field: FieldKey,
-  sourceText: string
+  sourceText: string,
 ): Observation => ({
   field,
   intent: "unknown",
@@ -217,13 +189,11 @@ export const pending = (
   options: {
     askedAtMessageId?: string;
     attempts?: number;
-  } = {}
+  } = {},
 ): PendingQuestion => ({
   field,
   reason,
-  askedAtMessageId:
-    options.askedAtMessageId ??
-    PREVIOUS_MESSAGE_ID,
+  askedAtMessageId: options.askedAtMessageId ?? PREVIOUS_MESSAGE_ID,
   attempts: options.attempts ?? 0,
 });
 
@@ -252,22 +222,13 @@ export const testConfig: BusinessConfig = {
       required: true,
       acceptUnknown: true,
 
-      cues: [
-        "budget",
-        "€",
-        "euros",
-      ],
+      cues: ["budget", "€", "euros"],
 
       unit: "EUR",
 
       allowDecimals: false,
 
-      allowedKinds: [
-        "exact",
-        "approximate",
-        "range",
-        "bound",
-      ],
+      allowedKinds: ["exact", "approximate", "range", "bound"],
 
       questions: {
         missing: [
@@ -275,9 +236,7 @@ export const testConfig: BusinessConfig = {
           "Pouvez-vous me donner une fourchette approximative de budget ?",
         ],
 
-        clarify: [
-          "Pouvez-vous préciser votre budget ?",
-        ],
+        clarify: ["Pouvez-vous préciser votre budget ?"],
       },
     },
 
@@ -289,30 +248,18 @@ export const testConfig: BusinessConfig = {
       required: true,
       acceptUnknown: false,
 
-      cues: [
-        "invités",
-        "convives",
-        "personnes",
-      ],
+      cues: ["invités", "convives", "personnes"],
 
       unit: "personnes",
 
       allowDecimals: false,
 
-      allowedKinds: [
-        "exact",
-        "approximate",
-        "range",
-      ],
+      allowedKinds: ["exact", "approximate", "range"],
 
       questions: {
-        missing: [
-          "Combien d'invités prévoyez-vous ?",
-        ],
+        missing: ["Combien d'invités prévoyez-vous ?"],
 
-        clarify: [
-          "Pouvez-vous préciser le nombre d'invités ?",
-        ],
+        clarify: ["Pouvez-vous préciser le nombre d'invités ?"],
       },
     },
 
@@ -324,22 +271,14 @@ export const testConfig: BusinessConfig = {
       required: true,
       acceptUnknown: false,
 
-      cues: [
-        "date",
-        "quand",
-        "mois",
-      ],
+      cues: ["date", "quand", "mois"],
 
       requireYear: true,
 
       questions: {
-        missing: [
-          "Pour quelle date ?",
-        ],
+        missing: ["Pour quelle date ?"],
 
-        clarify: [
-          "Pouvez-vous préciser l'année ?",
-        ],
+        clarify: ["Pouvez-vous préciser l'année ?"],
       },
     },
 
@@ -351,20 +290,12 @@ export const testConfig: BusinessConfig = {
       required: false,
       acceptUnknown: true,
 
-      cues: [
-        "lieu",
-        "adresse",
-        "ville",
-      ],
+      cues: ["lieu", "adresse", "ville"],
 
       questions: {
-        missing: [
-          "Dans quelle ville se situe le projet ?",
-        ],
+        missing: ["Dans quelle ville se situe le projet ?"],
 
-        clarify: [
-          "Pouvez-vous préciser le lieu ?",
-        ],
+        clarify: ["Pouvez-vous préciser le lieu ?"],
       },
     },
 
@@ -376,11 +307,7 @@ export const testConfig: BusinessConfig = {
       required: false,
       acceptUnknown: true,
 
-      cues: [
-        "cérémonie",
-        "civil",
-        "religieux",
-      ],
+      cues: ["cérémonie", "civil", "religieux"],
 
       options: [
         {
@@ -398,13 +325,9 @@ export const testConfig: BusinessConfig = {
       ],
 
       questions: {
-        missing: [
-          "Quel type de cérémonie ?",
-        ],
+        missing: ["Quel type de cérémonie ?"],
 
-        clarify: [
-          "Pouvez-vous préciser le type de cérémonie ?",
-        ],
+        clarify: ["Pouvez-vous préciser le type de cérémonie ?"],
       },
     },
   ],
@@ -421,36 +344,24 @@ export const testConfig: BusinessConfig = {
 /* Dossier de test                                                    */
 /* ------------------------------------------------------------------ */
 
-type DossierOverrides =
-  Omit<Partial<Dossier>, "fields"> & {
-    /**
-     * Surcharges de champs.
-     *
-     * Tous les autres champs de testConfig
-     * restent "absent".
-     */
-    readonly fields?: Readonly<
-      Record<FieldKey, Field>
-    >;
-  };
+type DossierOverrides = Omit<Partial<Dossier>, "fields"> & {
+  /**
+   * Surcharges de champs.
+   *
+   * Tous les autres champs de testConfig
+   * restent "absent".
+   */
+  readonly fields?: Readonly<Record<FieldKey, Field>>;
+};
 
-export function makeDossier(
-  overrides: DossierOverrides = {}
-): Dossier {
-  const baseFields: Record<
-    FieldKey,
-    Field
-  > = {};
+export function makeDossier(overrides: DossierOverrides = {}): Dossier {
+  const baseFields: Record<FieldKey, Field> = {};
 
   for (const definition of testConfig.fields) {
-    baseFields[definition.key] =
-      absentField();
+    baseFields[definition.key] = absentField();
   }
 
-  const {
-    fields,
-    ...rest
-  } = overrides;
+  const { fields, ...rest } = overrides;
 
   return {
     id: "d-test",

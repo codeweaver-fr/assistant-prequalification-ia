@@ -14,12 +14,7 @@ describe("applyToAbsentField", () => {
       sourceText: "budget 12000",
     };
 
-    expect(
-      applyToAbsentField(
-        observation,
-        "message-1",
-      ),
-    ).toEqual({
+    expect(applyToAbsentField(observation, "message-1")).toEqual({
       status: "applied",
       reason: "nouvelle_valeur",
       field: {
@@ -39,12 +34,7 @@ describe("applyToAbsentField", () => {
       sourceText: "budget 15000",
     };
 
-    expect(
-      applyToAbsentField(
-        observation,
-        "message-2",
-      ),
-    ).toEqual({
+    expect(applyToAbsentField(observation, "message-2")).toEqual({
       status: "applied",
       reason: "correct_sans_valeur",
       field: {
@@ -64,12 +54,7 @@ describe("applyToAbsentField", () => {
       sourceText: "je ne sais pas",
     };
 
-    expect(
-      applyToAbsentField(
-        observation,
-        "message-3",
-      ),
-    ).toEqual({
+    expect(applyToAbsentField(observation, "message-3")).toEqual({
       status: "applied",
       reason: "inconnu_declare",
       field: {
@@ -88,12 +73,7 @@ describe("applyToAbsentField", () => {
       sourceText: "retirez le budget",
     };
 
-    expect(
-      applyToAbsentField(
-        observation,
-        "message-4",
-      ),
-    ).toEqual({
+    expect(applyToAbsentField(observation, "message-4")).toEqual({
       status: "ignored",
       reason: "garde_remove_non_provided",
       field: {

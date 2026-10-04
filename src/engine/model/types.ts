@@ -21,7 +21,11 @@ export type BusinessId = string;
 /** exact / approximate / range / bound ne concernent que les nombres. */
 export type NumberValue =
   | { readonly type: "number"; readonly kind: "exact"; readonly v: number }
-  | { readonly type: "number"; readonly kind: "approximate"; readonly v: number }
+  | {
+      readonly type: "number";
+      readonly kind: "approximate";
+      readonly v: number;
+    }
   | {
       readonly type: "number";
       readonly kind: "range";
@@ -77,11 +81,7 @@ export type EnumValue = {
   readonly key: string;
 };
 
-export type FieldValue =
-  | NumberValue
-  | DateValue
-  | TextValue
-  | EnumValue;
+export type FieldValue = NumberValue | DateValue | TextValue | EnumValue;
 
 export type ValueType = FieldValue["type"];
 
@@ -106,8 +106,7 @@ export type Candidate = SourceRef & {
 
 /** Un conflit contient 2 ou 3 candidats maximum. */
 export type ConflictCandidates =
-  | readonly [Candidate, Candidate]
-  | readonly [Candidate, Candidate, Candidate];
+  readonly [Candidate, Candidate] | readonly [Candidate, Candidate, Candidate];
 
 export type Field =
   | {
@@ -131,11 +130,7 @@ export type Presence = Field["presence"];
 /* Observation (sortie du LLM, avant validation)                       */
 /* ------------------------------------------------------------------ */
 
-export type Intent =
-  | "provide"
-  | "correct"
-  | "remove"
-  | "unknown";
+export type Intent = "provide" | "correct" | "remove" | "unknown";
 
 type ObservationBase = {
   readonly field: FieldKey;
@@ -183,8 +178,7 @@ export type AppliedReason =
   | "conflit_resolu_affine"
   | "correction_sur_conflit";
 
-export type ConflictReason =
-  | "valeur_incompatible";
+export type ConflictReason = "valeur_incompatible";
 
 export type IgnoredReason =
   | "doublon"
@@ -273,10 +267,7 @@ export type HistoryEntry = {
 /* Conversation                                                        */
 /* ------------------------------------------------------------------ */
 
-export type PendingReason =
-  | "missing"
-  | "clarify"
-  | "conflict";
+export type PendingReason = "missing" | "clarify" | "conflict";
 
 export type PendingQuestion = {
   readonly field: FieldKey;

@@ -1,9 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import type {
-  Field,
-  Observation,
-} from "../model/types";
+import type { Field, Observation } from "../model/types";
 import { exact } from "../testing/builders";
 
 import { applyObservationsToField } from "./applyObservationsToField";

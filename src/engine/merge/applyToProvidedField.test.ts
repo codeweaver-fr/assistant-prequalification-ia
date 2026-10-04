@@ -1,14 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import type {
-  Field,
-  Observation,
-} from "../model/types";
-import {
-  approx,
-  exact,
-  range,
-} from "../testing/builders";
+import type { Field, Observation } from "../model/types";
+import { approx, exact, range } from "../testing/builders";
 
 import { applyToProvidedField } from "./applyToProvidedField";
 
@@ -29,11 +22,7 @@ describe("applyToProvidedField", () => {
     };
 
     expect(
-      applyToProvidedField(
-        currentField,
-        observation,
-        "message-2",
-      ),
+      applyToProvidedField(currentField, observation, "message-2"),
     ).toEqual({
       status: "ignored",
       reason: "doublon",
@@ -50,11 +39,7 @@ describe("applyToProvidedField", () => {
     };
 
     expect(
-      applyToProvidedField(
-        currentField,
-        observation,
-        "message-2",
-      ),
+      applyToProvidedField(currentField, observation, "message-2"),
     ).toEqual({
       status: "applied",
       reason: "affinement",
@@ -83,11 +68,7 @@ describe("applyToProvidedField", () => {
     };
 
     expect(
-      applyToProvidedField(
-        preciseField,
-        observation,
-        "message-2",
-      ),
+      applyToProvidedField(preciseField, observation, "message-2"),
     ).toEqual({
       status: "ignored",
       reason: "moins_precis",
@@ -110,13 +91,7 @@ describe("applyToProvidedField", () => {
       sourceText: "budget 15000",
     };
 
-    expect(
-      applyToProvidedField(
-        oldField,
-        observation,
-        "message-2",
-      ),
-    ).toEqual({
+    expect(applyToProvidedField(oldField, observation, "message-2")).toEqual({
       status: "conflict",
       reason: "valeur_incompatible",
       field: {
@@ -146,11 +121,7 @@ describe("applyToProvidedField", () => {
     };
 
     expect(
-      applyToProvidedField(
-        currentField,
-        observation,
-        "message-2",
-      ),
+      applyToProvidedField(currentField, observation, "message-2"),
     ).toEqual({
       status: "applied",
       reason: "correction",
@@ -172,11 +143,7 @@ describe("applyToProvidedField", () => {
     };
 
     expect(
-      applyToProvidedField(
-        currentField,
-        observation,
-        "message-2",
-      ),
+      applyToProvidedField(currentField, observation, "message-2"),
     ).toEqual({
       status: "applied",
       reason: "retrait",
@@ -195,11 +162,7 @@ describe("applyToProvidedField", () => {
     };
 
     expect(
-      applyToProvidedField(
-        currentField,
-        observation,
-        "message-2",
-      ),
+      applyToProvidedField(currentField, observation, "message-2"),
     ).toEqual({
       status: "applied",
       reason: "devient_inconnu",
@@ -220,11 +183,7 @@ describe("applyToProvidedField", () => {
     };
 
     expect(
-      applyToProvidedField(
-        currentField,
-        observation,
-        "message-2",
-      ),
+      applyToProvidedField(currentField, observation, "message-2"),
     ).toEqual({
       status: "applied",
       reason: "affinement",

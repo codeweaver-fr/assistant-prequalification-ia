@@ -5,21 +5,13 @@ import { matchesCues, positionOf } from "./textMatching";
 describe("matchesCues", () => {
   it("détecte un mot indice sans tenir compte de la casse", () => {
     expect(
-      matchesCues("Mon BUDGET est de 15 000 euros", [
-        "budget",
-        "€",
-        "euros",
-      ]),
+      matchesCues("Mon BUDGET est de 15 000 euros", ["budget", "€", "euros"]),
     ).toBe(true);
   });
 
   it("détecte un symbole utilisé comme indice", () => {
     expect(
-      matchesCues("Je peux mettre 15 000 €", [
-        "budget",
-        "€",
-        "euros",
-      ]),
+      matchesCues("Je peux mettre 15 000 €", ["budget", "€", "euros"]),
     ).toBe(true);
   });
 
@@ -33,27 +25,19 @@ describe("matchesCues", () => {
   });
 
   it("retourne false lorsqu'aucun indice n'est présent", () => {
-    expect(
-      matchesCues("Je ne sais pas encore", [
-        "budget",
-        "€",
-        "euros",
-      ]),
-    ).toBe(false);
+    expect(matchesCues("Je ne sais pas encore", ["budget", "€", "euros"])).toBe(
+      false,
+    );
   });
 
   it("ne confond pas un mot avec une partie d'un autre mot", () => {
-    expect(
-      matchesCues("Le milieu est calme", ["lieu"]),
-    ).toBe(false);
+    expect(matchesCues("Le milieu est calme", ["lieu"])).toBe(false);
   });
 
   it("profite de la normalisation des apostrophes et espaces", () => {
-    expect(
-      matchesCues("J’aimerais   parler du budget", [
-        "j'aimerais",
-      ]),
-    ).toBe(true);
+    expect(matchesCues("J’aimerais   parler du budget", ["j'aimerais"])).toBe(
+      true,
+    );
   });
 });
 
@@ -68,30 +52,15 @@ describe("positionOf", () => {
   });
 
   it("respecte la normalisation de la casse", () => {
-    expect(
-      positionOf(
-        "Mon BUDGET est de 15 000 euros",
-        "budget",
-      ),
-    ).toBe(4);
+    expect(positionOf("Mon BUDGET est de 15 000 euros", "budget")).toBe(4);
   });
 
   it("respecte les apostrophes typographiques", () => {
-    expect(
-      positionOf(
-        "J’aimerais changer la date",
-        "j'aimerais",
-      ),
-    ).toBe(0);
+    expect(positionOf("J’aimerais changer la date", "j'aimerais")).toBe(0);
   });
 
   it("retourne -1 si la citation n'existe pas", () => {
-    expect(
-      positionOf(
-        "Je veux me marier en juin",
-        "15 000 euros",
-      ),
-    ).toBe(-1);
+    expect(positionOf("Je veux me marier en juin", "15 000 euros")).toBe(-1);
   });
 
   it("peut chercher une occurrence suivante avec fromIndex", () => {

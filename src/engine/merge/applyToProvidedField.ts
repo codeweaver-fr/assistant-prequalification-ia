@@ -1,42 +1,24 @@
-import {
-  compareDateValues,
-} from "../compatibility/dateCompatibility";
-import {
-  compareNumberValues,
-} from "../compatibility/numberCompatibility";
+import { compareDateValues } from "../compatibility/dateCompatibility";
+import { compareNumberValues } from "../compatibility/numberCompatibility";
 import {
   compareEnumValues,
   compareTextValues,
 } from "../compatibility/textEnumCompatibility";
 
-import type {
-  Field,
-  FieldValue,
-  MessageId,
-  Observation,
-} from "../model/types";
+import type { Field, FieldValue, MessageId, Observation } from "../model/types";
 
 type ValueComparison =
-  | "equal"
-  | "more_precise"
-  | "less_precise"
-  | "incompatible";
+  "equal" | "more_precise" | "less_precise" | "incompatible";
 
 type ApplyToProvidedFieldResult =
   | {
       status: "applied";
-      reason:
-        | "affinement"
-        | "correction"
-        | "retrait"
-        | "devient_inconnu";
+      reason: "affinement" | "correction" | "retrait" | "devient_inconnu";
       field: Field;
     }
   | {
       status: "ignored";
-      reason:
-        | "doublon"
-        | "moins_precis";
+      reason: "doublon" | "moins_precis";
       field: Field;
     }
   | {
@@ -60,41 +42,28 @@ function compareValues(
         return "incompatible";
       }
 
-      return compareNumberValues(
-        previous,
-        incoming,
-        tolerance,
-      );
+      return compareNumberValues(previous, incoming, tolerance);
 
     case "date":
       if (incoming.type !== "date") {
         return "incompatible";
       }
 
-      return compareDateValues(
-        previous,
-        incoming,
-      );
+      return compareDateValues(previous, incoming);
 
     case "text":
       if (incoming.type !== "text") {
         return "incompatible";
       }
 
-      return compareTextValues(
-        previous,
-        incoming,
-      );
+      return compareTextValues(previous, incoming);
 
     case "enum":
       if (incoming.type !== "enum") {
         return "incompatible";
       }
 
-      return compareEnumValues(
-        previous,
-        incoming,
-      );
+      return compareEnumValues(previous, incoming);
   }
 }
 
@@ -105,9 +74,7 @@ export function applyToProvidedField(
   tolerance = 0.1,
 ): ApplyToProvidedFieldResult {
   if (currentField.presence !== "provided") {
-    throw new Error(
-      "applyToProvidedField nécessite un champ provided",
-    );
+    throw new Error("applyToProvidedField nécessite un champ provided");
   }
 
   switch (observation.intent) {
@@ -187,8 +154,7 @@ export function applyToProvidedField(
                 {
                   value: currentField.value,
                   sourceText: currentField.sourceText,
-                  sourceMessageId:
-                    currentField.sourceMessageId,
+                  sourceMessageId: currentField.sourceMessageId,
                 },
                 {
                   value: observation.proposedValue,

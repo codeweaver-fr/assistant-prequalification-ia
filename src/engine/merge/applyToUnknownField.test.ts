@@ -1,9 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import type {
-  Field,
-  Observation,
-} from "../model/types";
+import type { Field, Observation } from "../model/types";
 import { exact } from "../testing/builders";
 
 import { applyToUnknownField } from "./applyToUnknownField";
@@ -23,22 +20,18 @@ describe("applyToUnknownField", () => {
       sourceText: "budget 12000",
     };
 
-    expect(
-      applyToUnknownField(
-        currentField,
-        observation,
-        "message-2",
-      ),
-    ).toEqual({
-      status: "applied",
-      reason: "sortie_de_unknown",
-      field: {
-        presence: "provided",
-        value: exact(12000),
-        sourceText: "budget 12000",
-        sourceMessageId: "message-2",
+    expect(applyToUnknownField(currentField, observation, "message-2")).toEqual(
+      {
+        status: "applied",
+        reason: "sortie_de_unknown",
+        field: {
+          presence: "provided",
+          value: exact(12000),
+          sourceText: "budget 12000",
+          sourceMessageId: "message-2",
+        },
       },
-    });
+    );
   });
 
   it("correct remplace également unknown par une valeur fournie", () => {
@@ -49,22 +42,18 @@ describe("applyToUnknownField", () => {
       sourceText: "budget 15000",
     };
 
-    expect(
-      applyToUnknownField(
-        currentField,
-        observation,
-        "message-3",
-      ),
-    ).toEqual({
-      status: "applied",
-      reason: "sortie_de_unknown",
-      field: {
-        presence: "provided",
-        value: exact(15000),
-        sourceText: "budget 15000",
-        sourceMessageId: "message-3",
+    expect(applyToUnknownField(currentField, observation, "message-3")).toEqual(
+      {
+        status: "applied",
+        reason: "sortie_de_unknown",
+        field: {
+          presence: "provided",
+          value: exact(15000),
+          sourceText: "budget 15000",
+          sourceMessageId: "message-3",
+        },
       },
-    });
+    );
   });
 
   it("unknown sur un champ déjà unknown ne change rien", () => {
@@ -75,17 +64,13 @@ describe("applyToUnknownField", () => {
       sourceText: "je ne sais toujours pas",
     };
 
-    expect(
-      applyToUnknownField(
-        currentField,
-        observation,
-        "message-4",
-      ),
-    ).toEqual({
-      status: "ignored",
-      reason: "deja_unknown",
-      field: currentField,
-    });
+    expect(applyToUnknownField(currentField, observation, "message-4")).toEqual(
+      {
+        status: "ignored",
+        reason: "deja_unknown",
+        field: currentField,
+      },
+    );
   });
 
   it("remove sur unknown ne supprime pas le champ", () => {
@@ -96,16 +81,12 @@ describe("applyToUnknownField", () => {
       sourceText: "retirez le budget",
     };
 
-    expect(
-      applyToUnknownField(
-        currentField,
-        observation,
-        "message-5",
-      ),
-    ).toEqual({
-      status: "ignored",
-      reason: "garde_remove_non_provided",
-      field: currentField,
-    });
+    expect(applyToUnknownField(currentField, observation, "message-5")).toEqual(
+      {
+        status: "ignored",
+        reason: "garde_remove_non_provided",
+        field: currentField,
+      },
+    );
   });
 });

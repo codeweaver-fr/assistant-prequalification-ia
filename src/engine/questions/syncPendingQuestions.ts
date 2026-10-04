@@ -46,8 +46,7 @@ export function syncPendingQuestions({
     if (field?.presence === "conflicting") {
       const existing = pendingQuestions.find(
         (pending) =>
-          pending.field === fieldDef.key &&
-          pending.reason === "conflict",
+          pending.field === fieldDef.key && pending.reason === "conflict",
       );
 
       if (existing) {
@@ -73,8 +72,7 @@ export function syncPendingQuestions({
     if (clarifyFields.includes(fieldDef.key)) {
       const existing = pendingQuestions.find(
         (pending) =>
-          pending.field === fieldDef.key &&
-          pending.reason === "clarify",
+          pending.field === fieldDef.key && pending.reason === "clarify",
       );
 
       if (existing) {
@@ -98,14 +96,10 @@ export function syncPendingQuestions({
      * un champ obligatoire encore absent
      * génère une question missing.
      */
-    if (
-      fieldDef.required &&
-      field?.presence === "absent"
-    ) {
+    if (fieldDef.required && field?.presence === "absent") {
       const existing = pendingQuestions.find(
         (pending) =>
-          pending.field === fieldDef.key &&
-          pending.reason === "missing",
+          pending.field === fieldDef.key && pending.reason === "missing",
       );
 
       if (existing) {

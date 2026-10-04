@@ -28,9 +28,7 @@ type IgnoredObservationResult = {
 };
 
 export type ValidateObservationResult =
-  | ValidObservationResult
-  | RejectedObservationResult
-  | IgnoredObservationResult;
+  ValidObservationResult | RejectedObservationResult | IgnoredObservationResult;
 
 export function validateObservation(
   config: BusinessConfig,
@@ -41,10 +39,7 @@ export function validateObservation(
   /*
    * A1 — champ connu + forme valide
    */
-  const shapeResult = validateObservationShape(
-    config,
-    input,
-  );
+  const shapeResult = validateObservationShape(config, input);
 
   if (!shapeResult.success) {
     return {
@@ -59,10 +54,7 @@ export function validateObservation(
    * A2 — sourceText réellement présent
    * dans le message du prospect.
    */
-  const citationResult = validateObservationCitation(
-    message,
-    observation,
-  );
+  const citationResult = validateObservationCitation(message, observation);
 
   if (!citationResult.success) {
     return {
@@ -75,8 +67,7 @@ export function validateObservation(
    * A3 — pour number/date, la valeur proposée
    * doit réellement être supportée par sourceText.
    */
-  const valueSupportResult =
-    validateObservationValueSupport(observation);
+  const valueSupportResult = validateObservationValueSupport(observation);
 
   if (!valueSupportResult.success) {
     return {
@@ -89,10 +80,7 @@ export function validateObservation(
    * A4 — une EnumValue doit utiliser une clé
    * autorisée par la configuration métier.
    */
-  const enumResult = validateObservationEnum(
-    config,
-    observation,
-  );
+  const enumResult = validateObservationEnum(config, observation);
 
   if (!enumResult.success) {
     return {
@@ -112,11 +100,7 @@ export function validateObservation(
    * provide/correct hors contexte demandera
    * ensuite une clarification.
    */
-  const cueResult = validateObservationCue(
-    config,
-    observation,
-    pendingAtStart,
-  );
+  const cueResult = validateObservationCue(config, observation, pendingAtStart);
 
   if (!cueResult.success) {
     return {

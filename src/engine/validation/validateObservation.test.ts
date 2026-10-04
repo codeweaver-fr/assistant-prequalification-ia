@@ -1,9 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import {
-  pending,
-  testConfig,
-} from "../testing/builders";
+import { pending, testConfig } from "../testing/builders";
 
 import { validateObservation } from "./validateObservation";
 
@@ -180,12 +177,9 @@ describe("validateObservation", () => {
     };
 
     expect(
-      validateObservation(
-        testConfig,
-        "12000",
-        input,
-        [pending("budget", "missing")],
-      ),
+      validateObservation(testConfig, "12000", input, [
+        pending("budget", "missing"),
+      ]),
     ).toEqual({
       status: "valid",
       observation: input,

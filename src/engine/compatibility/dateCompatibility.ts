@@ -1,14 +1,9 @@
 import type { DateValue } from "../model/types";
 
 export type DateComparison =
-  | "equal"
-  | "more_precise"
-  | "less_precise"
-  | "incompatible";
+  "equal" | "more_precise" | "less_precise" | "incompatible";
 
-function relationPrecision(
-  relation: DateValue["relation"],
-): number {
+function relationPrecision(relation: DateValue["relation"]): number {
   switch (relation) {
     case "at":
       return 3;
@@ -34,16 +29,10 @@ export function datePrecision(value: DateValue): number {
     (value.month !== null ? 2 : 0) +
     (value.day !== null ? 4 : 0);
 
-  return (
-    componentPrecision * 10 +
-    relationPrecision(value.relation)
-  );
+  return componentPrecision * 10 + relationPrecision(value.relation);
 }
 
-function sameComponents(
-  left: DateValue,
-  right: DateValue,
-): boolean {
+function sameComponents(left: DateValue, right: DateValue): boolean {
   return (
     left.year === right.year &&
     left.month === right.month &&
@@ -51,15 +40,8 @@ function sameComponents(
   );
 }
 
-function componentsConflict(
-  left: DateValue,
-  right: DateValue,
-): boolean {
-  if (
-    left.year !== null &&
-    right.year !== null &&
-    left.year !== right.year
-  ) {
+function componentsConflict(left: DateValue, right: DateValue): boolean {
+  if (left.year !== null && right.year !== null && left.year !== right.year) {
     return true;
   }
 
@@ -71,11 +53,7 @@ function componentsConflict(
     return true;
   }
 
-  if (
-    left.day !== null &&
-    right.day !== null &&
-    left.day !== right.day
-  ) {
+  if (left.day !== null && right.day !== null && left.day !== right.day) {
     return true;
   }
 
@@ -98,11 +76,7 @@ function compareKnownDateParts(
    * comme s'ils appartenaient à la même année.
    */
 
-  if (
-    left.year !== null &&
-    right.year !== null &&
-    left.year !== right.year
-  ) {
+  if (left.year !== null && right.year !== null && left.year !== right.year) {
     return left.year < right.year ? -1 : 1;
   }
 
@@ -114,11 +88,7 @@ function compareKnownDateParts(
     return left.month < right.month ? -1 : 1;
   }
 
-  if (
-    left.day !== null &&
-    right.day !== null &&
-    left.day !== right.day
-  ) {
+  if (left.day !== null && right.day !== null && left.day !== right.day) {
     return left.day < right.day ? -1 : 1;
   }
 
@@ -127,11 +97,7 @@ function compareKnownDateParts(
     left.month === null &&
     right.month === null
   ) {
-    if (
-      left.year !== null &&
-      right.year !== null &&
-      left.year === right.year
-    ) {
+    if (left.year !== null && right.year !== null && left.year === right.year) {
       return 0;
     }
 
@@ -141,10 +107,7 @@ function compareKnownDateParts(
   return 0;
 }
 
-function respectsRelation(
-  boundary: DateValue,
-  value: DateValue,
-): boolean {
+function respectsRelation(boundary: DateValue, value: DateValue): boolean {
   const comparison = compareKnownDateParts(value, boundary);
 
   if (comparison === null) {
@@ -204,14 +167,8 @@ export function compareDateValues(
    * Une contrainte "avant/après" peut être affinée
    * par une vraie date qui respecte cette contrainte.
    */
-  if (
-    previous.relation === "before" ||
-    previous.relation === "after"
-  ) {
-    if (
-      incoming.relation === "at" ||
-      incoming.relation === "around"
-    ) {
+  if (previous.relation === "before" || previous.relation === "after") {
+    if (incoming.relation === "at" || incoming.relation === "around") {
       return respectsRelation(previous, incoming)
         ? "more_precise"
         : "incompatible";
@@ -227,14 +184,8 @@ export function compareDateValues(
    * une date précise suivie d'une borne qui la contient
    * constitue une information moins précise.
    */
-  if (
-    incoming.relation === "before" ||
-    incoming.relation === "after"
-  ) {
-    if (
-      previous.relation === "at" ||
-      previous.relation === "around"
-    ) {
+  if (incoming.relation === "before" || incoming.relation === "after") {
+    if (previous.relation === "at" || previous.relation === "around") {
       return respectsRelation(incoming, previous)
         ? "less_precise"
         : "incompatible";
@@ -260,10 +211,8 @@ export function compareDateValues(
    */
   const relationsCompatible =
     previous.relation === incoming.relation ||
-    (previous.relation === "around" &&
-      incoming.relation === "at") ||
-    (previous.relation === "at" &&
-      incoming.relation === "around");
+    (previous.relation === "around" && incoming.relation === "at") ||
+    (previous.relation === "at" && incoming.relation === "around");
 
   if (!relationsCompatible) {
     return "incompatible";

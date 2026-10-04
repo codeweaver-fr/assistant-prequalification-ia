@@ -1,9 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import type {
-  Field,
-  Observation,
-} from "../model/types";
+import type { Field, Observation } from "../model/types";
 import { exact } from "../testing/builders";
 
 import { applyObservationToField } from "./applyObservationToField";
@@ -22,11 +19,7 @@ describe("applyObservationToField", () => {
     };
 
     expect(
-      applyObservationToField(
-        currentField,
-        observation,
-        "message-1",
-      ),
+      applyObservationToField(currentField, observation, "message-1"),
     ).toEqual({
       status: "applied",
       reason: "nouvelle_valeur",
@@ -54,11 +47,7 @@ describe("applyObservationToField", () => {
     };
 
     expect(
-      applyObservationToField(
-        currentField,
-        observation,
-        "message-2",
-      ),
+      applyObservationToField(currentField, observation, "message-2"),
     ).toEqual({
       status: "applied",
       reason: "sortie_de_unknown",
@@ -87,11 +76,7 @@ describe("applyObservationToField", () => {
     };
 
     expect(
-      applyObservationToField(
-        currentField,
-        observation,
-        "message-2",
-      ),
+      applyObservationToField(currentField, observation, "message-2"),
     ).toEqual({
       status: "ignored",
       reason: "doublon",
@@ -124,15 +109,10 @@ describe("applyObservationToField", () => {
     };
 
     expect(
-      applyObservationToField(
-        currentField,
-        observation,
-        "message-3",
-        {
-          conflictPendingAtStart: true,
-          citationNamesField: false,
-        },
-      ),
+      applyObservationToField(currentField, observation, "message-3", {
+        conflictPendingAtStart: true,
+        citationNamesField: false,
+      }),
     ).toEqual({
       status: "applied",
       reason: "conflit_resolu",
@@ -165,14 +145,9 @@ describe("applyObservationToField", () => {
     };
 
     expect(
-      applyObservationToField(
-        currentField,
-        observation,
-        "message-2",
-        {
-          tolerance: 0.25,
-        },
-      ),
+      applyObservationToField(currentField, observation, "message-2", {
+        tolerance: 0.25,
+      }),
     ).toEqual({
       status: "applied",
       reason: "affinement",

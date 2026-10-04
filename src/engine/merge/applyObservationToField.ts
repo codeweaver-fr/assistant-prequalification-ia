@@ -1,8 +1,4 @@
-import type {
-  Field,
-  MessageId,
-  Observation,
-} from "../model/types";
+import type { Field, MessageId, Observation } from "../model/types";
 
 import { applyToAbsentField } from "./applyToAbsentField";
 import { applyToConflictingField } from "./applyToConflictingField";
@@ -23,17 +19,10 @@ export function applyObservationToField(
 ) {
   switch (currentField.presence) {
     case "absent":
-      return applyToAbsentField(
-        observation,
-        messageId,
-      );
+      return applyToAbsentField(observation, messageId);
 
     case "unknown":
-      return applyToUnknownField(
-        currentField,
-        observation,
-        messageId,
-      );
+      return applyToUnknownField(currentField, observation, messageId);
 
     case "provided":
       return applyToProvidedField(
@@ -44,16 +33,9 @@ export function applyObservationToField(
       );
 
     case "conflicting":
-      return applyToConflictingField(
-        currentField,
-        observation,
-        messageId,
-        {
-          conflictPendingAtStart:
-            options.conflictPendingAtStart ?? false,
-          citationNamesField:
-            options.citationNamesField ?? false,
-        },
-      );
+      return applyToConflictingField(currentField, observation, messageId, {
+        conflictPendingAtStart: options.conflictPendingAtStart ?? false,
+        citationNamesField: options.citationNamesField ?? false,
+      });
   }
 }

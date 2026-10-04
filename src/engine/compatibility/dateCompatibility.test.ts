@@ -2,10 +2,7 @@ import { describe, expect, test } from "vitest";
 
 import { dateValue } from "../testing/builders";
 
-import {
-  compareDateValues,
-  datePrecision,
-} from "./dateCompatibility";
+import { compareDateValues, datePrecision } from "./dateCompatibility";
 
 describe("datePrecision", () => {
   test("une année seule est moins précise qu'un mois", () => {
@@ -75,9 +72,7 @@ describe("datePrecision", () => {
       day: 14,
     } as const;
 
-    expect(
-      datePrecision(dateValue(parts, "at")),
-    ).toBeGreaterThan(
+    expect(datePrecision(dateValue(parts, "at"))).toBeGreaterThan(
       datePrecision(dateValue(parts, "around")),
     );
   });
@@ -89,15 +84,11 @@ describe("datePrecision", () => {
       day: null,
     } as const;
 
-    expect(
-      datePrecision(dateValue(parts, "around")),
-    ).toBeGreaterThan(
+    expect(datePrecision(dateValue(parts, "around"))).toBeGreaterThan(
       datePrecision(dateValue(parts, "before")),
     );
 
-    expect(
-      datePrecision(dateValue(parts, "around")),
-    ).toBeGreaterThan(
+    expect(datePrecision(dateValue(parts, "around"))).toBeGreaterThan(
       datePrecision(dateValue(parts, "after")),
     );
   });

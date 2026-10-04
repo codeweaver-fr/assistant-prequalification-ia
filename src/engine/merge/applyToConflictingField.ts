@@ -1,26 +1,14 @@
-import {
-  compareDateValues,
-} from "../compatibility/dateCompatibility";
-import {
-  compareNumberValues,
-} from "../compatibility/numberCompatibility";
+import { compareDateValues } from "../compatibility/dateCompatibility";
+import { compareNumberValues } from "../compatibility/numberCompatibility";
 import {
   compareEnumValues,
   compareTextValues,
 } from "../compatibility/textEnumCompatibility";
 
-import type {
-  Field,
-  FieldValue,
-  MessageId,
-  Observation,
-} from "../model/types";
+import type { Field, FieldValue, MessageId, Observation } from "../model/types";
 
 type ValueComparison =
-  | "equal"
-  | "more_precise"
-  | "less_precise"
-  | "incompatible";
+  "equal" | "more_precise" | "less_precise" | "incompatible";
 
 type ConflictContext = {
   conflictPendingAtStart: boolean;
@@ -40,9 +28,7 @@ type ApplyToConflictingFieldResult =
     }
   | {
       status: "ignored";
-      reason:
-        | "doublon"
-        | "trop_de_candidats";
+      reason: "doublon" | "trop_de_candidats";
       field: Field;
     }
   | {
@@ -65,40 +51,28 @@ function compareValues(
         return "incompatible";
       }
 
-      return compareNumberValues(
-        previous,
-        incoming,
-      );
+      return compareNumberValues(previous, incoming);
 
     case "date":
       if (incoming.type !== "date") {
         return "incompatible";
       }
 
-      return compareDateValues(
-        previous,
-        incoming,
-      );
+      return compareDateValues(previous, incoming);
 
     case "text":
       if (incoming.type !== "text") {
         return "incompatible";
       }
 
-      return compareTextValues(
-        previous,
-        incoming,
-      );
+      return compareTextValues(previous, incoming);
 
     case "enum":
       if (incoming.type !== "enum") {
         return "incompatible";
       }
 
-      return compareEnumValues(
-        previous,
-        incoming,
-      );
+      return compareEnumValues(previous, incoming);
   }
 }
 
@@ -109,9 +83,7 @@ export function applyToConflictingField(
   context: ConflictContext,
 ): ApplyToConflictingFieldResult {
   if (currentField.presence !== "conflicting") {
-    throw new Error(
-      "applyToConflictingField nécessite un champ conflicting",
-    );
+    throw new Error("applyToConflictingField nécessite un champ conflicting");
   }
 
   switch (observation.intent) {
@@ -137,10 +109,7 @@ export function applyToConflictingField(
       };
 
     case "unknown":
-      if (
-        context.conflictPendingAtStart ||
-        context.citationNamesField
-      ) {
+      if (context.conflictPendingAtStart || context.citationNamesField) {
         return {
           status: "applied",
           reason: "devient_inconnu",
@@ -159,14 +128,10 @@ export function applyToConflictingField(
       };
 
     case "provide": {
-      const comparisons =
-        currentField.candidates.map((candidate) => ({
-          candidate,
-          comparison: compareValues(
-            candidate.value,
-            observation.proposedValue,
-          ),
-        }));
+      const comparisons = currentField.candidates.map((candidate) => ({
+        candidate,
+        comparison: compareValues(candidate.value, observation.proposedValue),
+      }));
 
       const exactMatches = comparisons.filter(
         ({ comparison }) => comparison === "equal",
@@ -193,8 +158,7 @@ export function applyToConflictingField(
 
         const compatibleMatches = comparisons.filter(
           ({ comparison }) =>
-            comparison === "more_precise" ||
-            comparison === "less_precise",
+            comparison === "more_precise" || comparison === "less_precise",
         );
 
         if (compatibleMatches.length === 1) {
@@ -262,8 +226,7 @@ export function applyToConflictingField(
        * un tuple de trois éléments valide pour
        * ConflictCandidates.
        */
-      const [firstCandidate, secondCandidate] =
-        currentField.candidates;
+      const [firstCandidate, secondCandidate] = currentField.candidates;
 
       const newCandidate = {
         value: observation.proposedValue,
@@ -276,11 +239,7 @@ export function applyToConflictingField(
         reason: "candidat_ajoute",
         field: {
           presence: "conflicting",
-          candidates: [
-            firstCandidate,
-            secondCandidate,
-            newCandidate,
-          ],
+          candidates: [firstCandidate, secondCandidate, newCandidate],
         },
       };
     }

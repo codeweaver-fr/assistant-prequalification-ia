@@ -1,10 +1,7 @@
 import type { NumberValue } from "../model/types";
 
 export type NumberComparison =
-  | "equal"
-  | "more_precise"
-  | "less_precise"
-  | "incompatible";
+  "equal" | "more_precise" | "less_precise" | "incompatible";
 
 export function numberPrecision(value: NumberValue): number {
   switch (value.kind) {
@@ -50,18 +47,13 @@ function compareFromExact(
 ): NumberComparison {
   switch (incoming.kind) {
     case "exact":
-      return incoming.v === previous.v
-        ? "equal"
-        : "incompatible";
+      return incoming.v === previous.v ? "equal" : "incompatible";
 
     case "approximate":
-      return incoming.v === previous.v
-        ? "less_precise"
-        : "incompatible";
+      return incoming.v === previous.v ? "less_precise" : "incompatible";
 
     case "range":
-      return previous.v >= incoming.min &&
-        previous.v <= incoming.max
+      return previous.v >= incoming.min && previous.v <= incoming.max
         ? "less_precise"
         : "incompatible";
 
@@ -84,18 +76,13 @@ function compareFromApproximate(
 
   switch (incoming.kind) {
     case "exact":
-      return scalarIsCompatible(incoming.v)
-        ? "more_precise"
-        : "incompatible";
+      return scalarIsCompatible(incoming.v) ? "more_precise" : "incompatible";
 
     case "approximate":
-      return scalarIsCompatible(incoming.v)
-        ? "equal"
-        : "incompatible";
+      return scalarIsCompatible(incoming.v) ? "equal" : "incompatible";
 
     case "range":
-      return previous.v >= incoming.min &&
-        previous.v <= incoming.max
+      return previous.v >= incoming.min && previous.v <= incoming.max
         ? "less_precise"
         : "incompatible";
 
@@ -112,37 +99,32 @@ function compareFromRange(
 ): NumberComparison {
   switch (incoming.kind) {
     case "exact":
-      return incoming.v >= previous.min &&
-        incoming.v <= previous.max
+      return incoming.v >= previous.min && incoming.v <= previous.max
         ? "more_precise"
         : "incompatible";
 
     case "approximate":
-      return incoming.v >= previous.min &&
-        incoming.v <= previous.max
+      return incoming.v >= previous.min && incoming.v <= previous.max
         ? "more_precise"
         : "incompatible";
 
     case "range": {
       const sameRange =
-        incoming.min === previous.min &&
-        incoming.max === previous.max;
+        incoming.min === previous.min && incoming.max === previous.max;
 
       if (sameRange) {
         return "equal";
       }
 
       const isSubset =
-        incoming.min >= previous.min &&
-        incoming.max <= previous.max;
+        incoming.min >= previous.min && incoming.max <= previous.max;
 
       if (isSubset) {
         return "more_precise";
       }
 
       const isSuperset =
-        incoming.min <= previous.min &&
-        incoming.max >= previous.max;
+        incoming.min <= previous.min && incoming.max >= previous.max;
 
       if (isSuperset) {
         return "less_precise";
@@ -196,11 +178,7 @@ export function compareNumberValues(
       return compareFromExact(previous, incoming);
 
     case "approximate":
-      return compareFromApproximate(
-        previous,
-        incoming,
-        tolerance,
-      );
+      return compareFromApproximate(previous, incoming, tolerance);
 
     case "range":
       return compareFromRange(previous, incoming);

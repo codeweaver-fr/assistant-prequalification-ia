@@ -1,8 +1,4 @@
-import type {
-  Field,
-  MessageId,
-  Observation,
-} from "../model/types";
+import type { Field, MessageId, Observation } from "../model/types";
 
 type ApplyToUnknownFieldResult =
   | {
@@ -12,9 +8,7 @@ type ApplyToUnknownFieldResult =
     }
   | {
       status: "ignored";
-      reason:
-        | "deja_unknown"
-        | "garde_remove_non_provided";
+      reason: "deja_unknown" | "garde_remove_non_provided";
       field: Field;
     };
 

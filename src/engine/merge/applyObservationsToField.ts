@@ -1,8 +1,4 @@
-import type {
-  Field,
-  MessageId,
-  Observation,
-} from "../model/types";
+import type { Field, MessageId, Observation } from "../model/types";
 
 import { applyObservationToField } from "./applyObservationToField";
 import { orderObservations } from "./orderObservations";
@@ -36,30 +32,22 @@ export function applyObservationsToField({
    * On rétablit d'abord l'ordre réel des informations
    * dans le message du prospect.
    */
-  const orderedObservations = orderObservations(
-    message,
-    observations,
-  );
+  const orderedObservations = orderObservations(message, observations);
 
   let field = currentField;
   let didStateChange = false;
 
   for (const observation of orderedObservations) {
-    const result = applyObservationToField(
-      field,
-      observation,
-      messageId,
-      {
-        tolerance,
+    const result = applyObservationToField(field, observation, messageId, {
+      tolerance,
 
-        /*
-         * Ces deux informations appartiennent
-         * au contexte du message en cours.
-         */
-        conflictPendingAtStart,
-        citationNamesField,
-      },
-    );
+      /*
+       * Ces deux informations appartiennent
+       * au contexte du message en cours.
+       */
+      conflictPendingAtStart,
+      citationNamesField,
+    });
 
     /*
      * "applied" modifie le champ.
@@ -67,10 +55,7 @@ export function applyObservationsToField({
      * "conflict" modifie également le champ :
      * par exemple provided → conflicting.
      */
-    if (
-      result.status === "applied" ||
-      result.status === "conflict"
-    ) {
+    if (result.status === "applied" || result.status === "conflict") {
       didStateChange = true;
     }
 
