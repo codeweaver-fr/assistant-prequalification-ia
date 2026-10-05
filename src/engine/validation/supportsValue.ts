@@ -122,7 +122,29 @@ function hasRangeMarker(sourceText: string): boolean {
 function hasUnsupportedSignedNumber(sourceText: string): boolean {
   const normalized = normalizeText(sourceText);
 
-  return /(?:^|[^\p{L}\p{N}])[+-]\s*\d/u.test(normalized);
+  const numberBeforeDash = new RegExp(
+    `(?<![\\p{L}\\p{N}])${NUMBER_FRAGMENT}$`,
+    "u",
+  );
+
+  for (const match of normalized.matchAll(
+    /(?:^|[^\p{L}\p{N}])([+-])(?=\s*\d)/gu,
+  )) {
+    const signPosition = match.index + match[0].search(/[+-]/u);
+
+    // Un tiret après un nombre complet sépare les bornes d'une plage.
+    // Un signe plus ou un autre nombre signé reste interdit.
+    if (
+      match[1] === "-" &&
+      numberBeforeDash.test(normalized.slice(0, signPosition).trimEnd())
+    ) {
+      continue;
+    }
+
+    return true;
+  }
+
+  return false;
 }
 
 function supportsNumber(sourceText: string, value: NumberValue): boolean {

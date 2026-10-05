@@ -101,13 +101,15 @@ describe("orderObservations", () => {
       sourceText: "budget 10000",
     };
 
-    expect(
-      orderObservations("budget 10000, Toulon, puis encore budget 10000", [
-        second,
-        between,
-        first,
-      ]),
-    ).toEqual([second, between, first]);
+    const ordered = orderObservations(
+      "budget 10000, Toulon, puis encore budget 10000",
+      [between, second, first],
+    );
+
+    expect(ordered).toHaveLength(3);
+    expect(ordered[0]).toBe(second);
+    expect(ordered[1]).toBe(between);
+    expect(ordered[2]).toBe(first);
   });
 
   it("garde un doublon d'extraction auprès de sa citation au lieu de le déplacer à la fin", () => {

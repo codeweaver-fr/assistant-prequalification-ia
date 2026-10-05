@@ -35,6 +35,42 @@ describe("supportsValue", () => {
       expect(supportsValue("80-100 invités", range(80, 100))).toBe(true);
     });
 
+    it.each([
+      "80 - 100 invités",
+      "80  -  100 invités",
+      "80\u202f-\u202f100 invités",
+    ])("accepte une plage avec un tiret espacé dans %s", (sourceText) => {
+      expect(supportsValue(sourceText, range(80, 100))).toBe(true);
+    });
+
+    it("accepte une plage avec suffixes k et tiret espacé", () => {
+      expect(supportsValue("80k - 100k euros", range(80000, 100000))).toBe(
+        true,
+      );
+    });
+
+    it.each([
+      "-100",
+      "budget - 100",
+      "budget +100",
+      "budget + 100",
+      "budget (-100)",
+    ])("conserve le rejet d'un nombre signé dans %s", (sourceText) => {
+      expect(supportsValue(sourceText, exact(100))).toBe(false);
+    });
+
+    it.each([
+      "-80 - 100 invités",
+      "80 - -100 invités",
+      "80 + 100 invités",
+      "80 - 100 invités et budget -50",
+    ])(
+      "ne masque pas un signe réel derrière une plage dans %s",
+      (sourceText) => {
+        expect(supportsValue(sourceText, range(80, 100))).toBe(false);
+      },
+    );
+
     it("accepte une plage écrite avec à", () => {
       expect(supportsValue("80 à 100 invités", range(80, 100))).toBe(true);
     });

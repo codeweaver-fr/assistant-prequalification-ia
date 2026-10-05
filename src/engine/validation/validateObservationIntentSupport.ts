@@ -59,7 +59,7 @@ function isHypotheticalContext(context: CitationContext): boolean {
   const prefix = context.prefix;
 
   const sourceStartsHypothetical =
-    /^(?:si besoin|si nécessaire|si necessaire|si possible|au cas où|au cas ou|éventuellement|eventuellement)\b/u.test(
+    /^(?:si besoin|si nécessaire|si necessaire|si possible|au cas où|au cas ou|éventuellement|eventuellement)(?![\p{L}\p{N}])/u.test(
       source,
     );
 
@@ -76,7 +76,7 @@ function isReportedContext(context: CitationContext): boolean {
   const prefix = context.prefix;
 
   const reportedSource =
-    /^(?:(?:vous avez|tu as|il a|elle a|on a|ils ont|elles ont)\s+(?:dit|écrit|ecrit|demandé|demande)|si je (?:dis|écris|ecris)|selon)\b/u.test(
+    /^(?:(?:vous avez|tu as|il a|elle a|on a|ils ont|elles ont)\s+(?:dit|écrit|ecrit|demandé|demande)|si je (?:dis|écris|ecris)|selon)(?![\p{L}\p{N}])/u.test(
       source,
     );
 
@@ -105,8 +105,8 @@ function supportsCorrection(source: string): boolean {
    * cette partie corrective plutôt que l'ensemble ambigu.
    */
   if (
-    /\bnon\s*[,;:]?\s*pas\b/u.test(source) &&
-    !/\b(?:finalement|plutôt|plutot|je corrige|je rectifie|je me suis trompé|je me suis trompe)\b/u.test(
+    /(?<![\p{L}\p{N}])non\s*[,;:]?\s*pas(?![\p{L}\p{N}])/u.test(source) &&
+    !/(?<![\p{L}\p{N}])(?:finalement|plutôt|plutot|je corrige|je rectifie|je me suis trompé|je me suis trompe)(?![\p{L}\p{N}])/u.test(
       source,
     )
   ) {
@@ -114,7 +114,7 @@ function supportsCorrection(source: string): boolean {
   }
 
   const strongCorrection =
-    /\b(?:je corrige|je rectifie|je me suis trompé|je me suis trompe|rectification|correction|finalement|en fait|plutôt|plutot)\b/u.test(
+    /(?<![\p{L}\p{N}])(?:je corrige|je rectifie|je me suis trompé|je me suis trompe|rectification|correction|finalement|en fait|plutôt|plutot)(?![\p{L}\p{N}])/u.test(
       source,
     );
 
@@ -146,7 +146,7 @@ function supportsRemoval(source: string): boolean {
    * "n'en tenez pas compte"
    */
   const ignoreInstruction =
-    /\b(?:ne\s+(?:tenez|tiens)\s+pas\s+compte|n'en\s+(?:tenez|tiens)\s+pas\s+compte|ne\s+(?:prenez|prends)\s+plus\s+en\s+compte)\b/u.test(
+    /(?<![\p{L}\p{N}])(?:ne\s+(?:tenez|tiens)\s+pas\s+compte|n'en\s+(?:tenez|tiens)\s+pas\s+compte|ne\s+(?:prenez|prends)\s+plus\s+en\s+compte)(?![\p{L}\p{N}])/u.test(
       source,
     );
 
@@ -164,7 +164,7 @@ function supportsRemoval(source: string): boolean {
    * Elles ne doivent jamais être interprétées comme remove.
    */
   const negatedRemoval =
-    /\b(?:ne\s+(?:(?:le|la|les)\s+|l')?(?:supprimez?|retirez?|enlevez?|enl[eè]vez?|ignorez?)\s+pas|ne\s+pas\s+(?:supprimer|retirer|enlever|ignorer)|n'oubliez?\s+pas)\b/u.test(
+    /(?<![\p{L}\p{N}])(?:ne\s+(?:(?:le|la|les)\s+|l')?(?:supprimez?|retirez?|enlevez?|enl[eè]vez?|ignorez?)\s+pas|ne\s+pas\s+(?:supprimer|retirer|enlever|ignorer)|n'oubliez?\s+pas)(?![\p{L}\p{N}])/u.test(
       source,
     );
 
@@ -173,7 +173,7 @@ function supportsRemoval(source: string): boolean {
   }
 
   const explicitRemoval =
-    /\b(?:(?:je\s+)?(?:supprime|supprimer|supprimez|retire|retirer|retirez|enlève|enleve|enlever|enlevez|oublie|oublier|oubliez|ignore|ignorer|ignorez)|(?:à|a)\s+(?:supprimer|retirer|enlever))\b/u.test(
+    /(?<![\p{L}\p{N}])(?:(?:je\s+)?(?:supprime|supprimer|supprimez|retire|retirer|retirez|enlève|enleve|enlever|enlevez|oublie|oublier|oubliez|ignore|ignorer|ignorez)|(?:à|a)\s+(?:supprimer|retirer|enlever))(?![\p{L}\p{N}])/u.test(
       source,
     );
 
@@ -190,7 +190,11 @@ function supportsUnknown(source: string): boolean {
    * Exemple :
    * "je ne sais pas si le budget comprend la TVA".
    */
-  if (/\bje\s+(?:ne\s+)?sais\s+pas\s+si\b/u.test(source)) {
+  if (
+    /(?<![\p{L}\p{N}])je\s+(?:ne\s+)?sais\s+pas\s+si(?![\p{L}\p{N}])/u.test(
+      source,
+    )
+  ) {
     return false;
   }
 
@@ -199,7 +203,7 @@ function supportsUnknown(source: string): boolean {
    * la même chose que ne pas la connaître.
    */
   const disclosureRefusal =
-    /\b(?:je\s+(?:ne\s+)?(?:souhaite|veux|désire|desire)\s+pas\s+(?:communiquer|donner|indiquer|préciser|preciser|dire)|je\s+(?:préfère|prefere)\s+ne\s+pas\s+(?:communiquer|donner|indiquer|préciser|preciser|dire))\b/u.test(
+    /(?<![\p{L}\p{N}])(?:je\s+(?:ne\s+)?(?:souhaite|veux|désire|desire)\s+pas\s+(?:communiquer|donner|indiquer|préciser|preciser|dire)|je\s+(?:préfère|prefere)\s+ne\s+pas\s+(?:communiquer|donner|indiquer|préciser|preciser|dire))(?![\p{L}\p{N}])/u.test(
       source,
     );
 
@@ -208,18 +212,26 @@ function supportsUnknown(source: string): boolean {
   }
 
   return (
-    /\bje\s+(?:ne\s+)?sais\s+pas\b/u.test(source) ||
-    /\bj'en\s+sais\s+rien\b/u.test(source) ||
-    /\bje\s+n'en\s+sais\s+rien\b/u.test(source) ||
-    /\baucune\s+idée\b/u.test(source) ||
-    /\baucune\s+idee\b/u.test(source) ||
-    /\bje\s+ne\s+connais\s+pas\b/u.test(source) ||
-    /\bj'ignore\b/u.test(source) ||
-    /\bpas\s+encore\s+d[ée]fini(?:e)?\b/u.test(source) ||
-    /\bn'est\s+pas\s+encore\s+d[ée]fini(?:e)?\b/u.test(source) ||
-    /\b(?:reste\s+)?(?:à|a)\s+d[ée]finir\b/u.test(source) ||
-    /\bind[ée]termin[ée](?:e)?\b/u.test(source) ||
-    /\binconnu(?:e)?\b/u.test(source)
+    /(?<![\p{L}\p{N}])je\s+(?:ne\s+)?sais\s+pas(?![\p{L}\p{N}])/u.test(
+      source,
+    ) ||
+    /(?<![\p{L}\p{N}])j'en\s+sais\s+rien(?![\p{L}\p{N}])/u.test(source) ||
+    /(?<![\p{L}\p{N}])je\s+n'en\s+sais\s+rien(?![\p{L}\p{N}])/u.test(source) ||
+    /(?<![\p{L}\p{N}])aucune\s+idée(?![\p{L}\p{N}])/u.test(source) ||
+    /(?<![\p{L}\p{N}])aucune\s+idee(?![\p{L}\p{N}])/u.test(source) ||
+    /(?<![\p{L}\p{N}])je\s+ne\s+connais\s+pas(?![\p{L}\p{N}])/u.test(source) ||
+    /(?<![\p{L}\p{N}])j'ignore(?![\p{L}\p{N}])/u.test(source) ||
+    /(?<![\p{L}\p{N}])pas\s+encore\s+d[ée]fini(?:e)?(?![\p{L}\p{N}])/u.test(
+      source,
+    ) ||
+    /(?<![\p{L}\p{N}])n'est\s+pas\s+encore\s+d[ée]fini(?:e)?(?![\p{L}\p{N}])/u.test(
+      source,
+    ) ||
+    /(?<![\p{L}\p{N}])(?:reste\s+)?(?:à|a)\s+d[ée]finir(?![\p{L}\p{N}])/u.test(
+      source,
+    ) ||
+    /(?<![\p{L}\p{N}])ind[ée]termin[ée](?:e)?(?![\p{L}\p{N}])/u.test(source) ||
+    /(?<![\p{L}\p{N}])inconnu(?:e)?(?![\p{L}\p{N}])/u.test(source)
   );
 }
 

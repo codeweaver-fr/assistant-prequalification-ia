@@ -5,6 +5,114 @@ import { exact, pending, testConfig } from "../testing/builders";
 import { validateObservation } from "./validateObservation";
 
 describe("P3 - preuve des intentions sensibles", () => {
+  it.each(["aucune idée", "indéterminé", "à définir"])(
+    "accepte la déclaration française d'incertitude %s",
+    (sourceText) => {
+      const observation = {
+        field: "budget",
+        intent: "unknown" as const,
+        proposedValue: null,
+        sourceText,
+      };
+
+      expect(
+        validateObservation(testConfig, sourceText, observation, [
+          pending("budget", "missing"),
+        ]),
+      ).toEqual({ status: "valid", observation });
+    },
+  );
+
+  it.each(["je me suis trompé, 12000", "12000 plutôt"])(
+    "accepte la correction accentuée %s",
+    (sourceText) => {
+      const observation = {
+        field: "budget",
+        intent: "correct" as const,
+        proposedValue: exact(12000),
+        sourceText,
+      };
+
+      expect(
+        validateObservation(testConfig, sourceText, observation, [
+          pending("budget", "clarify"),
+        ]),
+      ).toEqual({ status: "valid", observation });
+    },
+  );
+
+  it("conserve le retrait formulé avec à supprimer", () => {
+    const observation = {
+      field: "budget",
+      intent: "remove" as const,
+      proposedValue: null,
+      sourceText: "budget à supprimer",
+    };
+
+    expect(
+      validateObservation(testConfig, observation.sourceText, observation, []),
+    ).toEqual({ status: "valid", observation });
+  });
+
+  it.each(["éaucune idée", "aucune idéeé", "indéterminéé"])(
+    "ne reconnaît pas un indice collé à une lettre accentuée dans %s",
+    (sourceText) => {
+      expect(
+        validateObservation(
+          testConfig,
+          sourceText,
+          {
+            field: "budget",
+            intent: "unknown",
+            proposedValue: null,
+            sourceText,
+          },
+          [pending("budget", "missing")],
+        ),
+      ).toEqual({
+        status: "rejected",
+        reason: "intention_non_supportee_par_citation",
+      });
+    },
+  );
+
+  it("ne reconnaît pas finalement à l'intérieur d'un mot accentué", () => {
+    const sourceText = "préfinalement budget 12000";
+
+    expect(
+      validateObservation(
+        testConfig,
+        sourceText,
+        {
+          field: "budget",
+          intent: "correct",
+          proposedValue: exact(12000),
+          sourceText,
+        },
+        [],
+      ),
+    ).toEqual({
+      status: "rejected",
+      reason: "intention_non_supportee_par_citation",
+    });
+  });
+
+  it("rejette une instruction rapportée après demandé avec un accent", () => {
+    const sourceText = "vous avez demandé : oubliez le budget";
+
+    expect(
+      validateObservation(
+        testConfig,
+        sourceText,
+        { field: "budget", intent: "remove", proposedValue: null, sourceText },
+        [],
+      ),
+    ).toEqual({
+      status: "rejected",
+      reason: "intention_non_supportee_par_citation",
+    });
+  });
+
   it("ne change pas le comportement de provide", () => {
     const observation = {
       field: "budget",
