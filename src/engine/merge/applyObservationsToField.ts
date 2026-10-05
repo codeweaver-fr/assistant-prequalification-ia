@@ -1,4 +1,5 @@
 import type { Field, MessageId, Observation } from "../model/types";
+import { matchesCues } from "../validation/textMatching";
 
 import { applyObservationToField } from "./applyObservationToField";
 import { orderObservations } from "./orderObservations";
@@ -10,7 +11,7 @@ type ApplyObservationsToFieldInput = {
   messageId: MessageId;
   tolerance?: number;
   conflictPendingAtStart?: boolean;
-  citationNamesField?: boolean;
+  cues?: readonly string[];
 };
 
 type ApplyObservationsToFieldResult = {
@@ -25,7 +26,7 @@ export function applyObservationsToField({
   messageId,
   tolerance = 0.1,
   conflictPendingAtStart = false,
-  citationNamesField = false,
+  cues = [],
 }: ApplyObservationsToFieldInput): ApplyObservationsToFieldResult {
   /*
    * L'ordre produit par le LLM n'est pas fiable.
@@ -42,11 +43,11 @@ export function applyObservationsToField({
       tolerance,
 
       /*
-       * Ces deux informations appartiennent
-       * au contexte du message en cours.
+       * Le pending reste celui du début du message.
+       * Les cues sont évalués sur la citation de cette observation.
        */
       conflictPendingAtStart,
-      citationNamesField,
+      citationNamesField: matchesCues(observation.sourceText, cues),
     });
 
     /*

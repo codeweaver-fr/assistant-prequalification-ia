@@ -36,7 +36,7 @@ describe("applyObservationsToField - contexte de conflit", () => {
       observations: [observation],
       messageId: "message-3",
       conflictPendingAtStart: false,
-      citationNamesField: true,
+      cues: ["budget"],
     });
 
     expect(result.field).toEqual({
