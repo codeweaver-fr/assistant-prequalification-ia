@@ -1,4 +1,4 @@
-import type { BusinessConfig } from "../model/config";
+import type { BusinessConfig, NumberFieldDef } from "../model/config";
 import type {
   DateValue,
   EnumValue,
@@ -54,6 +54,35 @@ function isNumberValue(value: unknown): value is NumberValue {
     default:
       return false;
   }
+}
+
+function numberComponents(value: NumberValue): readonly number[] {
+  switch (value.kind) {
+    case "exact":
+    case "approximate":
+    case "bound":
+      return [value.v];
+
+    case "range":
+      return [value.min, value.max];
+  }
+}
+
+function respectsNumberFieldRules(
+  fieldDef: NumberFieldDef,
+  value: NumberValue,
+): boolean {
+  if (!fieldDef.allowedKinds.includes(value.kind)) {
+    return false;
+  }
+
+  if (fieldDef.allowDecimals) {
+    return true;
+  }
+
+  return numberComponents(value).every((component) =>
+    Number.isInteger(component),
+  );
 }
 
 function isDateValue(value: unknown): value is DateValue {
@@ -206,6 +235,18 @@ export function validateObservationShape(
       success: false,
       reason: "forme_invalide",
     };
+  }
+
+  if (fieldDef.type === "number") {
+    if (
+      !isNumberValue(input.proposedValue) ||
+      !respectsNumberFieldRules(fieldDef, input.proposedValue)
+    ) {
+      return {
+        success: false,
+        reason: "forme_invalide",
+      };
+    }
   }
 
   return {

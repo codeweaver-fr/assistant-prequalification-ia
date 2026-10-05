@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 
+import type { BusinessConfig } from "../model/config";
 import { testConfig } from "../testing/builders";
+
 import { validateObservationShape } from "./validateObservationShape";
 
 describe("validateObservationShape", () => {
@@ -204,6 +206,132 @@ describe("validateObservationShape", () => {
     expect(validateObservationShape(testConfig, "budget 15k")).toEqual({
       success: false,
       reason: "forme_invalide",
+    });
+  });
+
+  it("rejette un kind numérique interdit par la config", () => {
+    expect(
+      validateObservationShape(testConfig, {
+        field: "guestCount",
+        intent: "provide",
+        proposedValue: {
+          type: "number",
+          kind: "bound",
+          direction: "max",
+          v: 100,
+        },
+        sourceText: "maximum 100 invités",
+      }),
+    ).toEqual({
+      success: false,
+      reason: "forme_invalide",
+    });
+  });
+
+  it("accepte un kind numérique autorisé par la config", () => {
+    expect(
+      validateObservationShape(testConfig, {
+        field: "guestCount",
+        intent: "provide",
+        proposedValue: {
+          type: "number",
+          kind: "range",
+          min: 80,
+          max: 100,
+        },
+        sourceText: "entre 80 et 100 invités",
+      }),
+    ).toEqual({
+      success: true,
+      observation: {
+        field: "guestCount",
+        intent: "provide",
+        proposedValue: {
+          type: "number",
+          kind: "range",
+          min: 80,
+          max: 100,
+        },
+        sourceText: "entre 80 et 100 invités",
+      },
+    });
+  });
+
+  it("rejette une valeur décimale quand allowDecimals est false", () => {
+    expect(
+      validateObservationShape(testConfig, {
+        field: "budget",
+        intent: "provide",
+        proposedValue: {
+          type: "number",
+          kind: "exact",
+          v: 15000.5,
+        },
+        sourceText: "15000,5 euros",
+      }),
+    ).toEqual({
+      success: false,
+      reason: "forme_invalide",
+    });
+  });
+
+  it("rejette une plage avec une borne décimale quand allowDecimals est false", () => {
+    expect(
+      validateObservationShape(testConfig, {
+        field: "budget",
+        intent: "provide",
+        proposedValue: {
+          type: "number",
+          kind: "range",
+          min: 10000,
+          max: 15000.5,
+        },
+        sourceText: "entre 10000 et 15000,5 euros",
+      }),
+    ).toEqual({
+      success: false,
+      reason: "forme_invalide",
+    });
+  });
+
+  it("accepte une valeur décimale quand allowDecimals est true", () => {
+    const decimalConfig: BusinessConfig = {
+      ...testConfig,
+      fields: testConfig.fields.map((field) => {
+        if (field.key !== "budget" || field.type !== "number") {
+          return field;
+        }
+
+        return {
+          ...field,
+          allowDecimals: true,
+        };
+      }),
+    };
+
+    expect(
+      validateObservationShape(decimalConfig, {
+        field: "budget",
+        intent: "provide",
+        proposedValue: {
+          type: "number",
+          kind: "exact",
+          v: 15000.5,
+        },
+        sourceText: "15000,5 euros",
+      }),
+    ).toEqual({
+      success: true,
+      observation: {
+        field: "budget",
+        intent: "provide",
+        proposedValue: {
+          type: "number",
+          kind: "exact",
+          v: 15000.5,
+        },
+        sourceText: "15000,5 euros",
+      },
     });
   });
 });
