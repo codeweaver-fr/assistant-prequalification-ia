@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import type { Field, Observation } from "../model/types";
-import { exact } from "../testing/builders";
+import { approx, exact } from "../testing/builders";
 
 import { applyObservationToField } from "./applyObservationToField";
 
@@ -128,11 +128,7 @@ describe("applyObservationToField", () => {
   it("transmet une tolérance personnalisée au cas provided", () => {
     const currentField: Field = {
       presence: "provided",
-      value: {
-        type: "number",
-        kind: "approximate",
-        v: 10000,
-      },
+      value: approx(10000),
       sourceText: "environ 10000",
       sourceMessageId: "message-1",
     };
@@ -156,6 +152,48 @@ describe("applyObservationToField", () => {
         value: exact(12000),
         sourceText: "budget 12000",
         sourceMessageId: "message-2",
+      },
+    });
+  });
+
+  it("transmet aussi une tolérance personnalisée au cas conflicting", () => {
+    const currentField: Field = {
+      presence: "conflicting",
+      candidates: [
+        {
+          value: approx(10000),
+          sourceText: "environ 10000",
+          sourceMessageId: "message-1",
+        },
+        {
+          value: exact(20000),
+          sourceText: "budget 20000",
+          sourceMessageId: "message-2",
+        },
+      ],
+    };
+
+    const observation: Observation = {
+      field: "budget",
+      intent: "provide",
+      proposedValue: exact(12000),
+      sourceText: "12000",
+    };
+
+    expect(
+      applyObservationToField(currentField, observation, "message-3", {
+        tolerance: 0.25,
+        conflictPendingAtStart: true,
+        citationNamesField: false,
+      }),
+    ).toEqual({
+      status: "applied",
+      reason: "conflit_resolu_affine",
+      field: {
+        presence: "provided",
+        value: exact(12000),
+        sourceText: "12000",
+        sourceMessageId: "message-3",
       },
     });
   });

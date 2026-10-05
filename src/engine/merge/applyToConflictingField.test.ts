@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import type { Field, Observation } from "../model/types";
-import { exact, range } from "../testing/builders";
+import { approx, exact, range } from "../testing/builders";
 
 import { applyToConflictingField } from "./applyToConflictingField";
 
@@ -179,6 +179,48 @@ describe("applyToConflictingField", () => {
         presence: "provided",
         value: exact(10000),
         sourceText: "10000",
+        sourceMessageId: "message-3",
+      },
+    });
+  });
+
+  it("utilise la tolérance personnalisée pour résoudre un conflit numérique", () => {
+    const approximateConflict: Field = {
+      presence: "conflicting",
+      candidates: [
+        {
+          value: approx(10000),
+          sourceText: "environ 10000",
+          sourceMessageId: "message-1",
+        },
+        {
+          value: exact(20000),
+          sourceText: "budget 20000",
+          sourceMessageId: "message-2",
+        },
+      ],
+    };
+
+    const observation: Observation = {
+      field: "budget",
+      intent: "provide",
+      proposedValue: exact(12000),
+      sourceText: "12000",
+    };
+
+    expect(
+      applyToConflictingField(approximateConflict, observation, "message-3", {
+        conflictPendingAtStart: true,
+        citationNamesField: false,
+        tolerance: 0.25,
+      }),
+    ).toEqual({
+      status: "applied",
+      reason: "conflit_resolu_affine",
+      field: {
+        presence: "provided",
+        value: exact(12000),
+        sourceText: "12000",
         sourceMessageId: "message-3",
       },
     });

@@ -13,6 +13,7 @@ type ValueComparison =
 type ConflictContext = {
   conflictPendingAtStart: boolean;
   citationNamesField: boolean;
+  tolerance?: number;
 };
 
 type ApplyToConflictingFieldResult =
@@ -40,6 +41,7 @@ type ApplyToConflictingFieldResult =
 function compareValues(
   previous: FieldValue,
   incoming: FieldValue,
+  tolerance: number,
 ): ValueComparison {
   if (previous.type !== incoming.type) {
     return "incompatible";
@@ -51,7 +53,7 @@ function compareValues(
         return "incompatible";
       }
 
-      return compareNumberValues(previous, incoming);
+      return compareNumberValues(previous, incoming, tolerance);
 
     case "date":
       if (incoming.type !== "date") {
@@ -85,6 +87,8 @@ export function applyToConflictingField(
   if (currentField.presence !== "conflicting") {
     throw new Error("applyToConflictingField nécessite un champ conflicting");
   }
+
+  const tolerance = context.tolerance ?? 0.1;
 
   switch (observation.intent) {
     case "correct":
@@ -130,18 +134,17 @@ export function applyToConflictingField(
     case "provide": {
       const comparisons = currentField.candidates.map((candidate) => ({
         candidate,
-        comparison: compareValues(candidate.value, observation.proposedValue),
+        comparison: compareValues(
+          candidate.value,
+          observation.proposedValue,
+          tolerance,
+        ),
       }));
 
       const exactMatches = comparisons.filter(
         ({ comparison }) => comparison === "equal",
       );
 
-      /*
-       * Si une clarification de conflit était en attente
-       * au début du message, la réponse du prospect sert
-       * directement à résoudre ce conflit.
-       */
       if (context.conflictPendingAtStart) {
         if (exactMatches.length === 1) {
           return {
@@ -174,13 +177,6 @@ export function applyToConflictingField(
           };
         }
 
-        /*
-         * La nouvelle valeur ne correspond clairement
-         * à aucun candidat, ou reste ambiguë entre eux.
-         *
-         * On considère alors qu'elle remplace explicitement
-         * l'ancien conflit.
-         */
         return {
           status: "applied",
           reason: "correction_sur_conflit",
@@ -193,11 +189,6 @@ export function applyToConflictingField(
         };
       }
 
-      /*
-       * Hors résolution explicite du conflit :
-       * si cette valeur est déjà un candidat,
-       * on ne fait rien.
-       */
       if (exactMatches.length > 0) {
         return {
           status: "ignored",
@@ -206,10 +197,6 @@ export function applyToConflictingField(
         };
       }
 
-      /*
-       * Le moteur limite volontairement un conflit
-       * à trois candidats maximum.
-       */
       if (currentField.candidates.length === 3) {
         return {
           status: "ignored",
@@ -218,14 +205,6 @@ export function applyToConflictingField(
         };
       }
 
-      /*
-       * À cet endroit TypeScript sait désormais
-       * qu'il reste exactement deux candidats.
-       *
-       * On les extrait explicitement pour construire
-       * un tuple de trois éléments valide pour
-       * ConflictCandidates.
-       */
       const [firstCandidate, secondCandidate] = currentField.candidates;
 
       const newCandidate = {

@@ -36,6 +36,7 @@ export function applyObservationToField(
       return applyToConflictingField(currentField, observation, messageId, {
         conflictPendingAtStart: options.conflictPendingAtStart ?? false,
         citationNamesField: options.citationNamesField ?? false,
+        tolerance: options.tolerance ?? 0.1,
       });
   }
 }
