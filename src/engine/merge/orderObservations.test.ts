@@ -55,7 +55,7 @@ describe("orderObservations", () => {
     ).toEqual([location, budget]);
   });
 
-  it("préserve l'ordre fourni lorsque deux citations commencent au même endroit", () => {
+  it("préserve l'ordre fourni lorsque deux observations utilisent la même occurrence", () => {
     const first: Observation = {
       field: "budget",
       intent: "provide",
@@ -76,7 +76,72 @@ describe("orderObservations", () => {
     ]);
   });
 
-  it("place à la fin une observation dont la citation est introuvable", () => {
+  it("utilise les occurrences successives lorsqu'une citation apparaît plusieurs fois", () => {
+    const first: Observation = {
+      field: "budget",
+      intent: "provide",
+      proposedValue: exact(10000),
+      sourceText: "budget 10000",
+    };
+
+    const between: Observation = {
+      field: "location",
+      intent: "provide",
+      proposedValue: {
+        type: "text",
+        text: "Toulon",
+      },
+      sourceText: "Toulon",
+    };
+
+    const second: Observation = {
+      field: "budget",
+      intent: "provide",
+      proposedValue: exact(10000),
+      sourceText: "budget 10000",
+    };
+
+    expect(
+      orderObservations("budget 10000, Toulon, puis encore budget 10000", [
+        second,
+        between,
+        first,
+      ]),
+    ).toEqual([second, between, first]);
+  });
+
+  it("garde un doublon d'extraction auprès de sa citation au lieu de le déplacer à la fin", () => {
+    const first: Observation = {
+      field: "budget",
+      intent: "provide",
+      proposedValue: exact(12000),
+      sourceText: "budget 12000",
+    };
+
+    const correction: Observation = {
+      field: "budget",
+      intent: "correct",
+      proposedValue: exact(15000),
+      sourceText: "budget 15000",
+    };
+
+    const duplicate: Observation = {
+      field: "budget",
+      intent: "provide",
+      proposedValue: exact(12000),
+      sourceText: "budget 12000",
+    };
+
+    expect(
+      orderObservations("budget 12000, non finalement budget 15000", [
+        first,
+        correction,
+        duplicate,
+      ]),
+    ).toEqual([first, duplicate, correction]);
+  });
+
+  it("place à la fin une observation dont la citation est réellement introuvable", () => {
     const valid: Observation = {
       field: "budget",
       intent: "provide",

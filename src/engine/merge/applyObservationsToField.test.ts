@@ -126,6 +126,49 @@ describe("applyObservationsToField", () => {
     expect(result.didStateChange).toBe(true);
   });
 
+  it("un doublon d'extraction ne recrée pas un conflit après une correction", () => {
+    const currentField: Field = {
+      presence: "absent",
+    };
+
+    const first: Observation = {
+      field: "budget",
+      intent: "provide",
+      proposedValue: exact(12000),
+      sourceText: "budget 12000",
+    };
+
+    const correction: Observation = {
+      field: "budget",
+      intent: "correct",
+      proposedValue: exact(15000),
+      sourceText: "budget 15000",
+    };
+
+    const duplicate: Observation = {
+      field: "budget",
+      intent: "provide",
+      proposedValue: exact(12000),
+      sourceText: "budget 12000",
+    };
+
+    const result = applyObservationsToField({
+      currentField,
+      message: "budget 12000, non finalement budget 15000",
+      observations: [first, correction, duplicate],
+      messageId: "message-2",
+    });
+
+    expect(result.field).toEqual({
+      presence: "provided",
+      value: exact(15000),
+      sourceText: "budget 15000",
+      sourceMessageId: "message-2",
+    });
+
+    expect(result.didStateChange).toBe(true);
+  });
+
   it("peut retirer puis fournir une nouvelle valeur dans le même message", () => {
     const currentField: Field = {
       presence: "provided",

@@ -9,36 +9,82 @@ type PositionedObservation = {
   originalIndex: number;
 };
 
+type CitationPositionState = {
+  nextSearchPosition: number;
+  lastFoundPosition: number | null;
+};
+
 export function orderObservations(
   message: string,
   observations: readonly Observation[],
 ): Observation[] {
-  const nextSearchPositionByCitation = new Map<string, number>();
+  const positionStateByCitation = new Map<string, CitationPositionState>();
 
   const positioned: PositionedObservation[] = observations.map(
     (observation, originalIndex) => {
       const normalizedCitation = normalizeText(observation.sourceText);
 
-      const fromIndex =
-        nextSearchPositionByCitation.get(normalizedCitation) ?? 0;
+      const state = positionStateByCitation.get(normalizedCitation) ?? {
+        nextSearchPosition: 0,
+        lastFoundPosition: null,
+      };
 
-      const position = positionOf(message, observation.sourceText, fromIndex);
+      const nextUnusedPosition = positionOf(
+        message,
+        observation.sourceText,
+        state.nextSearchPosition,
+      );
 
       /*
-       * Si plusieurs observations utilisent exactement
-       * la même citation, on cherche l'occurrence suivante
-       * pour la prochaine observation.
+       * Cas normal :
+       *
+       * on associe chaque observation à la première occurrence
+       * encore inutilisée de sa citation.
        */
-      if (position >= 0) {
-        nextSearchPositionByCitation.set(
-          normalizedCitation,
-          position + normalizedCitation.length,
-        );
+      if (nextUnusedPosition >= 0) {
+        positionStateByCitation.set(normalizedCitation, {
+          nextSearchPosition: nextUnusedPosition + normalizedCitation.length,
+          lastFoundPosition: nextUnusedPosition,
+        });
+
+        return {
+          observation,
+          position: nextUnusedPosition,
+          originalIndex,
+        };
       }
 
+      /*
+       * Le LLM peut parfois produire plusieurs observations
+       * à partir d'une seule et même citation.
+       *
+       * Si la citation existe bien dans le message mais que toutes
+       * ses occurrences ont déjà été consommées pour le tri,
+       * on rattache l'observation supplémentaire à la dernière
+       * occurrence réellement trouvée.
+       *
+       * Cela évite qu'un doublon soit artificiellement déplacé
+       * après une correction située plus loin dans le message.
+       *
+       * A2 reste responsable de la validation réelle de la citation.
+       */
+      if (state.lastFoundPosition !== null) {
+        return {
+          observation,
+          position: state.lastFoundPosition,
+          originalIndex,
+        };
+      }
+
+      /*
+       * Citation réellement introuvable.
+       *
+       * Elle sera placée après les citations présentes.
+       * A2 la rejettera ensuite.
+       */
       return {
         observation,
-        position,
+        position: -1,
         originalIndex,
       };
     },
@@ -46,12 +92,6 @@ export function orderObservations(
 
   return [...positioned]
     .sort((left, right) => {
-      /*
-       * Une citation introuvable est placée après
-       * toutes les citations réellement présentes.
-       *
-       * A2 la rejettera ensuite.
-       */
       if (left.position === -1 && right.position !== -1) {
         return 1;
       }
@@ -60,25 +100,17 @@ export function orderObservations(
         return -1;
       }
 
-      /*
-       * Deux citations introuvables :
-       * on conserve l'ordre produit par l'extracteur.
-       */
       if (left.position === -1 && right.position === -1) {
         return left.originalIndex - right.originalIndex;
       }
 
-      /*
-       * Position différente dans le message :
-       * l'ordre du prospect gagne.
-       */
       if (left.position !== right.position) {
         return left.position - right.position;
       }
 
       /*
-       * Même position :
-       * on conserve l'ordre initial fourni par l'IA.
+       * Plusieurs observations rattachées à la même occurrence :
+       * on conserve l'ordre produit par l'extracteur.
        */
       return left.originalIndex - right.originalIndex;
     })
