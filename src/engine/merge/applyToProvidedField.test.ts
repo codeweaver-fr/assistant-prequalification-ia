@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import type { Field, Observation } from "../model/types";
-import { approx, exact, range } from "../testing/builders";
+import { approx, dateValue, exact, range } from "../testing/builders";
 
 import { applyToProvidedField } from "./applyToProvidedField";
 
@@ -108,6 +108,97 @@ describe("applyToProvidedField", () => {
             sourceMessageId: "message-2",
           },
         ],
+      },
+    });
+  });
+
+  it("ne perd pas une année connue lorsqu'une nouvelle date apporte seulement le jour", () => {
+    const oldField: Field = {
+      presence: "provided",
+      value: dateValue({
+        year: 2027,
+        month: 6,
+        day: null,
+      }),
+      sourceText: "juin 2027",
+      sourceMessageId: "message-1",
+    };
+
+    const observation: Observation = {
+      field: "eventDate",
+      intent: "provide",
+      proposedValue: dateValue({
+        year: null,
+        month: 6,
+        day: 14,
+      }),
+      sourceText: "14 juin",
+    };
+
+    expect(applyToProvidedField(oldField, observation, "message-2")).toEqual({
+      status: "conflict",
+      reason: "valeur_incompatible",
+      field: {
+        presence: "conflicting",
+        candidates: [
+          {
+            value: dateValue({
+              year: 2027,
+              month: 6,
+              day: null,
+            }),
+            sourceText: "juin 2027",
+            sourceMessageId: "message-1",
+          },
+          {
+            value: dateValue({
+              year: null,
+              month: 6,
+              day: 14,
+            }),
+            sourceText: "14 juin",
+            sourceMessageId: "message-2",
+          },
+        ],
+      },
+    });
+  });
+
+  it("affine une date lorsqu'il ajoute le jour sans perdre l'année", () => {
+    const oldField: Field = {
+      presence: "provided",
+      value: dateValue({
+        year: 2027,
+        month: 6,
+        day: null,
+      }),
+      sourceText: "juin 2027",
+      sourceMessageId: "message-1",
+    };
+
+    const observation: Observation = {
+      field: "eventDate",
+      intent: "provide",
+      proposedValue: dateValue({
+        year: 2027,
+        month: 6,
+        day: 14,
+      }),
+      sourceText: "14 juin 2027",
+    };
+
+    expect(applyToProvidedField(oldField, observation, "message-2")).toEqual({
+      status: "applied",
+      reason: "affinement",
+      field: {
+        presence: "provided",
+        value: dateValue({
+          year: 2027,
+          month: 6,
+          day: 14,
+        }),
+        sourceText: "14 juin 2027",
+        sourceMessageId: "message-2",
       },
     });
   });

@@ -145,6 +145,23 @@ describe("compareDateValues", () => {
       ).toBe("more_precise");
     });
 
+    test("ajouter le jour sans perdre l'année est un affinement", () => {
+      expect(
+        compareDateValues(
+          dateValue({
+            year: 2027,
+            month: 6,
+            day: null,
+          }),
+          dateValue({
+            year: 2027,
+            month: 6,
+            day: 14,
+          }),
+        ),
+      ).toBe("more_precise");
+    });
+
     test("retirer une composante rend la valeur moins précise", () => {
       expect(
         compareDateValues(
@@ -160,6 +177,40 @@ describe("compareDateValues", () => {
           }),
         ),
       ).toBe("less_precise");
+    });
+
+    test("ajouter un jour tout en perdant une année connue n'est pas un affinement sûr", () => {
+      expect(
+        compareDateValues(
+          dateValue({
+            year: 2027,
+            month: 6,
+            day: null,
+          }),
+          dateValue({
+            year: null,
+            month: 6,
+            day: 14,
+          }),
+        ),
+      ).toBe("incompatible");
+    });
+
+    test("ajouter une année tout en perdant un jour connu n'est pas un affinement sûr", () => {
+      expect(
+        compareDateValues(
+          dateValue({
+            year: null,
+            month: 6,
+            day: 14,
+          }),
+          dateValue({
+            year: 2027,
+            month: 6,
+            day: null,
+          }),
+        ),
+      ).toBe("incompatible");
     });
   });
 
@@ -265,7 +316,7 @@ describe("compareDateValues", () => {
   });
 
   describe("before / after", () => {
-    test("'avant juin' est compatible avec une date en mai", () => {
+    test("'avant juin' est compatible avec une date en mai lorsque les années sont absentes", () => {
       expect(
         compareDateValues(
           dateValue(
@@ -311,7 +362,7 @@ describe("compareDateValues", () => {
       ).toBe("incompatible");
     });
 
-    test("'après juin' est compatible avec une date en juillet", () => {
+    test("'après juin' est compatible avec une date en juillet lorsque les années sont absentes", () => {
       expect(
         compareDateValues(
           dateValue(
@@ -344,6 +395,29 @@ describe("compareDateValues", () => {
               day: null,
             },
             "after",
+          ),
+          dateValue(
+            {
+              year: null,
+              month: 5,
+              day: 20,
+            },
+            "at",
+          ),
+        ),
+      ).toBe("incompatible");
+    });
+
+    test("ne suppose pas 2027 pour une date sans année", () => {
+      expect(
+        compareDateValues(
+          dateValue(
+            {
+              year: 2027,
+              month: 6,
+              day: null,
+            },
+            "before",
           ),
           dateValue(
             {
