@@ -1,20 +1,22 @@
 import { describe, expect, it } from "vitest";
 
-import type { Field, Observation } from "../model/types";
-import { exact, testConfig } from "../testing/builders";
+import type { Field, FieldKey, Observation } from "../model/types";
+import { exact, makeDossier, testConfig } from "../testing/builders";
 
 import { applyObservationsToFields } from "./applyObservationsToFields";
 
+function makeFields(
+  overrides: Readonly<Record<FieldKey, Field>> = {},
+): Record<FieldKey, Field> {
+  return {
+    ...makeDossier().fields,
+    ...overrides,
+  };
+}
+
 describe("applyObservationsToFields", () => {
   it("applique des observations sur plusieurs champs", () => {
-    const fields: Record<string, Field> = {
-      budget: {
-        presence: "absent",
-      },
-      guestCount: {
-        presence: "absent",
-      },
-    };
+    const fields = makeFields();
 
     const observations: Observation[] = [
       {
@@ -39,30 +41,37 @@ describe("applyObservationsToFields", () => {
       messageId: "message-1",
     });
 
-    expect(result.fields).toEqual({
-      budget: {
-        presence: "provided",
-        value: exact(12000),
-        sourceText: "budget 12000",
-        sourceMessageId: "message-1",
-      },
-      guestCount: {
-        presence: "provided",
-        value: exact(80),
-        sourceText: "80 invités",
-        sourceMessageId: "message-1",
-      },
+    expect(result.fields.budget).toEqual({
+      presence: "provided",
+      value: exact(12000),
+      sourceText: "budget 12000",
+      sourceMessageId: "message-1",
+    });
+
+    expect(result.fields.guestCount).toEqual({
+      presence: "provided",
+      value: exact(80),
+      sourceText: "80 invités",
+      sourceMessageId: "message-1",
+    });
+
+    expect(result.fields.eventDate).toEqual({
+      presence: "absent",
+    });
+
+    expect(result.fields.location).toEqual({
+      presence: "absent",
+    });
+
+    expect(result.fields.ceremony).toEqual({
+      presence: "absent",
     });
 
     expect(result.didStateChange).toBe(true);
   });
 
   it("applique plusieurs observations successives du même champ", () => {
-    const fields: Record<string, Field> = {
-      budget: {
-        presence: "absent",
-      },
-    };
+    const fields = makeFields();
 
     const observations: Observation[] = [
       {
@@ -98,10 +107,7 @@ describe("applyObservationsToFields", () => {
   });
 
   it("préserve les champs qui ne sont pas concernés", () => {
-    const fields: Record<string, Field> = {
-      budget: {
-        presence: "absent",
-      },
+    const fields = makeFields({
       location: {
         presence: "provided",
         value: {
@@ -111,7 +117,7 @@ describe("applyObservationsToFields", () => {
         sourceText: "Toulon",
         sourceMessageId: "message-0",
       },
-    };
+    });
 
     const observations: Observation[] = [
       {
@@ -134,11 +140,7 @@ describe("applyObservationsToFields", () => {
   });
 
   it("reste inchangé sans observation", () => {
-    const fields: Record<string, Field> = {
-      budget: {
-        presence: "absent",
-      },
-    };
+    const fields = makeFields();
 
     const result = applyObservationsToFields({
       config: testConfig,
@@ -153,11 +155,7 @@ describe("applyObservationsToFields", () => {
   });
 
   it("ne modifie pas l'objet fields d'origine", () => {
-    const fields: Record<string, Field> = {
-      budget: {
-        presence: "absent",
-      },
-    };
+    const fields = makeFields();
 
     const original = {
       ...fields,

@@ -7,6 +7,8 @@ import type {
   PendingQuestion,
 } from "../model/types";
 
+import { assertFieldSetMatchesConfig } from "../validation/assertFieldSetMatchesConfig";
+
 import { applyObservationsToField } from "./applyObservationsToField";
 import { groupObservationsByField } from "./groupObservationsByField";
 
@@ -34,6 +36,14 @@ export function applyObservationsToFields({
   pendingAtStart = [],
   tolerance = 0.1,
 }: ApplyObservationsToFieldsInput): ApplyObservationsToFieldsResult {
+  /*
+   * Un dossier incomplet structurellement est une erreur moteur.
+   *
+   * On ne doit jamais ignorer silencieusement un champ
+   * configuré mais absent du dossier.
+   */
+  assertFieldSetMatchesConfig(config, fields);
+
   const nextFields: Record<FieldKey, Field> = {
     ...fields,
   };

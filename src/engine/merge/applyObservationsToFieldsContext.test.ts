@@ -1,17 +1,32 @@
 import { describe, expect, it } from "vitest";
 
-import type { Field, Observation, PendingQuestion } from "../model/types";
+import type {
+  Field,
+  FieldKey,
+  Observation,
+  PendingQuestion,
+} from "../model/types";
 import {
   before,
   candidate,
   conflictingField,
   exact,
+  makeDossier,
   provideObs,
   testConfig,
   unknownObs,
 } from "../testing/builders";
 
 import { applyObservationsToFields } from "./applyObservationsToFields";
+
+function makeFields(
+  overrides: Readonly<Record<FieldKey, Field>> = {},
+): Record<FieldKey, Field> {
+  return {
+    ...makeDossier().fields,
+    ...overrides,
+  };
+}
 
 describe("applyObservationsToFields - contexte de début de message", () => {
   it("transmet le pending conflict uniquement au champ concerné", () => {
@@ -47,10 +62,10 @@ describe("applyObservationsToFields - contexte de début de message", () => {
       ],
     };
 
-    const fields: Record<string, Field> = {
+    const fields = makeFields({
       budget,
       guestCount,
-    };
+    });
 
     const observations: Observation[] = [
       {
@@ -101,6 +116,7 @@ describe("applyObservationsToFields - contexte de début de message", () => {
       candidate(exact(10000), before("budget 10000")),
       candidate(exact(15000), before("budget 15000")),
     ]);
+
     const guestCount = conflictingField([
       candidate(exact(80), before("80 invités")),
       candidate(exact(100), before("100 invités")),
@@ -108,7 +124,10 @@ describe("applyObservationsToFields - contexte de début de message", () => {
 
     const result = applyObservationsToFields({
       config: testConfig,
-      fields: { budget, guestCount },
+      fields: makeFields({
+        budget,
+        guestCount,
+      }),
       message: "je ne sais pas pour le budget",
       observations: [
         unknownObs("budget", "je ne sais pas pour le budget"),
@@ -122,6 +141,7 @@ describe("applyObservationsToFields - contexte de début de message", () => {
       sourceText: "je ne sais pas pour le budget",
       sourceMessageId: "message-3",
     });
+
     expect(result.fields.guestCount).toEqual(guestCount);
     expect(result.didStateChange).toBe(true);
   });
@@ -134,7 +154,9 @@ describe("applyObservationsToFields - contexte de début de message", () => {
 
     const result = applyObservationsToFields({
       config: testConfig,
-      fields: { budget },
+      fields: makeFields({
+        budget,
+      }),
       message: "budget 20000 puis je ne sais pas",
       observations: [
         provideObs("budget", exact(20000), "budget 20000"),
@@ -161,16 +183,24 @@ describe("applyObservationsToFields - contexte de début de message", () => {
       candidate(exact(10000), before("budget 10000")),
       candidate(exact(15000), before("budget 15000")),
     ]);
+
     const config = {
       ...testConfig,
       fields: testConfig.fields.map((field) =>
-        field.key === "budget" ? { ...field, cues: ["enveloppe"] } : field,
+        field.key === "budget"
+          ? {
+              ...field,
+              cues: ["enveloppe"],
+            }
+          : field,
       ),
     };
 
     const result = applyObservationsToFields({
       config,
-      fields: { budget },
+      fields: makeFields({
+        budget,
+      }),
       message: "Pour l’ENVELOPPE, je ne sais pas",
       observations: [unknownObs("budget", "Pour l’ENVELOPPE, je ne sais pas")],
       messageId: "message-3",

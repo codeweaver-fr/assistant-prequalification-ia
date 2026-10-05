@@ -6,11 +6,13 @@ import type {
   PendingQuestion,
 } from "../model/types";
 
+import { assertFieldSetMatchesConfig } from "../validation/assertFieldSetMatchesConfig";
+
 import { upsertPendingQuestion } from "./upsertPendingQuestion";
 
 type SyncPendingQuestionsInput = {
   config: BusinessConfig;
-  fields: Record<FieldKey, Field>;
+  fields: Readonly<Record<FieldKey, Field>>;
   pendingQuestions: readonly PendingQuestion[];
   clarifyFields: readonly FieldKey[];
   abandonedFields: readonly FieldKey[];
@@ -25,25 +27,36 @@ export function syncPendingQuestions({
   abandonedFields,
   messageId,
 }: SyncPendingQuestionsInput): PendingQuestion[] {
+  /*
+   * Si un champ configuré manque réellement dans le dossier,
+   * il ne s'agit pas d'un simple champ "absent".
+   *
+   * Le dossier est structurellement invalide et doit être
+   * refusé au lieu d'être traité silencieusement.
+   */
+  assertFieldSetMatchesConfig(config, fields);
+
   let result: PendingQuestion[] = [];
 
   for (const fieldDef of config.fields) {
     const field = fields[fieldDef.key];
 
-    /*
-     * Un champ abandonné ne doit plus être redemandé
-     * automatiquement par le moteur.
-     */
+    if (!field) {
+      /*
+       * Cette branche est normalement rendue impossible
+       * par assertFieldSetMatchesConfig.
+       *
+       * Elle reste ici uniquement pour garder le code
+       * explicitement défensif.
+       */
+      throw new Error(`Champ configuré absent du dossier : ${fieldDef.key}`);
+    }
+
     if (abandonedFields.includes(fieldDef.key)) {
       continue;
     }
 
-    /*
-     * Priorité 1 :
-     * un conflit doit être résolu avant toute autre
-     * raison de poser une question sur ce champ.
-     */
-    if (field?.presence === "conflicting") {
+    if (field.presence === "conflicting") {
       const existing = pendingQuestions.find(
         (pending) =>
           pending.field === fieldDef.key && pending.reason === "conflict",
@@ -65,10 +78,6 @@ export function syncPendingQuestions({
       continue;
     }
 
-    /*
-     * Priorité 2 :
-     * A5b peut demander explicitement une clarification.
-     */
     if (clarifyFields.includes(fieldDef.key)) {
       const existing = pendingQuestions.find(
         (pending) =>
@@ -91,12 +100,7 @@ export function syncPendingQuestions({
       continue;
     }
 
-    /*
-     * Priorité 3 :
-     * un champ obligatoire encore absent
-     * génère une question missing.
-     */
-    if (fieldDef.required && field?.presence === "absent") {
+    if (fieldDef.required && field.presence === "absent") {
       const existing = pendingQuestions.find(
         (pending) =>
           pending.field === fieldDef.key && pending.reason === "missing",
