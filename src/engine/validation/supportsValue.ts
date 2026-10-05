@@ -2,6 +2,7 @@ import type { DateValue, FieldValue, NumberValue } from "../model/types";
 
 import { normalizeText } from "./normalizeText";
 import { parseNumbers } from "./parseNumbers";
+import { matchesCues } from "./textMatching";
 
 const MONTHS: Readonly<Record<number, readonly string[]>> = {
   1: ["janvier", "janv"],
@@ -18,6 +19,49 @@ const MONTHS: Readonly<Record<number, readonly string[]>> = {
   12: ["décembre", "decembre", "déc", "dec"],
 };
 
+const APPROXIMATION_CUES = [
+  "environ",
+  "approximativement",
+  "approx",
+  "autour de",
+  "vers",
+  "à peu près",
+  "a peu pres",
+  "près de",
+  "pres de",
+];
+
+const MAX_BOUND_CUES = [
+  "maximum",
+  "max",
+  "au plus",
+  "jusqu'à",
+  "plafond",
+  "pas plus de",
+];
+
+const MIN_BOUND_CUES = [
+  "minimum",
+  "min",
+  "au moins",
+  "à partir de",
+  "a partir de",
+  "pas moins de",
+];
+
+const BEFORE_DATE_CUES = ["avant", "au plus tard", "d'ici"];
+
+const AFTER_DATE_CUES = [
+  "après",
+  "apres",
+  "à partir de",
+  "a partir de",
+  "au plus tôt",
+  "au plus tot",
+];
+
+const NUMBER_FRAGMENT = String.raw`\d+(?:(?: \d{3})+|[.,]\d+)?k?`;
+
 function parsedNumbersFrom(sourceText: string): number[] {
   return parseNumbers(sourceText)
     .filter(
@@ -31,17 +75,116 @@ function parsedNumbersFrom(sourceText: string): number[] {
     .map((result) => result.value);
 }
 
+function hasApproximationMarker(sourceText: string): boolean {
+  return matchesCues(sourceText, APPROXIMATION_CUES);
+}
+
+function hasMaximumMarker(sourceText: string): boolean {
+  const normalized = normalizeText(sourceText);
+
+  return (
+    matchesCues(sourceText, MAX_BOUND_CUES) ||
+    new RegExp(String.raw`(?:<=|<)\s*${NUMBER_FRAGMENT}`, "u").test(normalized)
+  );
+}
+
+function hasMinimumMarker(sourceText: string): boolean {
+  const normalized = normalizeText(sourceText);
+
+  return (
+    matchesCues(sourceText, MIN_BOUND_CUES) ||
+    new RegExp(String.raw`(?:>=|>)\s*${NUMBER_FRAGMENT}`, "u").test(
+      normalized,
+    ) ||
+    new RegExp(String.raw`${NUMBER_FRAGMENT}\s*\+`, "u").test(normalized)
+  );
+}
+
+function hasRangeMarker(sourceText: string): boolean {
+  const normalized = normalizeText(sourceText);
+
+  const hasBetween =
+    matchesCues(sourceText, ["entre"]) && matchesCues(sourceText, ["et"]);
+
+  const hasDashRange = new RegExp(
+    `${NUMBER_FRAGMENT}\\s*[-–—]\\s*${NUMBER_FRAGMENT}`,
+    "u",
+  ).test(normalized);
+
+  const hasToRange = new RegExp(
+    `${NUMBER_FRAGMENT}\\s+(?:à|a)\\s+${NUMBER_FRAGMENT}`,
+    "u",
+  ).test(normalized);
+
+  return hasBetween || hasDashRange || hasToRange;
+}
+
+function hasUnsupportedSignedNumber(sourceText: string): boolean {
+  const normalized = normalizeText(sourceText);
+
+  /*
+   * Décision conservatrice v1 :
+   *
+   * les nombres signés ne sont pas interprétés par A3.
+   * Cela évite notamment que "-100" soit accepté comme "100".
+   *
+   * Si un futur métier a réellement besoin de valeurs négatives,
+   * le parsing des nombres signés devra être ajouté explicitement.
+   */
+  return /(?:^|[^\p{L}\p{N}])[+-]\s*\d/u.test(normalized);
+}
+
 function supportsNumber(sourceText: string, value: NumberValue): boolean {
   const numbers = parsedNumbersFrom(sourceText);
 
+  if (hasUnsupportedSignedNumber(sourceText)) {
+    return false;
+  }
+
+  const hasApproximation = hasApproximationMarker(sourceText);
+  const hasMaximum = hasMaximumMarker(sourceText);
+  const hasMinimum = hasMinimumMarker(sourceText);
+  const hasRange = hasRangeMarker(sourceText);
+
   switch (value.kind) {
     case "exact":
+      return (
+        numbers.includes(value.v) &&
+        !hasApproximation &&
+        !hasMaximum &&
+        !hasMinimum &&
+        !hasRange
+      );
+
     case "approximate":
+      return (
+        numbers.includes(value.v) &&
+        hasApproximation &&
+        !hasMaximum &&
+        !hasMinimum &&
+        !hasRange
+      );
+
     case "bound":
-      return numbers.includes(value.v);
+      if (!numbers.includes(value.v) || hasRange || hasApproximation) {
+        return false;
+      }
+
+      if (value.direction === "max") {
+        return hasMaximum && !hasMinimum;
+      }
+
+      return hasMinimum && !hasMaximum;
 
     case "range":
-      return numbers.includes(value.min) && numbers.includes(value.max);
+      return (
+        numbers.includes(value.min) &&
+        numbers.includes(value.max) &&
+        hasRange &&
+        !hasMaximum &&
+        !hasMinimum &&
+        !hasApproximation
+      );
   }
 }
 
@@ -55,14 +198,42 @@ function containsMonth(
 
   const containsMonthName = monthNames.some((name) => {
     const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
     return new RegExp(`(?:^|\\s)${escaped}(?:\\s|$)`, "i").test(normalized);
   });
 
   return containsMonthName || numbers.includes(month);
 }
 
+function supportsDateRelation(
+  sourceText: string,
+  relation: DateValue["relation"],
+): boolean {
+  const hasAround = matchesCues(sourceText, APPROXIMATION_CUES);
+  const hasBefore = matchesCues(sourceText, BEFORE_DATE_CUES);
+  const hasAfter = matchesCues(sourceText, AFTER_DATE_CUES);
+
+  switch (relation) {
+    case "at":
+      return !hasAround && !hasBefore && !hasAfter;
+
+    case "around":
+      return hasAround && !hasBefore && !hasAfter;
+
+    case "before":
+      return hasBefore && !hasAfter && !hasAround;
+
+    case "after":
+      return hasAfter && !hasBefore && !hasAround;
+  }
+}
+
 function supportsDate(sourceText: string, value: DateValue): boolean {
   const numbers = parsedNumbersFrom(sourceText);
+
+  if (!supportsDateRelation(sourceText, value.relation)) {
+    return false;
+  }
 
   if (value.year !== null && !numbers.includes(value.year)) {
     return false;
