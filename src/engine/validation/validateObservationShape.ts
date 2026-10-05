@@ -85,6 +85,30 @@ function respectsNumberFieldRules(
   );
 }
 
+function isLeapYear(year: number): boolean {
+  return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+}
+
+function maximumDayForMonth(month: number, year: number | null): number {
+  switch (month) {
+    case 2:
+      if (year === null) {
+        return 29;
+      }
+
+      return isLeapYear(year) ? 29 : 28;
+
+    case 4:
+    case 6:
+    case 9:
+    case 11:
+      return 30;
+
+    default:
+      return 31;
+  }
+}
+
 function isDateValue(value: unknown): value is DateValue {
   if (!isRecord(value) || value.type !== "date") {
     return false;
@@ -111,13 +135,6 @@ function isDateValue(value: unknown): value is DateValue {
     return false;
   }
 
-  /*
-   * Invariants de DateValue :
-   * - au moins une composante doit être connue ;
-   * - un jour exige un mois ;
-   * - une année seule est autorisée ;
-   * - un mois peut exister avec ou sans année.
-   */
   if (year === null && month === null && day === null) {
     return false;
   }
@@ -135,6 +152,19 @@ function isDateValue(value: unknown): value is DateValue {
   }
 
   if (year !== null && !Number.isInteger(year)) {
+    return false;
+  }
+
+  /*
+   * Validation calendaire réelle.
+   *
+   * Sans année connue, le 29 février reste possible
+   * puisqu'il peut s'agir d'une année bissextile.
+   *
+   * Avec une année connue, on vérifie précisément
+   * février et les années bissextiles.
+   */
+  if (day !== null && month !== null && day > maximumDayForMonth(month, year)) {
     return false;
   }
 

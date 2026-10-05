@@ -122,15 +122,6 @@ function hasRangeMarker(sourceText: string): boolean {
 function hasUnsupportedSignedNumber(sourceText: string): boolean {
   const normalized = normalizeText(sourceText);
 
-  /*
-   * Décision conservatrice v1 :
-   *
-   * les nombres signés ne sont pas interprétés par A3.
-   * Cela évite notamment que "-100" soit accepté comme "100".
-   *
-   * Si un futur métier a réellement besoin de valeurs négatives,
-   * le parsing des nombres signés devra être ajouté explicitement.
-   */
   return /(?:^|[^\p{L}\p{N}])[+-]\s*\d/u.test(normalized);
 }
 
@@ -193,16 +184,9 @@ function containsMonth(
   month: number,
   numbers: readonly number[],
 ): boolean {
-  const normalized = normalizeText(sourceText);
   const monthNames = MONTHS[month] ?? [];
 
-  const containsMonthName = monthNames.some((name) => {
-    const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
-    return new RegExp(`(?:^|\\s)${escaped}(?:\\s|$)`, "i").test(normalized);
-  });
-
-  return containsMonthName || numbers.includes(month);
+  return matchesCues(sourceText, monthNames) || numbers.includes(month);
 }
 
 function supportsDateRelation(
@@ -210,7 +194,9 @@ function supportsDateRelation(
   relation: DateValue["relation"],
 ): boolean {
   const hasAround = matchesCues(sourceText, APPROXIMATION_CUES);
+
   const hasBefore = matchesCues(sourceText, BEFORE_DATE_CUES);
+
   const hasAfter = matchesCues(sourceText, AFTER_DATE_CUES);
 
   switch (relation) {
