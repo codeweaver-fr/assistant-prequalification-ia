@@ -8,6 +8,7 @@ import type {
 import { validateObservationCitation } from "./validateObservationCitation";
 import { validateObservationCue } from "./validateObservationCue";
 import { validateObservationEnum } from "./validateObservationEnum";
+import { validateObservationIntentSupport } from "./validateObservationIntentSupport";
 import { validateObservationShape } from "./validateObservationShape";
 import { validateObservationValueSupport } from "./validateObservationValueSupport";
 
@@ -64,6 +65,29 @@ export function validateObservation(
   }
 
   /*
+   * A2bis — intention sensible réellement prouvée.
+   *
+   * provide reste inchangé.
+   *
+   * correct / remove / unknown doivent être supportés
+   * par une formulation explicite et non ambiguë.
+   *
+   * Le contexte immédiat permet également de rejeter
+   * une instruction hypothétique ou rapportée.
+   */
+  const intentSupportResult = validateObservationIntentSupport(
+    message,
+    observation,
+  );
+
+  if (!intentSupportResult.success) {
+    return {
+      status: "rejected",
+      reason: intentSupportResult.reason,
+    };
+  }
+
+  /*
    * A3 — pour number/date, la valeur proposée
    * doit réellement être supportée par sourceText.
    */
@@ -99,6 +123,10 @@ export function validateObservation(
    * A5b :
    * provide/correct hors contexte demandera
    * ensuite une clarification.
+   *
+   * P10 traitera séparément le cas où plusieurs
+   * champs sont pending et où une réponse elliptique
+   * pourrait correspondre à plusieurs cibles.
    */
   const cueResult = validateObservationCue(config, observation, pendingAtStart);
 

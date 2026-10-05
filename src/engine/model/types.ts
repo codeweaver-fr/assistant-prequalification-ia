@@ -193,6 +193,7 @@ export type RejectedReason =
   | "champ_inconnu"
   | "forme_invalide"
   | "citation_introuvable"
+  | "intention_non_supportee_par_citation"
   | "valeur_non_supportee_par_citation"
   | "valeur_hors_enum";
 
