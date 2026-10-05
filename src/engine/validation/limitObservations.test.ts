@@ -97,6 +97,6 @@ describe("limitObservations", () => {
       },
     ]);
 
-    expect(result.ignored[0]).not.toHaveProperty("observation");
+    expect(Object.hasOwn(result.ignored[0], "observation")).toBe(false);
   });
 });
