@@ -1,3 +1,4 @@
+import type { BusinessConfig } from "../model/config";
 import type {
   Field,
   FieldKey,
@@ -10,6 +11,7 @@ import { applyObservationsToField } from "./applyObservationsToField";
 import { groupObservationsByField } from "./groupObservationsByField";
 
 type ApplyObservationsToFieldsInput = {
+  config: BusinessConfig;
   fields: Readonly<Record<FieldKey, Field>>;
   message: string;
   observations: readonly Observation[];
@@ -24,6 +26,7 @@ type ApplyObservationsToFieldsResult = {
 };
 
 export function applyObservationsToFields({
+  config,
   fields,
   message,
   observations,
@@ -70,6 +73,7 @@ export function applyObservationsToFields({
       messageId,
       tolerance,
       conflictPendingAtStart,
+      cues: config.fields.find((field) => field.key === fieldKey)?.cues ?? [],
     });
 
     nextFields[fieldKey] = result.field;

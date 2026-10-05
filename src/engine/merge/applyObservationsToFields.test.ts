@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import type { Field, Observation } from "../model/types";
-import { exact } from "../testing/builders";
+import { exact, testConfig } from "../testing/builders";
 
 import { applyObservationsToFields } from "./applyObservationsToFields";
 
@@ -32,6 +32,7 @@ describe("applyObservationsToFields", () => {
     ];
 
     const result = applyObservationsToFields({
+      config: testConfig,
       fields,
       message: "budget 12000 pour 80 invités",
       observations,
@@ -79,6 +80,7 @@ describe("applyObservationsToFields", () => {
     ];
 
     const result = applyObservationsToFields({
+      config: testConfig,
       fields,
       message: "budget 10000, non finalement budget 12000",
       observations,
@@ -121,6 +123,7 @@ describe("applyObservationsToFields", () => {
     ];
 
     const result = applyObservationsToFields({
+      config: testConfig,
       fields,
       message: "budget 12000",
       observations,
@@ -138,6 +141,7 @@ describe("applyObservationsToFields", () => {
     };
 
     const result = applyObservationsToFields({
+      config: testConfig,
       fields,
       message: "bonjour",
       observations: [],
@@ -160,6 +164,7 @@ describe("applyObservationsToFields", () => {
     };
 
     applyObservationsToFields({
+      config: testConfig,
       fields,
       message: "budget 12000",
       observations: [
