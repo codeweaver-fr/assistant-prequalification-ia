@@ -121,4 +121,62 @@ describe("validateObservationCitation", () => {
       success: true,
     });
   });
+
+  it("rejette une citation qui coupe un token numérique entier", () => {
+    expect(
+      validateObservationCitation(
+        "Mon budget est de 10000 euros.",
+        observation("budget est de 1000"),
+      ),
+    ).toEqual({
+      success: false,
+      reason: "citation_introuvable",
+    });
+  });
+
+  it("rejette une citation qui coupe un nombre décimal après la virgule", () => {
+    expect(
+      validateObservationCitation(
+        "Mon budget est de 10,5 euros.",
+        observation("budget est de 10,"),
+      ),
+    ).toEqual({
+      success: false,
+      reason: "citation_introuvable",
+    });
+  });
+
+  it("rejette une citation qui coupe un nombre décimal après le point", () => {
+    expect(
+      validateObservationCitation(
+        "Mon budget est de 10.5 euros.",
+        observation("budget est de 10."),
+      ),
+    ).toEqual({
+      success: false,
+      reason: "citation_introuvable",
+    });
+  });
+
+  it("accepte une citation contenant le nombre décimal complet avec virgule", () => {
+    expect(
+      validateObservationCitation(
+        "Mon budget est de 10,5 euros.",
+        observation("budget est de 10,5"),
+      ),
+    ).toEqual({
+      success: true,
+    });
+  });
+
+  it("accepte une citation contenant le nombre décimal complet avec point", () => {
+    expect(
+      validateObservationCitation(
+        "Mon budget est de 10.5 euros.",
+        observation("budget est de 10.5"),
+      ),
+    ).toEqual({
+      success: true,
+    });
+  });
 });

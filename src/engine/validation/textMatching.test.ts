@@ -42,6 +42,35 @@ describe("matchesCues", () => {
 });
 
 describe("positionOf", () => {
+  it.each([
+    ["budget 10000", "budget 1000"],
+    ["budget 10,5", "budget 10"],
+    ["budget 10.5", "budget 10."],
+    ["budget 10,5", ",5"],
+    ["budget 10.5 euros", ".5 euros"],
+    ["budget 10 000", "budget 10"],
+    ["budget 10\u202f000", "000"],
+    ["budget -100", "100"],
+    ["budget +100", "100"],
+    ["milieu", "lieu"],
+  ])("rejette une citation tronquée dans %s : %s", (message, citation) => {
+    expect(positionOf(message, citation)).toBe(-1);
+  });
+
+  it.each([
+    ["budget 10,5 euros", "10,5"],
+    ["budget 10.5 euros", "10.5"],
+    ["budget 10\u202f000 euros", "10 000"],
+    ["budget -100 euros", "-100"],
+    ["budget 10. Ensuite", "budget 10."],
+  ])("accepte une citation complète dans %s : %s", (message, citation) => {
+    expect(positionOf(message, citation)).toBeGreaterThanOrEqual(0);
+  });
+
+  it("ignore une occurrence tronquée et trouve la suivante complète", () => {
+    expect(positionOf("budget 10000 puis budget 1000", "budget 1000")).toBe(18);
+  });
+
   it("retrouve la position d'une citation dans le message normalisé", () => {
     expect(
       positionOf(
