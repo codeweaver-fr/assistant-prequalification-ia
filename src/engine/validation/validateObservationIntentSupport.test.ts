@@ -5,6 +5,143 @@ import { exact, pending, testConfig } from "../testing/builders";
 import { validateObservation } from "./validateObservation";
 
 describe("P3 - preuve des intentions sensibles", () => {
+  it("ne perd pas le cadrage hypothétique au-delà de 96 caractères", () => {
+    const sourceText = "supprimez le budget";
+    const message = `Si nécessaire ${"pour mon dossier et sa préparation ".repeat(6)}, ${sourceText}`;
+    expect(
+      validateObservation(
+        testConfig,
+        message,
+        {
+          field: "budget",
+          intent: "remove",
+          proposedValue: null,
+          sourceText,
+        },
+        [],
+      ),
+    ).toEqual({
+      status: "rejected",
+      reason: "intention_non_supportee_par_citation",
+    });
+  });
+
+  it("conserve une correction après une interdiction dans une autre phrase", () => {
+    const sourceText = "Finalement le budget est 12000";
+    const observation = {
+      field: "budget",
+      intent: "correct" as const,
+      proposedValue: exact(12000),
+      sourceText,
+    };
+    expect(
+      validateObservation(
+        testConfig,
+        `Ne corrigez pas le lieu. ${sourceText}`,
+        observation,
+        [],
+      ),
+    ).toEqual({ status: "valid", observation });
+  });
+
+  it.each([
+    [
+      "Si nécessaire pour mon dossier, supprimez le budget",
+      "supprimez le budget",
+    ],
+    ["Selon le conseiller, « supprimez le budget »", "supprimez le budget"],
+    [
+      "Vous avez demandé hier au conseiller : supprimez le budget",
+      "supprimez le budget",
+    ],
+    [
+      "Je ne veux pas supprimer le budget",
+      "Je ne veux pas supprimer le budget",
+    ],
+    ["Je ne veux pas supprimer le budget", "supprimer le budget"],
+    [
+      "Ne supprimez surtout pas le budget",
+      "Ne supprimez surtout pas le budget",
+    ],
+    [
+      "Ne tenez pas compte du budget, je ne veux pas le supprimer",
+      "Ne tenez pas compte du budget",
+    ],
+  ])("rejette le retrait non actuel dans %s", (message, sourceText) => {
+    expect(
+      validateObservation(
+        testConfig,
+        message,
+        {
+          field: "budget",
+          intent: "remove",
+          proposedValue: null,
+          sourceText,
+        },
+        [],
+      ),
+    ).toEqual({
+      status: "rejected",
+      reason: "intention_non_supportee_par_citation",
+    });
+  });
+
+  it.each([
+    [
+      "Finalement, ne corrigez pas le budget à 12000",
+      "Finalement, ne corrigez pas le budget à 12000",
+    ],
+    [
+      "Je ne veux pas corriger le budget : finalement 12000",
+      "finalement 12000",
+    ],
+    [
+      "Finalement, ne corrigez surtout pas le budget à 12000",
+      "Finalement, ne corrigez surtout pas le budget à 12000",
+    ],
+  ])("rejette la correction interdite dans %s", (message, sourceText) => {
+    expect(
+      validateObservation(
+        testConfig,
+        message,
+        {
+          field: "budget",
+          intent: "correct",
+          proposedValue: exact(12000),
+          sourceText,
+        },
+        [pending("budget", "clarify")],
+      ),
+    ).toEqual({
+      status: "rejected",
+      reason: "intention_non_supportee_par_citation",
+    });
+  });
+
+  it.each([
+    ["Ne tenez pas compte du budget", "Ne tenez pas compte du budget"],
+    [
+      "Selon le conseiller, gardez le lieu. Supprimez le budget",
+      "Supprimez le budget",
+    ],
+    [
+      "Si nécessaire, gardez le lieu; supprimez le budget",
+      "supprimez le budget",
+    ],
+    ["Ne supprimez pas le lieu. Supprimez le budget", "Supprimez le budget"],
+  ])("conserve le retrait actuel dans %s", (message, sourceText) => {
+    const observation = {
+      field: "budget",
+      intent: "remove" as const,
+      proposedValue: null,
+      sourceText,
+    };
+    expect(validateObservation(testConfig, message, observation, [])).toEqual({
+      status: "valid",
+      observation,
+    });
+  });
+
   it.each(["aucune idée", "indéterminé", "à définir"])(
     "accepte la déclaration française d'incertitude %s",
     (sourceText) => {

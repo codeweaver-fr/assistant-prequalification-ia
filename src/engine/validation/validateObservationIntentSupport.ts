@@ -38,19 +38,17 @@ function getCitationContext(
     };
   }
 
-  const prefixStart = Math.max(0, position - 96);
-  const suffixEnd = Math.min(
-    normalizedMessage.length,
-    position + normalizedSource.length + 64,
-  );
+  // Une fenêtre fixe peut couper le marqueur qui encadre la citation.
+  // Les virgules et deux-points font partie de cet encadrement.
+  const before = normalizedMessage.slice(0, position);
+  const after = normalizedMessage.slice(position + normalizedSource.length);
+  const prefix = before.split(/[.!?;»”]/u).at(-1) ?? "";
+  const suffix = after.split(/[.!?;»”]/u)[0];
 
   return {
     source: normalizedSource,
-    prefix: normalizedMessage.slice(prefixStart, position),
-    suffix: normalizedMessage.slice(
-      position + normalizedSource.length,
-      suffixEnd,
-    ),
+    prefix,
+    suffix,
   };
 }
 
@@ -64,7 +62,7 @@ function isHypotheticalContext(context: CitationContext): boolean {
     );
 
   const prefixEndsHypothetical =
-    /(?:si besoin|si nécessaire|si necessaire|si possible|au cas où|au cas ou|éventuellement|eventuellement)\s*[,;:]?\s*$/u.test(
+    /(?<![\p{L}\p{N}])(?:si besoin|si nécessaire|si necessaire|si possible|au cas où|au cas ou|éventuellement|eventuellement)(?![\p{L}\p{N}])[^.!?;»”]*$/u.test(
       prefix,
     );
 
@@ -81,7 +79,7 @@ function isReportedContext(context: CitationContext): boolean {
     );
 
   const reportedPrefix =
-    /(?:(?:vous avez|tu as|il a|elle a|on a|ils ont|elles ont)\s+(?:dit|écrit|ecrit|demandé|demande)|si je (?:dis|écris|ecris))\s*[:«"“]?\s*$/u.test(
+    /(?<![\p{L}\p{N}])(?:(?:vous avez|tu as|il a|elle a|on a|ils ont|elles ont)\s+(?:dit|écrit|ecrit|demandé|demande)|si je (?:dis|écris|ecris)|selon)(?![\p{L}\p{N}])[^.!?;»”]*$/u.test(
       prefix,
     );
 
@@ -90,6 +88,28 @@ function isReportedContext(context: CitationContext): boolean {
 
 function hasUnsafeFrame(context: CitationContext): boolean {
   return isHypotheticalContext(context) || isReportedContext(context);
+}
+
+function hasNegatedChange(context: CitationContext): boolean {
+  const clause = `${context.prefix}${context.source}${context.suffix}`;
+  const changeVerb =
+    "(?:corrig(?:e|er|ez)|rectifi(?:e|er|ez)|supprim(?:e|er|ez)|retir(?:e|er|ez)|enl(?:è|e)v(?:e|er|ez)|oubli(?:e|er|ez)|ignor(?:e|er|ez))";
+
+  // Le veto précède les cues positifs, y compris « finalement ».
+  // « Ne tenez pas compte » reste une instruction affirmative :
+  // tenir/prendre compte ne fait pas partie des verbes interdits ici.
+  return (
+    new RegExp(
+      `(?<![\\p{L}\\p{N}])(?:ne\\s+|n')` +
+        `[^.!?;]*?${changeVerb}(?![\\p{L}\\p{N}])\\s+(?:[\\p{L}]+\\s+)*(?:pas|plus|jamais)(?![\\p{L}\\p{N}])`,
+      "u",
+    ).test(clause) ||
+    new RegExp(
+      `(?<![\\p{L}\\p{N}])(?:ne\\s+(?:surtout\\s+)?(?:pas|plus|jamais)|(?:veux|veut|souhaite|désire|desire|préfère|prefere)\\s+(?:ne\\s+)?(?:pas|plus|jamais))` +
+        `[^.!?;]*?${changeVerb}(?![\\p{L}\\p{N}])`,
+      "u",
+    ).test(clause)
+  );
 }
 
 function supportsCorrection(source: string): boolean {
@@ -256,7 +276,11 @@ export function validateObservationIntentSupport(
    * Une instruction hypothétique ou rapportée
    * n'est pas considérée comme une intention actuelle.
    */
-  if (hasUnsafeFrame(context)) {
+  if (
+    hasUnsafeFrame(context) ||
+    ((observation.intent === "correct" || observation.intent === "remove") &&
+      hasNegatedChange(context))
+  ) {
     return {
       success: false,
       reason: "intention_non_supportee_par_citation",
