@@ -85,6 +85,111 @@ function filledState() {
 }
 
 describe("flux prospect A → moteur → B", () => {
+  it("trace le défaut salon/ville/délai sur plusieurs tours puis termine avec un rattachement explicite", async () => {
+    const first = await processMessage(
+      initialState("salon"),
+      message("je veux refaire mon salon", "salon-1"),
+      {
+        provider: providerFor(
+          raw({
+            demandePrincipale: provided("je veux refaire mon salon", {
+              type: "text",
+              text: "refaire mon salon",
+            }),
+          }),
+        ),
+      },
+    );
+    if (!first.ok) throw Error(first.error.code);
+    expect(first.state.askedQuestionsAtStart.map((q) => q.field)).toEqual([
+      "localisation",
+      "délai",
+    ]);
+    const second = await processMessage(
+      first.state,
+      message("marseille , avant l'été", "salon-2"),
+      {
+        provider: providerFor(
+          raw({
+            localisation: provided("marseille", {
+              type: "text",
+              text: "marseille",
+            }),
+            délai: provided("avant l'été", {
+              type: "text",
+              text: "avant l'été",
+            }),
+          }),
+        ),
+      },
+    );
+    if (!second.ok) throw Error(second.error.code);
+    // Reproduction d'un défaut connu, pas un critère de qualité souhaité.
+    expect(second.state.dossier.fields.localisation.presence).toBe("absent");
+    expect(second.diagnostics.ignored).toEqual([
+      { index: 0, reason: "reponse_elliptique_ambigue" },
+    ]);
+    expect(second.state.dossier.fields.délai).toMatchObject({
+      presence: "provided",
+      value: { text: "avant l'été" },
+    });
+    expect(second.questions.map((q) => q.fieldKey)).toEqual([
+      "localisation",
+      "budget",
+    ]);
+    const third = await processMessage(
+      second.state,
+      message("à marseille", "salon-3"),
+      {
+        provider: providerFor(
+          raw({
+            localisation: provided("marseille", {
+              type: "text",
+              text: "marseille",
+            }),
+          }),
+        ),
+      },
+    );
+    if (!third.ok) throw Error(third.error.code);
+    expect(third.state.dossier.fields.localisation.presence).toBe("provided");
+    expect(third.questions.map((q) => q.fieldKey)).toEqual([
+      "budget",
+      "contact",
+    ]);
+    const fourth = await processMessage(
+      third.state,
+      message("environ 12000 €, contact : prospect@example.com", "salon-4"),
+      {
+        provider: providerFor(
+          raw({
+            budget: provided("environ 12000 €", {
+              type: "number",
+              kind: "approximate",
+              v: 12000,
+            }),
+            contact: provided("prospect@example.com", {
+              type: "text",
+              text: "prospect@example.com",
+            }),
+          }),
+        ),
+      },
+    );
+    if (!fourth.ok) throw Error(fourth.error.code);
+    expect(fourth.qualification).toBe("complete");
+    expect(fourth.questions).toEqual([]);
+    expect(
+      fourth.state.dossier.history.some(
+        (entry) =>
+          entry.triggerMessageId === "salon-2" &&
+          entry.field === "localisation",
+      ),
+    ).toBe(false);
+    expect(fourth.state.dossier.fields.demandePrincipale).toEqual(
+      first.state.dossier.fields.demandePrincipale,
+    );
+  });
   it.each([
     ["Je veux refaire ma cuisine à Toulon.", "refaire ma cuisine", "Toulon"],
     [

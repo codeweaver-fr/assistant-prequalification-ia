@@ -64,6 +64,10 @@ export type NumberFieldDef = FieldDefBase & {
 
   readonly allowDecimals: boolean;
 
+  /** Limites inclusives appliquées à chaque composante numérique, borne comprise. */
+  readonly minValue?: number;
+  readonly maxValue?: number;
+
   /** Formes numériques acceptées pour ce champ. */
   readonly allowedKinds: NonEmptyArray<NumberValue["kind"]>;
 

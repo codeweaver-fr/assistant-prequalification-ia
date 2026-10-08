@@ -76,12 +76,20 @@ function respectsNumberFieldRules(
     return false;
   }
 
-  if (fieldDef.allowDecimals) {
-    return true;
+  const { minValue, maxValue } = fieldDef;
+  if (
+    (minValue !== undefined && !Number.isFinite(minValue)) ||
+    (maxValue !== undefined && !Number.isFinite(maxValue)) ||
+    (minValue !== undefined && maxValue !== undefined && minValue > maxValue)
+  ) {
+    return false;
   }
 
-  return numberComponents(value).every((component) =>
-    Number.isInteger(component),
+  return numberComponents(value).every(
+    (component) =>
+      (fieldDef.allowDecimals || Number.isInteger(component)) &&
+      (minValue === undefined || component >= minValue) &&
+      (maxValue === undefined || component <= maxValue),
   );
 }
 

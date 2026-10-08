@@ -3,6 +3,8 @@ import { z } from "zod";
 import type { BusinessConfig } from "../../engine/model/config";
 import type { PendingQuestion } from "../../engine/model/types";
 import { groqJsonProvider } from "../groq";
+import { tracePrequalification } from "../diagnostics";
+import { classifyProviderError } from "../groqTechnicalRetry";
 import type {
   DocumentaryInput,
   DocumentaryOutput,
@@ -74,10 +76,106 @@ export async function extractMessage(
   message: string,
   askedQuestionsAtStart: readonly PendingQuestion[],
   provider: JsonAiProvider = groqJsonProvider,
+  messageId?: string,
 ) {
   const messages = extractionMessages(config, message, askedQuestionsAtStart);
-  const raw = await provider(messages);
-  return convertRawExtraction(config, message, raw, askedQuestionsAtStart);
+  let raw: unknown;
+  try {
+    raw = await provider(messages);
+  } catch (error) {
+    tracePrequalification("A-error", {
+      messageId,
+      ...classifyProviderError(error),
+    });
+    throw error;
+  }
+  const conversion = convertRawExtraction(
+    config,
+    message,
+    raw,
+    askedQuestionsAtStart,
+  );
+  const rawFields =
+    raw !== null &&
+    typeof raw === "object" &&
+    "fields" in raw &&
+    raw.fields !== null &&
+    typeof raw.fields === "object"
+      ? raw.fields
+      : {};
+  tracePrequalification("A-validation", {
+    messageId,
+    askedFields: askedQuestionsAtStart.map(({ field }) => field),
+    fields: Object.fromEntries(
+      config.fields.map(({ key }) => {
+        const field = (rawFields as Record<string, unknown>)[key];
+        if (field === null || typeof field !== "object") return [key, null];
+        const entry = field as Record<string, unknown>;
+        const scalar = (value: unknown) =>
+          typeof value === "string" ||
+          typeof value === "number" ||
+          value === null
+            ? value
+            : undefined;
+        const value =
+          entry.value !== null && typeof entry.value === "object"
+            ? (entry.value as Record<string, unknown>)
+            : {};
+        const normalized =
+          value.normalized !== null && typeof value.normalized === "object"
+            ? (value.normalized as Record<string, unknown>)
+            : {};
+        return [
+          key,
+          {
+            status: scalar(entry.status),
+            intent: scalar(entry.intent),
+            sourceText: scalar(entry.sourceText),
+            value:
+              entry.value === null
+                ? null
+                : {
+                    raw: scalar(value.raw),
+                    normalized:
+                      value.normalized === null
+                        ? null
+                        : Object.fromEntries(
+                            [
+                              "type",
+                              "text",
+                              "key",
+                              "kind",
+                              "v",
+                              "min",
+                              "max",
+                              "direction",
+                              "relation",
+                              "year",
+                              "month",
+                              "day",
+                            ].map((name) => [name, scalar(normalized[name])]),
+                          ),
+                  },
+          },
+        ];
+      }),
+    ),
+    conversion: conversion.success
+      ? {
+          success: true,
+          candidateFields: conversion.candidateFields,
+          validFields: conversion.validation.valid.map(({ field, intent }) => ({
+            field,
+            intent,
+          })),
+          rejected: conversion.validation.rejected,
+          ignored: conversion.validation.ignored,
+          clarifyFields: conversion.validation.clarifyFields,
+          unresolved: conversion.unresolved,
+        }
+      : conversion,
+  });
+  return conversion;
 }
 
 export async function formulateQuestions(

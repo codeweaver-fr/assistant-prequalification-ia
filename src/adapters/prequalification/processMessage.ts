@@ -84,6 +84,7 @@ export async function processMessage(
       message.text,
       state.askedQuestionsAtStart,
       dependencies.provider,
+      message.id,
     );
   } catch {
     return { ok: false, error: { code: "extraction_failed" } };

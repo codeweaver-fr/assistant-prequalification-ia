@@ -1,9 +1,157 @@
 import { describe, expect, it } from "vitest";
 
-import type { BusinessConfig } from "../model/config";
+import type { BusinessConfig, NumberFieldDef } from "../model/config";
+import type { NumberValue } from "../model/types";
 import { testConfig } from "../testing/builders";
 
 import { validateObservationShape } from "./validateObservationShape";
+import { validateObservationValueSupport } from "./validateObservationValueSupport";
+
+describe("bornes numériques configurables", () => {
+  function validate(rules: Partial<NumberFieldDef>, value: NumberValue) {
+    const config: BusinessConfig = {
+      ...testConfig,
+      fields: testConfig.fields.map((field) =>
+        field.key === "budget"
+          ? ({ ...field, ...rules } as NumberFieldDef)
+          : field,
+      ),
+    };
+    return validateObservationShape(config, {
+      field: "budget",
+      intent: "provide",
+      proposedValue: value,
+      sourceText: "budget",
+    });
+  }
+  const exact = (v: number): NumberValue => ({
+    type: "number",
+    kind: "exact",
+    v,
+  });
+
+  it.each([-10, 0, 150])("sans borne conserve la forme numérique %s", (v) => {
+    expect(validate({}, exact(v)).success).toBe(true);
+  });
+  it.each([
+    [0, false],
+    [1, true],
+    [50, true],
+  ])("minimum 1 : %s → %s", (v, accepted) => {
+    expect(validate({ minValue: 1 }, exact(v as number)).success).toBe(
+      accepted,
+    );
+  });
+  it.each([
+    [100, true],
+    [101, false],
+  ])("maximum 100 : %s → %s", (v, accepted) => {
+    expect(validate({ maxValue: 100 }, exact(v as number)).success).toBe(
+      accepted,
+    );
+  });
+  it.each([
+    [-1, false],
+    [0, true],
+    [50, true],
+    [100, true],
+    [150, false],
+  ])("intervalle inclusif 0–100 : %s → %s", (v, accepted) => {
+    expect(
+      validate({ minValue: 0, maxValue: 100 }, exact(v as number)).success,
+    ).toBe(accepted);
+  });
+  it.each([false, true])("décimales autorisées = %s", (allowDecimals) => {
+    expect(
+      validate({ minValue: 1, maxValue: 2, allowDecimals }, exact(1.5)).success,
+    ).toBe(allowDecimals);
+    expect(
+      validate({ minValue: 1, maxValue: 2, allowDecimals }, exact(2.5)).success,
+    ).toBe(false);
+  });
+  it.each([0, 1, 50, 100, 101])(
+    "approximate contrôle la valeur centrale %s",
+    (v) => {
+      expect(
+        validate(
+          { minValue: 1, maxValue: 100 },
+          { type: "number", kind: "approximate", v },
+        ).success,
+      ).toBe(v >= 1 && v <= 100);
+    },
+  );
+  it.each([
+    [1, 100, true],
+    [0, 50, false],
+    [50, 101, false],
+    [1, 1, true],
+    [1.5, 50, false],
+  ])("range %s–%s → %s", (min, max, accepted) => {
+    expect(
+      validate(
+        { minValue: 1, maxValue: 100 },
+        {
+          type: "number",
+          kind: "range",
+          min: min as number,
+          max: max as number,
+        },
+      ).success,
+    ).toBe(accepted);
+  });
+  for (const direction of ["min", "max"] as const) {
+    it.each([0, 1, 50, 100, 101])(
+      `bound ${direction} contrôle le seuil %s`,
+      (v) => {
+        expect(
+          validate(
+            { minValue: 1, maxValue: 100 },
+            { type: "number", kind: "bound", direction, v },
+          ).success,
+        ).toBe(v >= 1 && v <= 100);
+      },
+    );
+  }
+  it.each([
+    { minValue: 10, maxValue: 1 },
+    { minValue: NaN },
+    { maxValue: Infinity },
+  ])("configuration incohérente rejetée : %j", (rules) => {
+    expect(validate(rules, exact(5))).toEqual({
+      success: false,
+      reason: "forme_invalide",
+    });
+  });
+  it("bornes égales autorisent uniquement la valeur commune", () => {
+    expect(validate({ minValue: 1, maxValue: 1 }, exact(1)).success).toBe(true);
+    expect(validate({ minValue: 1, maxValue: 1 }, exact(2)).success).toBe(
+      false,
+    );
+  });
+  it.each([
+    [0, false],
+    [50, true],
+    [1.5, false],
+  ])("preuve citation %s personnes → %s", (v, accepted) => {
+    const proposedValue = exact(v as number);
+    const config: BusinessConfig = {
+      ...testConfig,
+      fields: testConfig.fields.map((field) =>
+        field.key === "guestCount" ? { ...field, minValue: 1 } : field,
+      ),
+    };
+    const observation = {
+      field: "guestCount",
+      intent: "provide" as const,
+      proposedValue,
+      sourceText: `${v} personnes`,
+    };
+    expect(validateObservationShape(config, observation).success).toBe(
+      accepted,
+    );
+    expect(validateObservationValueSupport(observation).success).toBe(true);
+  });
+});
 
 describe("validateObservationShape", () => {
   it("accepte un provide number valide pour un champ number", () => {
