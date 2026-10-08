@@ -4,6 +4,8 @@ import type { BusinessConfig } from "../model/config";
 
 import { limitObservations } from "./limitObservations";
 import { validateObservation } from "./validateObservation";
+import { normalizeText } from "./normalizeText";
+import { matchesCues } from "./textMatching";
 
 type ValidationResult = ReturnType<typeof validateObservation>;
 
@@ -42,7 +44,7 @@ export function validateObservations(
   config: BusinessConfig,
   message: string,
   rawObservations: readonly unknown[],
-  pendingAtStart: readonly PendingQuestion[],
+  askedQuestionsAtStart: readonly PendingQuestion[],
 ): ValidateObservationsResult {
   /*
    * A0
@@ -53,6 +55,7 @@ export function validateObservations(
   const limited = limitObservations(config, rawObservations);
 
   const valid: Observation[] = [];
+  const validIndexes = new Map<Observation, number>();
   const rejected: RejectedObservation[] = [];
 
   const ignored: IgnoredObservation[] = [...limited.ignored];
@@ -74,10 +77,18 @@ export function validateObservations(
      * A4 enum
      * A5 garde elliptique
      */
-    const result = validateObservation(config, message, input, pendingAtStart);
+    // Contexte des questions réellement affichées au tour précédent,
+    // jamais la liste globale des pendingQuestions.
+    const result = validateObservation(
+      config,
+      message,
+      input,
+      askedQuestionsAtStart,
+    );
 
     if (result.status === "valid") {
       valid.push(result.observation);
+      validIndexes.set(result.observation, index);
       return;
     }
 
@@ -113,8 +124,49 @@ export function validateObservations(
     }
   });
 
+  // Une même valeur textuelle ne prouve pas deux rattachements concurrents.
+  // Seuls les candidats déjà validés participent : un candidat invalide ne
+  // peut pas empoisonner une observation fiable.
+  const ambiguous = new Set<Observation>();
+  for (const observation of valid) {
+    if (
+      (observation.intent !== "provide" && observation.intent !== "correct") ||
+      observation.proposedValue?.type !== "text"
+    )
+      continue;
+    const valueText = normalizeText(observation.proposedValue.text);
+    const peers = valid.filter(
+      (other) =>
+        other.field !== observation.field &&
+        (other.intent === "provide" || other.intent === "correct") &&
+        other.proposedValue?.type === "text" &&
+        normalizeText(other.proposedValue.text) === valueText &&
+        normalizeText(other.sourceText) ===
+          normalizeText(observation.sourceText),
+    );
+    if (peers.length === 0) continue;
+    const namesOwnField = matchesCues(
+      observation.sourceText,
+      config.fields.find((field) => field.key === observation.field)?.cues ??
+        [],
+    );
+    const namesPeer = peers.some((other) =>
+      matchesCues(
+        other.sourceText,
+        config.fields.find((field) => field.key === other.field)?.cues ?? [],
+      ),
+    );
+    if (!namesOwnField || namesPeer) ambiguous.add(observation);
+  }
+  for (const observation of ambiguous) {
+    ignored.push({
+      index: validIndexes.get(observation)!,
+      reason: "reponse_elliptique_ambigue",
+    });
+    clarifyFields.delete(observation.field);
+  }
   return {
-    valid,
+    valid: valid.filter((observation) => !ambiguous.has(observation)),
     rejected,
     ignored,
     clarifyFields: [...clarifyFields],

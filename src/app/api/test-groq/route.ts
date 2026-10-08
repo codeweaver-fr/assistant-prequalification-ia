@@ -1,4 +1,4 @@
-import Groq from "groq-sdk";
+import { getGroqClient, GROQ_MODEL } from "@/adapters/groq";
 import { NextRequest, NextResponse } from "next/server";
 import { ProjectRequestSchema } from "@/lib/schemas/projectRequest";
 import { getMissingFields } from "@/lib/business/getMissingFields";
@@ -23,12 +23,10 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    const groq = new Groq({
-      apiKey,
-    });
+    const groq = getGroqClient();
 
     const completion = await groq.chat.completions.create({
-      model: "openai/gpt-oss-120b",
+      model: GROQ_MODEL,
       messages: [
         {
           role: "system",

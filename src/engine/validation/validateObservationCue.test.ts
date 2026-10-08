@@ -40,7 +40,7 @@ describe("validateObservationCue", () => {
     });
   });
 
-  it("accepte une réponse elliptique si le champ était en attente au début du message", () => {
+  it("accepte une réponse elliptique pour l'unique champ réellement demandé", () => {
     const observation: Observation = {
       field: "budget",
       intent: "provide",
@@ -116,7 +116,7 @@ describe("validateObservationCue", () => {
     });
   });
 
-  it("accepte unknown elliptique si le champ était en attente", () => {
+  it("accepte unknown elliptique pour l'unique champ réellement demandé", () => {
     const observation: Observation = {
       field: "budget",
       intent: "unknown",
@@ -148,7 +148,7 @@ describe("validateObservationCue", () => {
     });
   });
 
-  it("accepte remove elliptique si le champ était en attente", () => {
+  it("accepte remove elliptique pour l'unique champ réellement demandé", () => {
     const observation: Observation = {
       field: "guestCount",
       intent: "remove",
@@ -180,7 +180,7 @@ describe("validateObservationCue", () => {
     });
   });
 
-  it("utilise bien les pendingQuestions du début du message", () => {
+  it("ignore une ellipse lorsque deux champs ont réellement été demandés", () => {
     const observation: Observation = {
       field: "guestCount",
       intent: "provide",
@@ -198,7 +198,9 @@ describe("validateObservationCue", () => {
         pending("guestCount", "missing"),
       ]),
     ).toEqual({
-      success: true,
+      success: false,
+      reason: "reponse_elliptique_ambigue",
+      shouldClarify: false,
     });
   });
 });

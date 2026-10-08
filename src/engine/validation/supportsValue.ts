@@ -2,7 +2,7 @@ import type { DateValue, FieldValue, NumberValue } from "../model/types";
 
 import { normalizeText } from "./normalizeText";
 import { parseNumbers } from "./parseNumbers";
-import { matchesCues } from "./textMatching";
+import { matchesCues, positionOf } from "./textMatching";
 
 const MONTHS: Readonly<Record<number, readonly string[]>> = {
   1: ["janvier", "janv"],
@@ -60,7 +60,62 @@ const AFTER_DATE_CUES = [
   "au plus tot",
 ];
 
-const NUMBER_FRAGMENT = String.raw`\d+(?:(?: \d{3})+|[.,]\d+)?k?`;
+const NUMBER_FRAGMENT = String.raw`\d+(?:(?: \d{3})+|(?:\.\d{3})+|[.,]\d+)?(?:\s*k)?`;
+// Une borne négative du verbe dépasser est un opérateur, pas un synonyme métier.
+const NEGATED_EXCEED = String.raw`ne\s+dépass(?:erai(?:s|ent)?|era(?:s|it|ient)?|erons|erez|eront|e(?:s|nt|z)?|ons|ais|ait|aient)\s+pas|ne\s+pas\s+dépasser`;
+
+/** Vérifie la couverture des modificateurs immédiatement autour de la citation.
+ * Réutilise les marqueurs déjà contrôlés par A3, sans créer de valeur.
+ */
+export function hasTruncatedValueEvidence(
+  message: string,
+  sourceText: string,
+  value: FieldValue,
+): boolean {
+  if (value.type !== "number" && value.type !== "date") return false;
+  const text = normalizeText(message);
+  const source = normalizeText(sourceText);
+  const escape = (part: string) => part.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&");
+  const markers =
+    value.type === "number"
+      ? [...APPROXIMATION_CUES, ...MAX_BOUND_CUES, ...MIN_BOUND_CUES]
+      : [...APPROXIMATION_CUES, ...BEFORE_DATE_CUES, ...AFTER_DATE_CUES];
+  const prefix = new RegExp(
+    `(?<![\\p{L}\\p{N}])(?:${markers.map(escape).join("|")}${value.type === "number" ? `|${NEGATED_EXCEED}` : ""})\\s*$`,
+    "u",
+  );
+  const suffix = new RegExp(
+    `^\\s*(?:${markers.map(escape).join("|")})(?![\\p{L}\\p{N}])`,
+    "u",
+  );
+  const rangePrefix = new RegExp(
+    `(?<![\\p{L}\\p{N}])(?:entre\\s+${NUMBER_FRAGMENT}\\s+et|${NUMBER_FRAGMENT}\\s*(?:[-–—]|à|a))\\s*$`,
+    "u",
+  );
+  const rangeSuffix = new RegExp(
+    `^\\s*(?:et|[-–—]|à|a)\\s*${NUMBER_FRAGMENT}(?![\\p{L}\\p{N}])`,
+    "u",
+  );
+  if (!source) return false;
+  let from = 0;
+  while (from < text.length) {
+    const position = positionOf(text, source, from);
+    if (position === -1) break;
+    const before = text.slice(0, position);
+    const after = text.slice(position + source.length);
+    if (prefix.test(before) || suffix.test(after)) return true;
+    if (
+      value.type === "number" &&
+      (rangePrefix.test(before) ||
+        (/\d(?:k)?$/iu.test(source) && rangeSuffix.test(after)) ||
+        /(?:<=|>=|<|>)\s*$/u.test(before) ||
+        /^\s*\+(?!\s*\d)/u.test(after))
+    )
+      return true;
+    from = position + source.length;
+  }
+  return false;
+}
 
 function parsedNumbersFrom(sourceText: string): number[] {
   return parseNumbers(sourceText)
@@ -84,6 +139,10 @@ function hasMaximumMarker(sourceText: string): boolean {
 
   return (
     matchesCues(sourceText, MAX_BOUND_CUES) ||
+    new RegExp(
+      `(?<![\\p{L}\\p{N}])(?:${NEGATED_EXCEED})\\s+${NUMBER_FRAGMENT}(?![\\p{L}\\p{N}])`,
+      "u",
+    ).test(normalized) ||
     new RegExp(String.raw`(?:<=|<)\s*${NUMBER_FRAGMENT}`, "u").test(normalized)
   );
 }
@@ -234,6 +293,19 @@ function supportsDateRelation(
     case "after":
       return hasAfter && !hasBefore && !hasAround;
   }
+}
+
+/** Réutilise les preuves calendaires de A3, sans normaliser un texte en date. */
+export function supportsTemporalText(sourceText: string): boolean {
+  const namesMonth = Object.values(MONTHS).some((names) =>
+    matchesCues(sourceText, names),
+  );
+  return (
+    namesMonth &&
+    (hasApproximationMarker(sourceText) ||
+      matchesCues(sourceText, BEFORE_DATE_CUES) ||
+      matchesCues(sourceText, AFTER_DATE_CUES))
+  );
 }
 
 function supportsDate(sourceText: string, value: DateValue): boolean {

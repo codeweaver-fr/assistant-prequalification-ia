@@ -1,0 +1,285 @@
+{
+  "request-01": {
+    "fields": {
+      "typeProjet": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "demandePrincipale": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "localisation": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "délai": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "budget": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "contact": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      }
+    }
+  },
+  "request-02": {
+    "fields": {
+      "typeProjet": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "demandePrincipale": {
+        "status": "provided",
+        "value": {
+          "raw": "refaire la salle d’eau",
+          "normalized": {
+            "type": "text",
+            "text": "refaire la salle d’eau"
+          }
+        },
+        "sourceText": "refaire la salle d’eau"
+      },
+      "localisation": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "délai": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "budget": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "contact": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      }
+    }
+  },
+  "request-03": {
+    "fields": {
+      "typeProjet": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "demandePrincipale": {
+        "status": "provided",
+        "value": {
+          "raw": "remettre la pièce à neuf",
+          "normalized": {
+            "type": "text",
+            "text": "remettre la pièce à neuf"
+          }
+        },
+        "sourceText": "Je veux remettre la pièce à neuf"
+      },
+      "localisation": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "délai": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "budget": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "contact": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      }
+    }
+  },
+  "request-06": {
+    "evaluationError": "provider_failed"
+  },
+  "request-05": {
+    "evaluationError": "provider_failed"
+  },
+  "request-04": {
+    "evaluationError": "provider_failed"
+  },
+  "location-01": {
+    "evaluationError": "provider_failed"
+  },
+  "location-03": {
+    "evaluationError": "provider_failed"
+  },
+  "location-02": {
+    "fields": {
+      "typeProjet": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "demandePrincipale": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "localisation": {
+        "status": "provided",
+        "value": {
+          "raw": "Six-Fours",
+          "normalized": {
+            "type": "text",
+            "text": "Six-Fours"
+          }
+        },
+        "sourceText": "chez mes parents à Six-Fours"
+      },
+      "délai": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "budget": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "contact": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      }
+    }
+  },
+  "location-04": {
+    "evaluationError": "provider_failed"
+  },
+  "location-06": {
+    "evaluationError": "provider_failed"
+  },
+  "location-05": {
+    "evaluationError": "provider_failed"
+  },
+  "time-01": {
+    "evaluationError": "provider_failed"
+  },
+  "time-03": {
+    "evaluationError": "provider_failed"
+  },
+  "time-02": {
+    "evaluationError": "provider_failed"
+  },
+  "time-06": {
+    "evaluationError": "provider_failed"
+  },
+  "time-04": {
+    "evaluationError": "provider_failed"
+  },
+  "time-05": {
+    "evaluationError": "provider_failed"
+  },
+  "time-07": {
+    "evaluationError": "provider_failed"
+  },
+  "time-08": {
+    "evaluationError": "provider_failed"
+  },
+  "money-01": {
+    "evaluationError": "provider_failed"
+  },
+  "money-02": {
+    "evaluationError": "provider_failed"
+  },
+  "money-03": {
+    "evaluationError": "provider_failed"
+  },
+  "money-04": {
+    "evaluationError": "provider_failed"
+  },
+  "money-06": {
+    "evaluationError": "provider_failed"
+  },
+  "money-05": {
+    "evaluationError": "provider_failed"
+  },
+  "money-07": {
+    "evaluationError": "provider_failed"
+  },
+  "contact-01": {
+    "evaluationError": "provider_failed"
+  },
+  "money-08": {
+    "evaluationError": "provider_failed"
+  },
+  "money-09": {
+    "evaluationError": "provider_failed"
+  },
+  "contact-03": {
+    "evaluationError": "provider_failed"
+  },
+  "contact-02": {
+    "evaluationError": "provider_failed"
+  },
+  "contact-04": {
+    "evaluationError": "provider_failed"
+  },
+  "ambiguous-01": {
+    "evaluationError": "provider_failed"
+  },
+  "ambiguous-02": {
+    "evaluationError": "provider_failed"
+  },
+  "ambiguous-03": {
+    "evaluationError": "provider_failed"
+  },
+  "unknown-02": {
+    "evaluationError": "provider_failed"
+  },
+  "ambiguous-04": {
+    "evaluationError": "provider_failed"
+  },
+  "unknown-01": {
+    "evaluationError": "provider_failed"
+  },
+  "unknown-03": {
+    "evaluationError": "provider_failed"
+  },
+  "conflict-01": {
+    "evaluationError": "provider_failed"
+  },
+  "unknown-04": {
+    "evaluationError": "provider_failed"
+  },
+  "correction-01": {
+    "evaluationError": "provider_failed"
+  },
+  "invalid-02": {
+    "evaluationError": "provider_failed"
+  },
+  "invalid-01": {
+    "evaluationError": "provider_failed"
+  },
+  "collision-01": {
+    "evaluationError": "provider_failed"
+  },
+  "invalid-03": {
+    "evaluationError": "provider_failed"
+  }
+}

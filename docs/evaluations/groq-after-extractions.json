@@ -1,0 +1,365 @@
+{
+  "request-03": {
+    "fields": {
+      "typeProjet": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "demandePrincipale": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "localisation": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "délai": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "budget": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "contact": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      }
+    }
+  },
+  "request-01": {
+    "fields": {
+      "typeProjet": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "demandePrincipale": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "localisation": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "délai": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "budget": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "contact": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      }
+    }
+  },
+  "request-02": {
+    "fields": {
+      "typeProjet": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "demandePrincipale": {
+        "status": "provided",
+        "value": {
+          "raw": "refaire la salle d’eau",
+          "normalized": {
+            "type": "text",
+            "text": "refaire la salle d’eau"
+          }
+        },
+        "sourceText": "refaire la salle d’eau"
+      },
+      "localisation": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "délai": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "budget": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "contact": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      }
+    }
+  },
+  "request-05": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "request-06": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "request-04": {
+    "fields": {
+      "typeProjet": {
+        "status": "provided",
+        "value": {
+          "raw": "cloison acoustique",
+          "normalized": {
+            "type": "text",
+            "text": "cloison acoustique"
+          }
+        },
+        "sourceText": "Installer une cloison acoustique"
+      },
+      "demandePrincipale": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "localisation": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "délai": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "budget": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      },
+      "contact": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null
+      }
+    }
+  },
+  "location-02": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "location-01": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "location-03": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "location-05": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "location-04": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "location-06": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "time-01": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "time-02": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "time-03": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "time-06": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "time-05": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "time-04": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "time-08": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "time-07": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "money-01": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "money-03": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "money-02": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "money-04": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "money-06": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "money-05": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "money-07": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "money-09": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "money-08": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "contact-01": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "contact-03": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "contact-04": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "contact-02": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "ambiguous-01": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "ambiguous-02": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "ambiguous-03": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "ambiguous-04": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "unknown-01": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "unknown-02": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "unknown-04": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "unknown-03": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "conflict-01": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "invalid-01": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "invalid-02": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "correction-01": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "invalid-03": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  },
+  "collision-01": {
+    "evaluationError": "provider_failed",
+    "status": 429,
+    "kind": "Error"
+  }
+}

@@ -187,6 +187,7 @@ export type IgnoredReason =
   | "deja_unknown"
   | "trop_de_candidats"
   | "trop_d_observations"
+  | "reponse_elliptique_ambigue"
   | "champ_non_en_attente";
 
 export type RejectedReason =

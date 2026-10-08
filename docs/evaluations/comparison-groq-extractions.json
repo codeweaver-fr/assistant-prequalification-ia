@@ -1,0 +1,341 @@
+{
+  "request-01": {
+    "fields": {
+      "typeProjet": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      },
+      "demandePrincipale": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      },
+      "localisation": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      },
+      "délai": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      },
+      "budget": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      },
+      "contact": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      }
+    }
+  },
+  "request-02": {
+    "fields": {
+      "typeProjet": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      },
+      "demandePrincipale": {
+        "status": "provided",
+        "value": {
+          "raw": "refaire la salle d’eau",
+          "normalized": {
+            "type": "text",
+            "text": "refaire la salle d’eau"
+          }
+        },
+        "sourceText": "Il faudrait refaire la salle d’eau",
+        "intent": "provide"
+      },
+      "localisation": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      },
+      "délai": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      },
+      "budget": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      },
+      "contact": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      }
+    }
+  },
+  "request-03": {
+    "fields": {
+      "typeProjet": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      },
+      "demandePrincipale": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      },
+      "localisation": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      },
+      "délai": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      },
+      "budget": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      },
+      "contact": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      }
+    }
+  },
+  "request-04": {
+    "fields": {
+      "typeProjet": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      },
+      "demandePrincipale": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      },
+      "localisation": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      },
+      "délai": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      },
+      "budget": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      },
+      "contact": {
+        "status": "missing",
+        "value": null,
+        "sourceText": null,
+        "intent": null
+      }
+    }
+  },
+  "request-05": {
+    "evaluationError": "provider_failed",
+    "category": "provider_rate_limited",
+    "status": 429
+  },
+  "request-06": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "location-01": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "location-02": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "location-03": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "location-04": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "location-05": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "location-06": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "time-01": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "time-02": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "time-03": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "time-04": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "time-05": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "time-06": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "time-07": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "time-08": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "money-01": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "money-02": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "money-03": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "money-04": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "money-05": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "money-06": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "money-07": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "money-08": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "money-09": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "contact-01": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "contact-02": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "contact-03": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "contact-04": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "ambiguous-01": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "ambiguous-02": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "ambiguous-03": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "ambiguous-04": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "unknown-01": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "unknown-02": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "unknown-03": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "unknown-04": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "conflict-01": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "correction-01": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "invalid-01": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "invalid-02": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "invalid-03": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  },
+  "collision-01": {
+    "evaluationError": "not_attempted",
+    "reason": "rate_limit_circuit_open"
+  }
+}

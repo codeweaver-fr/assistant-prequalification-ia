@@ -29,6 +29,28 @@ function makeFields(
 }
 
 describe("syncPendingQuestions", () => {
+  it("ne questionne pas un champ facultatif absent même proposé en clarification", () => {
+    const config = {
+      ...testConfig,
+      fields: testConfig.fields.map((field) => ({ ...field, required: false })),
+    };
+    const result = syncPendingQuestions({
+      config,
+      fields: makeFields(),
+      pendingQuestions: [
+        {
+          field: "location",
+          reason: "missing",
+          attempts: 0,
+          askedAtMessageId: "old",
+        },
+      ],
+      clarifyFields: ["location"],
+      abandonedFields: [],
+      messageId: "m1",
+    });
+    expect(result).toEqual([]);
+  });
   it("crée des pending missing pour les champs requis absents", () => {
     const result = syncPendingQuestions({
       config: testConfig,

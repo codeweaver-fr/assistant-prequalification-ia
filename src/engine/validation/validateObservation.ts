@@ -24,7 +24,7 @@ type RejectedObservationResult = {
 
 type IgnoredObservationResult = {
   status: "ignored";
-  reason: "champ_non_en_attente";
+  reason: "champ_non_en_attente" | "reponse_elliptique_ambigue";
   shouldClarify: boolean;
 };
 
@@ -35,7 +35,7 @@ export function validateObservation(
   config: BusinessConfig,
   message: string,
   input: unknown,
-  pendingAtStart: readonly PendingQuestion[],
+  askedQuestionsAtStart: readonly PendingQuestion[],
 ): ValidateObservationResult {
   /*
    * A1 — champ connu + forme valide
@@ -91,7 +91,10 @@ export function validateObservation(
    * A3 — pour number/date, la valeur proposée
    * doit réellement être supportée par sourceText.
    */
-  const valueSupportResult = validateObservationValueSupport(observation);
+  const valueSupportResult = validateObservationValueSupport(
+    observation,
+    message,
+  );
 
   if (!valueSupportResult.success) {
     return {
@@ -116,19 +119,25 @@ export function validateObservation(
   /*
    * A5 — garde des réponses elliptiques.
    *
-   * Sans indice explicite dans sourceText,
-   * le champ doit avoir été pending au début
-   * du message.
+   * Sans preuve textuelle contextualisée ni indice explicite,
+   * le champ doit être l'unique cible des questions réellement
+   * affichées au prospect au tour précédent.
+   * Plusieurs cibles distinctes rendent l'ellipse ambiguë :
+   * aucune cible du LLM n'est choisie, ni ajoutée aux clarifications.
    *
    * A5b :
    * provide/correct hors contexte demandera
    * ensuite une clarification.
    *
-   * P10 traitera séparément le cas où plusieurs
-   * champs sont pending et où une réponse elliptique
-   * pourrait correspondre à plusieurs cibles.
+   * Le pipeline doit fournir les questions sélectionnées et affichées,
+   * pas l'ensemble de dossier.pendingQuestions.
    */
-  const cueResult = validateObservationCue(config, observation, pendingAtStart);
+  const cueResult = validateObservationCue(
+    config,
+    observation,
+    askedQuestionsAtStart,
+    message,
+  );
 
   if (!cueResult.success) {
     return {

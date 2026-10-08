@@ -1,0 +1,3948 @@
+{
+  "phase": "baseline",
+  "methodology": "Référence = sorties A contrôlées ; liveReplay = sorties Groq capturées avant refactor, revalidées à l'identique. Aucune garantie de généralisation réelle déduite des fixtures.",
+  "reference": {
+    "summary": {
+      "scenarios": 47,
+      "entirelyCorrect": 27,
+      "extractionOrContractErrors": 1,
+      "validationErrors": 19,
+      "decisionErrors": 0,
+      "falsePositives": 0,
+      "falseNegatives": 19,
+      "providerErrors": 0
+    },
+    "rows": [
+      {
+        "id": "request-01",
+        "family": "request",
+        "message": "J’aimerais moderniser complètement ma cuisine",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "demandePrincipale",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "champ_non_en_attente"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:demandePrincipale:clarify",
+            "fieldKey": "demandePrincipale",
+            "text": "Pouvez-vous préciser votre demande principale ?"
+          }
+        ]
+      },
+      {
+        "id": "request-02",
+        "family": "request",
+        "message": "Il faudrait refaire la salle d’eau",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "demandePrincipale",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "provided",
+              "value": {
+                "type": "text",
+                "text": "refaire la salle d’eau"
+              },
+              "sourceText": "Il faudrait refaire la salle d’eau",
+              "sourceMessageId": "m1"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": []
+      },
+      {
+        "id": "request-03",
+        "family": "request",
+        "message": "Je veux remettre la pièce à neuf",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "demandePrincipale",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "champ_non_en_attente"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:demandePrincipale:clarify",
+            "fieldKey": "demandePrincipale",
+            "text": "Pouvez-vous préciser votre demande principale ?"
+          }
+        ]
+      },
+      {
+        "id": "request-04",
+        "family": "request",
+        "message": "Installer une cloison acoustique",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "demandePrincipale",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "champ_non_en_attente"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:demandePrincipale:clarify",
+            "fieldKey": "demandePrincipale",
+            "text": "Pouvez-vous préciser votre demande principale ?"
+          }
+        ]
+      },
+      {
+        "id": "request-05",
+        "family": "request",
+        "message": "Nous souhaitons transformer le garage pour y aménager un bureau calme",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "demandePrincipale",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "champ_non_en_attente"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:demandePrincipale:clarify",
+            "fieldKey": "demandePrincipale",
+            "text": "Pouvez-vous préciser votre demande principale ?"
+          }
+        ]
+      },
+      {
+        "id": "request-06",
+        "family": "request",
+        "message": "Rendre l’entrée accessible",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "demandePrincipale",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "champ_non_en_attente"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:demandePrincipale:clarify",
+            "fieldKey": "demandePrincipale",
+            "text": "Pouvez-vous préciser votre demande principale ?"
+          }
+        ]
+      },
+      {
+        "id": "location-01",
+        "family": "location",
+        "message": "le chantier est à Ollioules",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "localisation",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "provided",
+              "value": {
+                "type": "text",
+                "text": "Ollioules"
+              },
+              "sourceText": "le chantier est à Ollioules",
+              "sourceMessageId": "m1"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": []
+      },
+      {
+        "id": "location-02",
+        "family": "location",
+        "message": "chez mes parents à Six-Fours",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "localisation",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "provided",
+              "value": {
+                "type": "text",
+                "text": "Six-Fours"
+              },
+              "sourceText": "chez mes parents à Six-Fours",
+              "sourceMessageId": "m1"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": []
+      },
+      {
+        "id": "location-03",
+        "family": "location",
+        "message": "le projet se trouve du côté de La Garde",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "localisation",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "champ_non_en_attente"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:localisation:clarify",
+            "fieldKey": "localisation",
+            "text": "Pouvez-vous préciser la localisation du projet ?"
+          }
+        ]
+      },
+      {
+        "id": "location-04",
+        "family": "location",
+        "message": "L’intervention se déroulera dans notre résidence secondaire près de Bordeaux",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "localisation",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "champ_non_en_attente"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:localisation:clarify",
+            "fieldKey": "localisation",
+            "text": "Pouvez-vous préciser la localisation du projet ?"
+          }
+        ]
+      },
+      {
+        "id": "location-05",
+        "family": "location",
+        "message": "Pour les travaux, rendez-vous au 21 rue des Lilas",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "localisation",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "champ_non_en_attente"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:localisation:clarify",
+            "fieldKey": "localisation",
+            "text": "Pouvez-vous préciser la localisation du projet ?"
+          }
+        ]
+      },
+      {
+        "id": "location-06",
+        "family": "location",
+        "message": "L’appartement concerné se trouve dans le centre de Dijon",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "localisation",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "champ_non_en_attente"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:localisation:clarify",
+            "fieldKey": "localisation",
+            "text": "Pouvez-vous préciser la localisation du projet ?"
+          }
+        ]
+      },
+      {
+        "id": "time-01",
+        "family": "time",
+        "message": "avant l’été",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "délai",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "reponse_elliptique_ambigue"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:délai:missing",
+            "fieldKey": "délai",
+            "text": "À quelle période souhaitez-vous réaliser votre projet ?"
+          }
+        ]
+      },
+      {
+        "id": "time-02",
+        "family": "time",
+        "message": "quand ce sera possible",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "délai",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "provided",
+              "value": {
+                "type": "text",
+                "text": "quand ce sera possible"
+              },
+              "sourceText": "quand ce sera possible",
+              "sourceMessageId": "m1"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": []
+      },
+      {
+        "id": "time-03",
+        "family": "time",
+        "message": "idéalement au printemps",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "délai",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "reponse_elliptique_ambigue"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:délai:missing",
+            "fieldKey": "délai",
+            "text": "À quelle période souhaitez-vous réaliser votre projet ?"
+          }
+        ]
+      },
+      {
+        "id": "time-04",
+        "family": "time",
+        "message": "pas avant janvier",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "délai",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "provided",
+              "value": {
+                "type": "text",
+                "text": "pas avant janvier"
+              },
+              "sourceText": "pas avant janvier",
+              "sourceMessageId": "m1"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": []
+      },
+      {
+        "id": "time-05",
+        "family": "time",
+        "message": "courant mars",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "délai",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "reponse_elliptique_ambigue"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:délai:missing",
+            "fieldKey": "délai",
+            "text": "À quelle période souhaitez-vous réaliser votre projet ?"
+          }
+        ]
+      },
+      {
+        "id": "time-06",
+        "family": "time",
+        "message": "dans quelques mois",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "délai",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "reponse_elliptique_ambigue"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:délai:missing",
+            "fieldKey": "délai",
+            "text": "À quelle période souhaitez-vous réaliser votre projet ?"
+          }
+        ]
+      },
+      {
+        "id": "time-07",
+        "family": "time",
+        "message": "à réception des clés",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "délai",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "champ_non_en_attente"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:délai:clarify",
+            "fieldKey": "délai",
+            "text": "Pouvez-vous préciser le délai souhaité ?"
+          }
+        ]
+      },
+      {
+        "id": "time-08",
+        "family": "time",
+        "message": "après la fin de notre location actuelle",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "délai",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "champ_non_en_attente"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:délai:clarify",
+            "fieldKey": "délai",
+            "text": "Pouvez-vous préciser le délai souhaité ?"
+          }
+        ]
+      },
+      {
+        "id": "money-01",
+        "family": "money",
+        "message": "autour de 10 000 €",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "budget",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "provided",
+              "value": {
+                "type": "number",
+                "kind": "approximate",
+                "v": 10000
+              },
+              "sourceText": "autour de 10 000 €",
+              "sourceMessageId": "m1"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": []
+      },
+      {
+        "id": "money-02",
+        "family": "money",
+        "message": "Le budget sera de 12000 €",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "budget",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "provided",
+              "value": {
+                "type": "number",
+                "kind": "exact",
+                "v": 12000
+              },
+              "sourceText": "Le budget sera de 12000 €",
+              "sourceMessageId": "m1"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": []
+      },
+      {
+        "id": "money-03",
+        "family": "money",
+        "message": "environ 12000 €",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "budget",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "provided",
+              "value": {
+                "type": "number",
+                "kind": "approximate",
+                "v": 12000
+              },
+              "sourceText": "environ 12000 €",
+              "sourceMessageId": "m1"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": []
+      },
+      {
+        "id": "money-04",
+        "family": "money",
+        "message": "maximum 12000 €",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "budget",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "provided",
+              "value": {
+                "type": "number",
+                "kind": "bound",
+                "v": 12000,
+                "direction": "max"
+              },
+              "sourceText": "maximum 12000 €",
+              "sourceMessageId": "m1"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": []
+      },
+      {
+        "id": "money-05",
+        "family": "money",
+        "message": "au moins 12000 €",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "budget",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "provided",
+              "value": {
+                "type": "number",
+                "kind": "bound",
+                "v": 12000,
+                "direction": "min"
+              },
+              "sourceText": "au moins 12000 €",
+              "sourceMessageId": "m1"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": []
+      },
+      {
+        "id": "money-06",
+        "family": "money",
+        "message": "entre 10000 et 12000 €",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "budget",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "provided",
+              "value": {
+                "type": "number",
+                "kind": "range",
+                "min": 10000,
+                "max": 12000
+              },
+              "sourceText": "entre 10000 et 12000 €",
+              "sourceMessageId": "m1"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": []
+      },
+      {
+        "id": "money-07",
+        "family": "money",
+        "message": "je ne dépasserai pas 15k",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "budget",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": false,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": "La borne peut être comprise par A mais ce marqueur n'est pas supporté par A3 actuellement ; aucun patch lexical pour ce cas.",
+        "diagnostics": {
+          "rejected": [
+            {
+              "index": 0,
+              "reason": "valeur_non_supportee_par_citation"
+            }
+          ],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:budget:missing",
+            "fieldKey": "budget",
+            "text": "Quel budget, même approximatif, avez-vous prévu ?"
+          }
+        ]
+      },
+      {
+        "id": "money-08",
+        "family": "unsupported",
+        "message": "environ huit mille",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "budget",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": "Nombres en lettres hors scope V1 ; ne pas fabriquer 8000.",
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [
+            {
+              "field": "budget",
+              "status": "provided",
+              "reason": "normalisation_absente"
+            }
+          ],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:budget:missing",
+            "fieldKey": "budget",
+            "text": "Quel budget, même approximatif, avez-vous prévu ?"
+          }
+        ]
+      },
+      {
+        "id": "money-09",
+        "family": "unsupported",
+        "message": "entre 8 et 12 000",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "budget",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": "Ne pas inventer une multiplication de la borne 8 sans preuve.",
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [
+            {
+              "field": "budget",
+              "status": "ambiguous",
+              "reason": "extraction_ambigue"
+            }
+          ],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:budget:missing",
+            "fieldKey": "budget",
+            "text": "Quel budget, même approximatif, avez-vous prévu ?"
+          }
+        ]
+      },
+      {
+        "id": "contact-01",
+        "family": "contact",
+        "message": "Vous pouvez m’écrire à lea@example.com",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "contact",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "champ_non_en_attente"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:contact:clarify",
+            "fieldKey": "contact",
+            "text": "Pouvez-vous fournir une adresse email ou un numéro de téléphone valide ?"
+          }
+        ]
+      },
+      {
+        "id": "contact-02",
+        "family": "contact",
+        "message": "Pour me joindre : 06 12 34 56 78",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "contact",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "champ_non_en_attente"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:contact:clarify",
+            "fieldKey": "contact",
+            "text": "Pouvez-vous fournir une adresse email ou un numéro de téléphone valide ?"
+          }
+        ]
+      },
+      {
+        "id": "contact-03",
+        "family": "contact",
+        "message": "Mon email est client@example.org",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "contact",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "provided",
+              "value": {
+                "type": "text",
+                "text": "client@example.org"
+              },
+              "sourceText": "Mon email est client@example.org",
+              "sourceMessageId": "m1"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": []
+      },
+      {
+        "id": "contact-04",
+        "family": "contact",
+        "message": "Appelez-moi au +33 6 98 76 54 32",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "contact",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "champ_non_en_attente"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:contact:clarify",
+            "fieldKey": "contact",
+            "text": "Pouvez-vous fournir une adresse email ou un numéro de téléphone valide ?"
+          }
+        ]
+      },
+      {
+        "id": "ambiguous-01",
+        "family": "ambiguity",
+        "message": "100",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "délai",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "reponse_elliptique_ambigue"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:délai:missing",
+            "fieldKey": "délai",
+            "text": "À quelle période souhaitez-vous réaliser votre projet ?"
+          }
+        ]
+      },
+      {
+        "id": "ambiguous-02",
+        "family": "ambiguity",
+        "message": "mars",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "délai",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "reponse_elliptique_ambigue"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:délai:missing",
+            "fieldKey": "délai",
+            "text": "À quelle période souhaitez-vous réaliser votre projet ?"
+          }
+        ]
+      },
+      {
+        "id": "ambiguous-03",
+        "family": "ambiguity",
+        "message": "8000",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "délai",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "reponse_elliptique_ambigue"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:délai:missing",
+            "fieldKey": "délai",
+            "text": "À quelle période souhaitez-vous réaliser votre projet ?"
+          }
+        ]
+      },
+      {
+        "id": "ambiguous-04",
+        "family": "ambiguity",
+        "message": "La Garde",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "localisation",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "reponse_elliptique_ambigue"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:localisation:missing",
+            "fieldKey": "localisation",
+            "text": "Où se situe votre projet ?"
+          }
+        ]
+      },
+      {
+        "id": "unknown-01",
+        "family": "unknown",
+        "message": "je ne sais pas",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "budget",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "unknown",
+              "sourceText": "je ne sais pas",
+              "sourceMessageId": "m1"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:budget:clarify",
+            "fieldKey": "budget",
+            "text": "Pouvez-vous préciser le budget prévu ?"
+          }
+        ]
+      },
+      {
+        "id": "unknown-02",
+        "family": "unknown",
+        "message": "aucune idée",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "budget",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "unknown",
+              "sourceText": "aucune idée",
+              "sourceMessageId": "m1"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:budget:clarify",
+            "fieldKey": "budget",
+            "text": "Pouvez-vous préciser le budget prévu ?"
+          }
+        ]
+      },
+      {
+        "id": "unknown-03",
+        "family": "unknown",
+        "message": "je n’ai aucune idée du budget",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "budget",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "unknown",
+              "sourceText": "je n’ai aucune idée du budget",
+              "sourceMessageId": "m1"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:budget:clarify",
+            "fieldKey": "budget",
+            "text": "Pouvez-vous préciser le budget prévu ?"
+          }
+        ]
+      },
+      {
+        "id": "unknown-04",
+        "family": "unknown",
+        "message": "pas encore décidé",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "délai",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [
+            {
+              "index": 0,
+              "reason": "intention_non_supportee_par_citation"
+            }
+          ],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:délai:missing",
+            "fieldKey": "délai",
+            "text": "À quelle période souhaitez-vous réaliser votre projet ?"
+          }
+        ]
+      },
+      {
+        "id": "conflict-01",
+        "family": "conflict",
+        "message": "Le budget est de 15000 €",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "budget",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "conflicting",
+              "candidates": [
+                {
+                  "value": {
+                    "type": "number",
+                    "kind": "exact",
+                    "v": 10000
+                  },
+                  "sourceText": "budget 10000",
+                  "sourceMessageId": "old"
+                },
+                {
+                  "value": {
+                    "type": "number",
+                    "kind": "exact",
+                    "v": 15000
+                  },
+                  "sourceText": "Le budget est de 15000 €",
+                  "sourceMessageId": "m1"
+                }
+              ]
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:budget:conflict",
+            "fieldKey": "budget",
+            "text": "J’ai deux informations différentes pour le budget. Laquelle dois-je retenir ?"
+          }
+        ]
+      },
+      {
+        "id": "correction-01",
+        "family": "correction",
+        "message": "Je corrige le budget : 15000 €",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "extraction_or_contract",
+        "checks": [
+          {
+            "field": "budget",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": false,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "conflicting",
+              "candidates": [
+                {
+                  "value": {
+                    "type": "number",
+                    "kind": "exact",
+                    "v": 10000
+                  },
+                  "sourceText": "budget 10000",
+                  "sourceMessageId": "old"
+                },
+                {
+                  "value": {
+                    "type": "number",
+                    "kind": "exact",
+                    "v": 15000
+                  },
+                  "sourceText": "Je corrige le budget : 15000 €",
+                  "sourceMessageId": "m1"
+                }
+              ]
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": "A ne transmet pas correct aujourd'hui : limite d'extraction à exposer, sans refonte du merge.",
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:budget:conflict",
+            "fieldKey": "budget",
+            "text": "J’ai deux informations différentes pour le budget. Laquelle dois-je retenir ?"
+          }
+        ]
+      },
+      {
+        "id": "invalid-01",
+        "family": "security",
+        "message": "budget environ 12000 €",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "budget",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": ["budget:citation_tronquee"],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": []
+      },
+      {
+        "id": "invalid-02",
+        "family": "security",
+        "message": "Nous restons à Lyon",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "localisation",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": ["localisation:texte_non_supporte"],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": []
+      },
+      {
+        "id": "invalid-03",
+        "family": "security",
+        "message": "Je veux un bureau",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "demandePrincipale",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": ["demandePrincipale:citation_invalide"],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": []
+      },
+      {
+        "id": "collision-01",
+        "family": "security",
+        "message": "Une installation complète",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "demandePrincipale",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          },
+          {
+            "field": "localisation",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "reponse_elliptique_ambigue"
+            },
+            {
+              "index": 1,
+              "reason": "reponse_elliptique_ambigue"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:demandePrincipale:missing",
+            "fieldKey": "demandePrincipale",
+            "text": "Que souhaitez-vous réaliser principalement ?"
+          },
+          {
+            "questionId": "m1:localisation:missing",
+            "fieldKey": "localisation",
+            "text": "Où se situe votre projet ?"
+          }
+        ]
+      }
+    ]
+  },
+  "liveReplay": {
+    "summary": {
+      "scenarios": 47,
+      "entirelyCorrect": 2,
+      "extractionOrContractErrors": 1,
+      "validationErrors": 1,
+      "decisionErrors": 0,
+      "falsePositives": 0,
+      "falseNegatives": 2,
+      "providerErrors": 43
+    },
+    "rows": [
+      {
+        "id": "request-01",
+        "family": "request",
+        "message": "J’aimerais moderniser complètement ma cuisine",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "extraction_or_contract",
+        "checks": [
+          {
+            "field": "demandePrincipale",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:demandePrincipale:missing",
+            "fieldKey": "demandePrincipale",
+            "text": "Que souhaitez-vous réaliser principalement ?"
+          }
+        ]
+      },
+      {
+        "id": "request-02",
+        "family": "request",
+        "message": "Il faudrait refaire la salle d’eau",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "demandePrincipale",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "provided",
+              "value": {
+                "type": "text",
+                "text": "refaire la salle d’eau"
+              },
+              "sourceText": "refaire la salle d’eau",
+              "sourceMessageId": "m1"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": []
+      },
+      {
+        "id": "request-03",
+        "family": "request",
+        "message": "Je veux remettre la pièce à neuf",
+        "passed": false,
+        "extractionCorrect": true,
+        "errorLayer": "validation",
+        "checks": [
+          {
+            "field": "demandePrincipale",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": true,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [
+            {
+              "index": 0,
+              "reason": "champ_non_en_attente"
+            }
+          ],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": [
+          {
+            "questionId": "m1:demandePrincipale:clarify",
+            "fieldKey": "demandePrincipale",
+            "text": "Pouvez-vous préciser votre demande principale ?"
+          }
+        ]
+      },
+      {
+        "id": "request-04",
+        "family": "request",
+        "message": "Installer une cloison acoustique",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "demandePrincipale",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "request-05",
+        "family": "request",
+        "message": "Nous souhaitons transformer le garage pour y aménager un bureau calme",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "demandePrincipale",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "request-06",
+        "family": "request",
+        "message": "Rendre l’entrée accessible",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "demandePrincipale",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "location-01",
+        "family": "location",
+        "message": "le chantier est à Ollioules",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "localisation",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "location-02",
+        "family": "location",
+        "message": "chez mes parents à Six-Fours",
+        "passed": true,
+        "extractionCorrect": true,
+        "errorLayer": null,
+        "checks": [
+          {
+            "field": "localisation",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "provided",
+              "value": {
+                "type": "text",
+                "text": "Six-Fours"
+              },
+              "sourceText": "chez mes parents à Six-Fours",
+              "sourceMessageId": "m1"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "rejected": [],
+          "ignored": [],
+          "unresolved": [],
+          "invalidContact": false,
+          "bFallback": false,
+          "needsHumanReview": false
+        },
+        "questions": []
+      },
+      {
+        "id": "location-03",
+        "family": "location",
+        "message": "le projet se trouve du côté de La Garde",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "localisation",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "location-04",
+        "family": "location",
+        "message": "L’intervention se déroulera dans notre résidence secondaire près de Bordeaux",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "localisation",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "location-05",
+        "family": "location",
+        "message": "Pour les travaux, rendez-vous au 21 rue des Lilas",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "localisation",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "location-06",
+        "family": "location",
+        "message": "L’appartement concerné se trouve dans le centre de Dijon",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "localisation",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "time-01",
+        "family": "time",
+        "message": "avant l’été",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "délai",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "time-02",
+        "family": "time",
+        "message": "quand ce sera possible",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "délai",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "time-03",
+        "family": "time",
+        "message": "idéalement au printemps",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "délai",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "time-04",
+        "family": "time",
+        "message": "pas avant janvier",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "délai",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "time-05",
+        "family": "time",
+        "message": "courant mars",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "délai",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "time-06",
+        "family": "time",
+        "message": "dans quelques mois",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "délai",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "time-07",
+        "family": "time",
+        "message": "à réception des clés",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "délai",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "time-08",
+        "family": "time",
+        "message": "après la fin de notre location actuelle",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "délai",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "money-01",
+        "family": "money",
+        "message": "autour de 10 000 €",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "budget",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": false,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "money-02",
+        "family": "money",
+        "message": "Le budget sera de 12000 €",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "budget",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": false,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "money-03",
+        "family": "money",
+        "message": "environ 12000 €",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "budget",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": false,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "money-04",
+        "family": "money",
+        "message": "maximum 12000 €",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "budget",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": false,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "money-05",
+        "family": "money",
+        "message": "au moins 12000 €",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "budget",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": false,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "money-06",
+        "family": "money",
+        "message": "entre 10000 et 12000 €",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "budget",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": false,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "money-07",
+        "family": "money",
+        "message": "je ne dépasserai pas 15k",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "budget",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": false,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": "La borne peut être comprise par A mais ce marqueur n'est pas supporté par A3 actuellement ; aucun patch lexical pour ce cas.",
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "money-08",
+        "family": "unsupported",
+        "message": "environ huit mille",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "budget",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": "Nombres en lettres hors scope V1 ; ne pas fabriquer 8000.",
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "money-09",
+        "family": "unsupported",
+        "message": "entre 8 et 12 000",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "budget",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": "Ne pas inventer une multiplication de la borne 8 sans preuve.",
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "contact-01",
+        "family": "contact",
+        "message": "Vous pouvez m’écrire à lea@example.com",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "contact",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "contact-02",
+        "family": "contact",
+        "message": "Pour me joindre : 06 12 34 56 78",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "contact",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "contact-03",
+        "family": "contact",
+        "message": "Mon email est client@example.org",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "contact",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "contact-04",
+        "family": "contact",
+        "message": "Appelez-moi au +33 6 98 76 54 32",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "contact",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": false,
+            "sourceCorrect": true,
+            "typeCorrect": false,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "ambiguous-01",
+        "family": "ambiguity",
+        "message": "100",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "délai",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "ambiguous-02",
+        "family": "ambiguity",
+        "message": "mars",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "délai",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "ambiguous-03",
+        "family": "ambiguity",
+        "message": "8000",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "délai",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "ambiguous-04",
+        "family": "ambiguity",
+        "message": "La Garde",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "localisation",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "unknown-01",
+        "family": "unknown",
+        "message": "je ne sais pas",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "budget",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "unknown-02",
+        "family": "unknown",
+        "message": "aucune idée",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "budget",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "unknown-03",
+        "family": "unknown",
+        "message": "je n’ai aucune idée du budget",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "budget",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": true,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "unknown-04",
+        "family": "unknown",
+        "message": "pas encore décidé",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "délai",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "conflict-01",
+        "family": "conflict",
+        "message": "Le budget est de 15000 €",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "budget",
+            "detected": false,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": false,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "provided",
+              "value": {
+                "type": "number",
+                "kind": "exact",
+                "v": 10000
+              },
+              "sourceText": "budget 10000",
+              "sourceMessageId": "old"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "correction-01",
+        "family": "correction",
+        "message": "Je corrige le budget : 15000 €",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "budget",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": false,
+            "sourceCorrect": false,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "provided",
+              "value": {
+                "type": "number",
+                "kind": "exact",
+                "v": 10000
+              },
+              "sourceText": "budget 10000",
+              "sourceMessageId": "old"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": "A ne transmet pas correct aujourd'hui : limite d'extraction à exposer, sans refonte du merge.",
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "invalid-01",
+        "family": "security",
+        "message": "budget environ 12000 €",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "budget",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "invalid-02",
+        "family": "security",
+        "message": "Nous restons à Lyon",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "localisation",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "invalid-03",
+        "family": "security",
+        "message": "Je veux un bureau",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "demandePrincipale",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      },
+      {
+        "id": "collision-01",
+        "family": "security",
+        "message": "Une installation complète",
+        "passed": false,
+        "extractionCorrect": false,
+        "errorLayer": "provider",
+        "checks": [
+          {
+            "field": "demandePrincipale",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          },
+          {
+            "field": "localisation",
+            "detected": true,
+            "falsePositive": false,
+            "falseNegative": false,
+            "valueCorrect": true,
+            "sourceCorrect": true,
+            "typeCorrect": true,
+            "nuanceCorrect": true,
+            "correctAmbiguityRejection": true,
+            "unnecessaryQuestion": false,
+            "actual": {
+              "presence": "absent"
+            }
+          }
+        ],
+        "unexpectedFields": [],
+        "conversionIssues": [],
+        "limitation": null,
+        "diagnostics": {
+          "code": "invalid_extraction"
+        },
+        "questions": [],
+        "providerFailure": {
+          "evaluationError": "provider_failed"
+        }
+      }
+    ]
+  },
+  "measurementCorrection": "Même baseline avant refactor conservée ; les échecs provider historiques ont été séparés des erreurs de contrat, et ne sont plus comptés comme rejets réussis."
+}

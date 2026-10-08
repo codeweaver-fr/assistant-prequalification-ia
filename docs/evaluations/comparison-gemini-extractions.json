@@ -1,0 +1,190 @@
+{
+  "request-01": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "request-02": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "request-03": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "request-04": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "request-05": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "request-06": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "location-01": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "location-02": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "location-03": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "location-04": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "location-05": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "location-06": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "time-01": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "time-02": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "time-03": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "time-04": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "time-05": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "time-06": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "time-07": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "time-08": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "money-01": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "money-02": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "money-03": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "money-04": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "money-05": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "money-06": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "money-07": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "money-08": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "money-09": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "contact-01": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "contact-02": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "contact-03": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "contact-04": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "ambiguous-01": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "ambiguous-02": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "ambiguous-03": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "ambiguous-04": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "unknown-01": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "unknown-02": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "unknown-03": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "unknown-04": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "conflict-01": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "correction-01": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "invalid-01": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "invalid-02": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "invalid-03": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  },
+  "collision-01": {
+    "evaluationError": "not_attempted",
+    "reason": "configuration_missing"
+  }
+}

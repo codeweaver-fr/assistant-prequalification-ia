@@ -1,6 +1,6 @@
 import type { Observation } from "../model/types";
 
-import { supportsValue } from "./supportsValue";
+import { hasTruncatedValueEvidence, supportsValue } from "./supportsValue";
 
 type ValueSupportValidationSuccess = {
   success: true;
@@ -16,6 +16,7 @@ export type ValueSupportValidationResult =
 
 export function validateObservationValueSupport(
   observation: Observation,
+  message?: string,
 ): ValueSupportValidationResult {
   const proposedValue = observation.proposedValue;
 
@@ -46,7 +47,14 @@ export function validateObservationValueSupport(
     };
   }
 
-  const supported = supportsValue(observation.sourceText, proposedValue);
+  const supported =
+    supportsValue(observation.sourceText, proposedValue) &&
+    (message === undefined ||
+      !hasTruncatedValueEvidence(
+        message,
+        observation.sourceText,
+        proposedValue,
+      ));
 
   if (!supported) {
     return {

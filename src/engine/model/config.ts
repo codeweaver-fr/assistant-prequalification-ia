@@ -101,6 +101,17 @@ export type DateFieldDef = FieldDefBase & {
 
 export type TextFieldDef = FieldDefBase & {
   readonly type: "text";
+  readonly semanticNormalizations?: readonly SemanticNormalization[];
+  /** Introductions explicites de la valeur dans le message, sans inférence du LLM. */
+  readonly valueIntroducers?: readonly string[];
+  /** Texte temporel : les preuves calendaires existantes peuvent lever l'ellipse. */
+  readonly contentType?: "temporal";
+};
+
+/** Équivalence métier locale sur la citation entière ; cible texte ou clé enum. */
+export type SemanticNormalization = {
+  readonly sourceText: string;
+  readonly normalizedValue: string;
 };
 
 /* ------------------------------------------------------------------ */
@@ -116,6 +127,7 @@ export type EnumFieldDef = FieldDefBase & {
   readonly type: "enum";
 
   readonly options: NonEmptyArray<EnumOption>;
+  readonly semanticNormalizations?: readonly SemanticNormalization[];
 };
 
 export type FieldDef =

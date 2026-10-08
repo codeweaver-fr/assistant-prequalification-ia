@@ -1,30 +1,8 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-
-type ProjectData = {
-  projectType: string | null;
-  mainNeed: string | null;
-  location: string | null;
-  budget: {
-    status: "missing" | "unknown" | "provided" | "ambiguous";
-    min: number | null;
-    max: number | null;
-  };
-  deadline: string | null;
-};
-
-type ApiResponse = {
-  ok: boolean;
-  data?: ProjectData;
-  missingFields?: string[];
-  fieldsToClarify?: string[];
-  questions?: {
-    missing: string[];
-    clarification: string[];
-  };
-  error?: string;
-};
+import type { ConversationState } from "../adapters/prequalification/state";
+import type { PrequalificationResult } from "../adapters/prequalification/processMessage";
 
 type ChatMessage = {
   role: "user" | "assistant";
@@ -33,7 +11,7 @@ type ChatMessage = {
 
 export default function Home() {
   const [input, setInput] = useState("");
-  const [currentProject, setCurrentProject] = useState<ProjectData | null>(
+  const [currentState, setCurrentState] = useState<ConversationState | null>(
     null,
   );
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -60,37 +38,34 @@ export default function Home() {
     setLoading(true);
 
     try {
-      const response = await fetch("/api/test-groq", {
+      const response = await fetch("/api/prequalification", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           message,
-          currentProject,
+          state: currentState,
         }),
       });
 
-      const data: ApiResponse = await response.json();
+      const data: PrequalificationResult = await response.json();
 
-      if (!data.ok || !data.data) {
+      if (!data.ok) {
         setMessages((previous) => [
           ...previous,
           {
             role: "assistant",
-            content: data.error ?? "Une erreur est survenue.",
+            content: "Impossible de traiter la demande pour le moment.",
           },
         ]);
 
         return;
       }
 
-      setCurrentProject(data.data);
+      setCurrentState(data.state);
 
-      const nextQuestions = [
-        ...(data.questions?.missing ?? []),
-        ...(data.questions?.clarification ?? []),
-      ];
+      const nextQuestions = data.questions.map((question) => question.text);
 
       if (nextQuestions.length > 0) {
         setMessages((previous) => [
@@ -106,7 +81,9 @@ export default function Home() {
           {
             role: "assistant",
             content:
-              "Merci. J'ai maintenant les informations nécessaires pour préparer votre demande.",
+              data.qualification === "complete"
+                ? "Merci. J'ai maintenant les informations nécessaires pour préparer votre demande."
+                : "Le dossier reste incomplet. Aucune question supplémentaire n’est disponible pour ce tour.",
           },
         ]);
       }
@@ -181,7 +158,7 @@ export default function Home() {
         </button>
       </form>
 
-      {currentProject && (
+      {currentState && (
         <section style={{ marginTop: "40px" }}>
           <h2>État actuel du dossier</h2>
 
@@ -192,7 +169,7 @@ export default function Home() {
               background: "#111",
             }}
           >
-            {JSON.stringify(currentProject, null, 2)}
+            {JSON.stringify(currentState.dossier, null, 2)}
           </pre>
         </section>
       )}

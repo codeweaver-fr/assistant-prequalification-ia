@@ -78,6 +78,10 @@ export function syncPendingQuestions({
       continue;
     }
 
+    // Une proposition non retenue ne rend pas obligatoire un champ facultatif.
+    // Les conflits réels ci-dessus restent traités par le moteur.
+    if (field.presence === "absent" && !fieldDef.required) continue;
+
     if (clarifyFields.includes(fieldDef.key)) {
       const existing = pendingQuestions.find(
         (pending) =>

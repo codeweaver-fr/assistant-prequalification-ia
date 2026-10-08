@@ -5,6 +5,19 @@ import type { Observation } from "../model/types";
 import { validateObservationValueSupport } from "./validateObservationValueSupport";
 
 describe("validateObservationValueSupport", () => {
+  it("contrôle le modificateur adjacent du message même si la citation seule justifie exact", () => {
+    expect(
+      validateObservationValueSupport(
+        {
+          field: "budget",
+          intent: "provide",
+          proposedValue: { type: "number", kind: "exact", v: 12000 },
+          sourceText: "12000 €",
+        },
+        "environ 12000 €",
+      ),
+    ).toEqual({ success: false, reason: "valeur_non_supportee_par_citation" });
+  });
   it("accepte un nombre réellement supporté par la citation", () => {
     const observation: Observation = {
       field: "budget",
